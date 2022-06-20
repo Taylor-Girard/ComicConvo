@@ -49,6 +49,14 @@ public class LoginActivity extends AppCompatActivity {
                 loginUser(username, password);
             }
         });
+
+        btnSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     private void loginUser(String username, String password){
@@ -63,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 // navigate to the main activity if the user has signed in properly
                 goMainActivity();
-                Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -74,12 +82,4 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-    public static class MainActivity extends AppCompatActivity {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-        }
-    }
 }
