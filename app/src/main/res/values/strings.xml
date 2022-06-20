@@ -6,6 +6,8 @@
     <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
     <string name="matches">Matches</string>
-    <string name="hello_profile_fragment">Hello profile fragment</string>
+    <string name="about_me">About Me</string>
+    <string name="likes">Likes</string>
+    <string name="dislikes">Dislikes</string>
     <string name="hello_matches_fragment">Hello matches fragment</string>
 </resources>
