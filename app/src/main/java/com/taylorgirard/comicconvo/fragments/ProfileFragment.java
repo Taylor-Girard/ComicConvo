@@ -32,6 +32,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.activities.LoginActivity;
 
 import java.io.File;
@@ -46,8 +47,9 @@ public class ProfileFragment extends Fragment {
     EditText etAboutMe;
     Button btnLogout;
     Button btnAboutMe;
+    Button btnEditLists;
     private File photoFile;
-    public String photoFileName = "photo.jpg";
+    String photoFileName = "photo.jpg";
 
     public ProfileFragment() {
         //Empty constructor
@@ -67,6 +69,7 @@ public class ProfileFragment extends Fragment {
         etAboutMe = view.findViewById(R.id.etAboutMe);
         btnAboutMe = view.findViewById(R.id.btnAboutMe);
         btnLogout = view.findViewById(R.id.btnLogout);
+        btnEditLists = view.findViewById(R.id.btnEditLists);
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
@@ -75,6 +78,14 @@ public class ProfileFragment extends Fragment {
 
         String AboutMe = user.getString("aboutMe");
         etAboutMe.setText(AboutMe);
+
+        btnEditLists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), ComicSearchActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnAboutMe.setOnClickListener(new View.OnClickListener() {
             @Override
