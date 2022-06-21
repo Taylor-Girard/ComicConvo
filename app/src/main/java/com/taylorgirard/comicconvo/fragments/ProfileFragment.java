@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +43,9 @@ public class ProfileFragment extends Fragment {
 
     ParseUser user = ParseUser.getCurrentUser();
     ImageView ivUserProfile;
-    TextView tvAboutMe;
+    EditText etAboutMe;
     Button btnLogout;
+    Button btnAboutMe;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -62,13 +64,34 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ivUserProfile = view.findViewById(R.id.ivUserProfile);
-        tvAboutMe = view.findViewById(R.id.tvAboutMe);
+        etAboutMe = view.findViewById(R.id.etAboutMe);
+        btnAboutMe = view.findViewById(R.id.btnAboutMe);
         btnLogout = view.findViewById(R.id.btnLogout);
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
             Glide.with(getContext()).load(profilePic.getUrl()).transform(new CircleCrop()).into(ivUserProfile);
         }
+
+        String AboutMe = user.getString("aboutMe");
+        etAboutMe.setText(AboutMe);
+
+        btnAboutMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String description = etAboutMe.getText().toString();
+                user.put("aboutMe", description);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error while saving about me", e);
+                            Toast.makeText(getContext(), "Error while saving about me!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +118,9 @@ public class ProfileFragment extends Fragment {
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
                 photoFile = getPhotoFileUri(photoFileName);
+
+                Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
+                chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
                 startActivityForResult(chooserIntent, PICK_IMAGE);
 
@@ -127,6 +153,7 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
             if(resultCode == Activity.RESULT_OK){
                 Uri selectedImageUri = data.getData();
@@ -141,7 +168,7 @@ public class ProfileFragment extends Fragment {
         // Get safe storage directory for photos
         // Use `getExternalFilesDir` on Context to access package-specific directories.
         // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
+        File mediaStorageDir = new File(String.valueOf(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
 
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){

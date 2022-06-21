@@ -99,4 +99,14 @@
         app:layout_constraintStart_toEndOf="@+id/ivUserProfile"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnAboutMe"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/submit"
+        app:layout_constraintBottom_toTopOf="@+id/etAboutMe"
+        app:layout_constraintStart_toEndOf="@+id/tvAboutMe"
+        app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
