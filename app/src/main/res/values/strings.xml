@@ -10,5 +10,6 @@
     <string name="likes">Likes</string>
     <string name="dislikes">Dislikes</string>
     <string name="edit">Edit</string>
+    <string name="logout">Logout</string>
     <string name="hello_matches_fragment">Hello matches fragment</string>
 </resources>

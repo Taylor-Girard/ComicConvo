@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.activities.LoginActivity;
 
 import java.io.File;
 
@@ -41,6 +43,7 @@ public class ProfileFragment extends Fragment {
     ParseUser user = ParseUser.getCurrentUser();
     ImageView ivUserProfile;
     TextView tvAboutMe;
+    Button btnLogout;
     private File photoFile;
     public String photoFileName = "photo.jpg";
 
@@ -60,11 +63,24 @@ public class ProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ivUserProfile = view.findViewById(R.id.ivUserProfile);
         tvAboutMe = view.findViewById(R.id.tvAboutMe);
+        btnLogout = view.findViewById(R.id.btnLogout);
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
             Glide.with(getContext()).load(profilePic.getUrl()).transform(new CircleCrop()).into(ivUserProfile);
         }
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOutInBackground();
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                Intent i = new Intent(getContext(), LoginActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // same as above
+                startActivity(i);
+            }
+        });
 
         ivUserProfile.setOnClickListener(new View.OnClickListener() {
             @Override
