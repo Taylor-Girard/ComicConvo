@@ -14,7 +14,7 @@ public class Comic {
 
     public Comic(JSONObject jsonObject) throws JSONException {
 
-        JSONObject images = jsonObject.getJSONObject("images");
+        JSONObject images = jsonObject.getJSONObject("thumbnail");
         coverPath = images.getString("path") + "." + images.getString("extension");
         title = jsonObject.getString("title");
 
