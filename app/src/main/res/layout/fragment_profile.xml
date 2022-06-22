@@ -29,7 +29,7 @@
 
     <EditText
         android:id="@+id/etAboutMe"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="User description goes here"
@@ -102,11 +102,11 @@
     <Button
         android:id="@+id/btnAboutMe"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
         android:text="@string/submit"
-        app:layout_constraintBottom_toTopOf="@+id/etAboutMe"
-        app:layout_constraintStart_toEndOf="@+id/tvAboutMe"
-        app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etAboutMe"
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutMe" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
