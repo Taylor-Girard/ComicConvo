@@ -2,15 +2,14 @@ package com.taylorgirard.comicconvo.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import android.os.Environment;
@@ -22,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,7 +33,9 @@ import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.activities.LoginActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
@@ -49,7 +49,6 @@ public class ProfileFragment extends Fragment {
     Button btnAboutMe;
     Button btnEditLists;
     private File photoFile;
-    String photoFileName = "photo.jpg";
 
     public ProfileFragment() {
         //Empty constructor
@@ -128,35 +127,7 @@ public class ProfileFragment extends Fragment {
                 Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
-                photoFile = getPhotoFileUri(photoFileName);
-
-                Uri fileProvider = FileProvider.getUriForFile(getContext(), "com.codepath.fileprovider", photoFile);
-                chooserIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
-
                 startActivityForResult(chooserIntent, PICK_IMAGE);
-
-                ParseFile profile = new ParseFile(photoFile);
-                profile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e == null){
-                            user.put("profilePic", profile);
-                            user.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    if (e != null){
-                                        Log.e(TAG, "Error while saving", e);
-                                        Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
-                                    }
-                                    Log.i(TAG, "Profile save was successful!");
-                                };
-                            });
-                        } else{
-                            Log.e(TAG, "Error while saving image", e);
-                            Toast.makeText(getContext(), "Error while saving image!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
 
             }
         });
@@ -167,28 +138,47 @@ public class ProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
             if(resultCode == Activity.RESULT_OK){
-                Uri selectedImageUri = data.getData();
-                if(selectedImageUri != null){
-                    Glide.with(getContext()).load(selectedImageUri).transform(new CircleCrop()).into(ivUserProfile);
+                Uri photoUri = data.getData();
+                if(photoUri != null){
+                    Glide.with(getContext()).load(photoUri).transform(new CircleCrop()).into(ivUserProfile);
                 }
+                // Load the image located at photoUri into selectedImage
+                Bitmap selectedImage = loadFromUri(photoUri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                ParseFile profilePic = new ParseFile(byteArray);
+                user.put("profilePic", profilePic);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                                        Log.e(TAG, "Error while saving", e);
+                                        Toast.makeText(getContext(), "Error while saving!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    Log.i(TAG, "Profile save was successful!");
+                    }
+                });
             }
         }
     }
 
-    public File getPhotoFileUri(String fileName) {
-        // Get safe storage directory for photos
-        // Use `getExternalFilesDir` on Context to access package-specific directories.
-        // This way, we don't need to request external read/write runtime permissions.
-        File mediaStorageDir = new File(String.valueOf(getContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-            Log.d(TAG, "failed to create directory");
+    public Bitmap loadFromUri(Uri photoUri) {
+        Bitmap image = null;
+        try {
+            // check version of Android on device
+            if(Build.VERSION.SDK_INT > 27){
+                // on newer versions of Android, use the new decodeBitmap method
+                ImageDecoder.Source source = ImageDecoder.createSource(getContext().getContentResolver(), photoUri);
+                image = ImageDecoder.decodeBitmap(source);
+            } else {
+                // support older versions of Android by using getBitmap
+                image = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), photoUri);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        // Return the file target for the photo based on filename
-        return new File(mediaStorageDir.getPath() + File.separator + fileName);
-
+        return image;
     }
 
 }
