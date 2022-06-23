@@ -29,7 +29,6 @@ Keeps track of users' likes/dislikes with the comics they read and matches them 
 * User can create a list of their comic favorites and dislikes
 * User can get matched to people in the area with similar preferences and can chat through messages
 * Each user has a profile page with basic info and their comic preferences
-* Settings (Accesibility, Notification, General, etc.)
 * Map feature where users can choose where to meet up or point out where to find cool comic finds.
 
 **Optional Nice-to-have Stories**
@@ -38,6 +37,7 @@ Keeps track of users' likes/dislikes with the comics they read and matches them 
 * Community page where users can post about good comic finds in their area or to buy/sell comics
 * Allow people to connect their social media accounts
 * Kid-friendly setting that blocks out certain information and can only be used by same age group
+* Settings (Accesibility, Notification, General, etc.)
 
 ### 2. Screen Archetypes
 
