@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes);
+        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, 'd');
         rvDislikes.setAdapter(comicAdapterDislikes);
         rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -110,7 +110,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes);
+        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes,'l');
         rvLikes.setAdapter(comicAdapterLikes);
         rvLikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
 

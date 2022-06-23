@@ -1,52 +1,41 @@
 package com.taylorgirard.comicconvo.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
-import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.models.Comic;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
-    public static final String TAG = "ComicAdapter";
+    public static final String TAG = "UserListAdapter";
 
+    ParseUser user = ParseUser.getCurrentUser();
     Context context;
     List<Comic> comics;
+    char tag;
 
-    public UserListAdapter(Context context, List<Comic> comics){
+    public UserListAdapter(Context context, List<Comic> comics, char tag){
         this.comics = comics;
         this.context = context;
+        this.tag = tag;
     }
 
     @NonNull
@@ -73,11 +62,13 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         TextView tvTitle;
         ImageView ivCover;
+        Button btnRemove;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);
             ivCover = itemView.findViewById(R.id.ivCover);
+            btnRemove = itemView.findViewById(R.id.btnRemove);
 
         }
 
@@ -85,6 +76,41 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
             tvTitle.setText(comic.getTitle());
             String imageUrl = comic.getCoverPath();
             Glide.with(context).load(imageUrl).into(ivCover);
+
+            btnRemove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    comics.remove(comic);
+                    notifyDataSetChanged();
+                    ArrayList<Comic> remove = new ArrayList<Comic>();
+                    remove.add(comic);
+                    if (tag == 'l') {
+                        user.removeAll("Likes", remove);
+                        user.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null){
+                                    Log.d(TAG, "success removing item");
+                                } else{
+                                    Log.e(TAG, "error removing item", e);
+                                }
+                            }
+                        });
+                    } else if (tag == 'd') {
+                        user.removeAll("Dislikes", remove);
+                        user.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null){
+                                    Log.d(TAG, "success removing item");
+                                } else{
+                                    Log.e(TAG, "error removing item", e);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
         }
     }
 }
