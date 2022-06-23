@@ -83,7 +83,8 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
 
         public void bind(Comic comic) {
             tvTitle.setText(comic.getTitle());
-            String imageUrl;
+            String imageUrl = comic.getCoverPath();
+            Glide.with(context).load(imageUrl).into(ivCover);
         }
     }
 }

@@ -109,31 +109,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                     });
                     comic.put("comicId", comic.getComicId());
                     comic.put("Title", comic.getTitle());
-//                    //Convert image to byte array
-//                    Bitmap myBitmap;
-//                    byte[] imgByteArray = {};
-//                    try {
-//                        URL url = new URL(comic.getCoverPath());
-//                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//                        connection.setDoInput(true);
-//                        connection.connect();
-//                        InputStream input = connection.getInputStream();
-//                        myBitmap = BitmapFactory.decodeStream(input);
-//                        if (myBitmap != null){
-//                            imgByteArray = encodeToByteArray(myBitmap);
-//                        }
-//                    } catch (Exception e) {
-//                        Log.e(TAG, "issue converting to byte array", e);
-//                    }
-//                    //Convert to parse file
-//                    ParseFile parseCover = new ParseFile(imgByteArray);
-//                    //Save parse file
-//                    try {
-//                        parseCover.save();
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    comic.put("Cover", parseCover);
+                    comic.put("coverPath", comic.getCoverPath());
                     comic.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
@@ -149,14 +125,4 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
         }
     }
 
-
-    public byte[] encodeToByteArray(Bitmap image) {
-        Log.d(TAG, "encodeToByteArray");
-        Bitmap b= image;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        b.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imgByteArray = baos.toByteArray();
-
-        return imgByteArray ;
-    }
 }

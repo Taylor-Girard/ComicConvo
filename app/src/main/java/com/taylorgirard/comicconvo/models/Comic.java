@@ -60,6 +60,7 @@ public class Comic extends ParseObject {
             ParseObject object = query.get(id);
             Log.d(">>", ">>" + object);
             currentComic.setTitle(object.getString("Title"));
+            currentComic.setCoverPath(object.getString("coverPath"));
             comics.add(currentComic);
         }
 
@@ -73,6 +74,10 @@ public class Comic extends ParseObject {
 
     public String getCoverPath(){
         return coverPath;
+    }
+
+    public void setCoverPath(String coverPath){
+        this.coverPath = coverPath;
     }
 
     public String getTitle(){
