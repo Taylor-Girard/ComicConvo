@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,15 +29,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.activities.LoginActivity;
+import com.taylorgirard.comicconvo.adapters.ComicAdapter;
+import com.taylorgirard.comicconvo.adapters.UserListAdapter;
+import com.taylorgirard.comicconvo.models.Comic;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -48,7 +59,10 @@ public class ProfileFragment extends Fragment {
     Button btnLogout;
     Button btnAboutMe;
     Button btnEditLists;
-    private File photoFile;
+    RecyclerView rvLikes;
+    RecyclerView rvDislikes;
+    List<Comic> likes;
+    List<Comic> dislikes;
 
     public ProfileFragment() {
         //Empty constructor
@@ -69,6 +83,21 @@ public class ProfileFragment extends Fragment {
         btnAboutMe = view.findViewById(R.id.btnAboutMe);
         btnLogout = view.findViewById(R.id.btnLogout);
         btnEditLists = view.findViewById(R.id.btnEditLists);
+        rvLikes = view.findViewById(R.id.rvLikes);
+        rvDislikes = view.findViewById(R.id.rvDislikes);
+
+        List<Comic> userList = user.getList("Likes");
+
+        likes = new ArrayList<Comic>();
+        try {
+            likes.addAll(Comic.fromParseArray(userList));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes);
+        rvLikes.setAdapter(comicAdapterLikes);
+        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
