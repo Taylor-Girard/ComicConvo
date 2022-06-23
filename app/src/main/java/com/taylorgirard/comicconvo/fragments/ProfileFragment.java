@@ -86,11 +86,26 @@ public class ProfileFragment extends Fragment {
         rvLikes = view.findViewById(R.id.rvLikes);
         rvDislikes = view.findViewById(R.id.rvDislikes);
 
-        List<Comic> userList = user.getList("Likes");
+        //Set up list of likes
+        List<Comic> userDislikes = user.getList("Dislikes");
+
+        dislikes = new ArrayList<Comic>();
+        try {
+            dislikes.addAll(Comic.fromParseArray(userDislikes));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes);
+        rvDislikes.setAdapter(comicAdapterDislikes);
+        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+        //Set up list of dislikes
+        List<Comic> userLikes = user.getList("Likes");
 
         likes = new ArrayList<Comic>();
         try {
-            likes.addAll(Comic.fromParseArray(userList));
+            likes.addAll(Comic.fromParseArray(userLikes));
         } catch (ParseException e) {
             e.printStackTrace();
         }

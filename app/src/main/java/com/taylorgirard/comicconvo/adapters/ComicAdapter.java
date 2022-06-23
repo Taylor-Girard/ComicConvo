@@ -122,7 +122,38 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                     });
                 }
             });
+
+            btnDislike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ParseUser user = ParseUser.getCurrentUser();
+                    user.addUnique("Dislikes", comic);
+                    user.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.e(TAG, "Error while saving to likes", e);
+                            } else{
+                                Log.d(TAG, "Successfully saved likes");
+                            }
+                        }
+                    });
+                    comic.put("comicId", comic.getComicId());
+                    comic.put("Title", comic.getTitle());
+                    comic.put("coverPath", comic.getCoverPath());
+                    comic.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.e(TAG, "Error while saving comic", e);
+                            } else{
+                                Log.d(TAG, "Successfully saved comic");
+                            }
+                        }
+                    });
+                }
+            });
         }
     }
-
 }
+

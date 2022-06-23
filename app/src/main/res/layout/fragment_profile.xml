@@ -64,7 +64,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLikes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
@@ -72,7 +72,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDislikes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
