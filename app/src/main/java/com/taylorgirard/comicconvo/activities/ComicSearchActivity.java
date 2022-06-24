@@ -1,10 +1,13 @@
 package com.taylorgirard.comicconvo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.SearchView;
@@ -15,6 +18,7 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.adapters.ComicAdapter;
+import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 import com.taylorgirard.comicconvo.models.Comic;
 
 import org.json.JSONArray;
@@ -106,5 +110,11 @@ public class ComicSearchActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }

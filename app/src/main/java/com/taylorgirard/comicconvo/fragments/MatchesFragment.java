@@ -13,6 +13,10 @@ import com.taylorgirard.comicconvo.R;
 
 public class MatchesFragment extends Fragment {
 
+    public MatchesFragment(){
+        //empty constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
