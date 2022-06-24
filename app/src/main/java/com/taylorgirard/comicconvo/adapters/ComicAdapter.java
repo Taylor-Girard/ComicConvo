@@ -22,6 +22,7 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
@@ -85,7 +86,7 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
 
         }
 
-        public void bind(Comic comic){
+        public void bind(Comic comic) {
             tvTitle.setText(comic.getTitle());
             String imageUrl;
 
@@ -96,27 +97,34 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     ParseUser user = ParseUser.getCurrentUser();
-                    user.addUnique("Likes", comic);
+                    ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
+                    query.whereEqualTo("comicId", comic.getComicId());
+                    try {
+                        Comic existingComic = query.getFirst();
+                        user.addUnique("Likes", existingComic);
+                    } catch (ParseException e) {
+                        user.addUnique("Likes", comic);
+                        comic.put("comicId", comic.getComicId());
+                        comic.put("Title", comic.getTitle());
+                        comic.put("coverPath", comic.getCoverPath());
+                        comic.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Error while saving comic", e);
+                                } else {
+                                    Log.d(TAG, "Successfully saved comic");
+                                }
+                            }
+                        });
+                    }
                     user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e != null){
+                            if (e != null) {
                                 Log.e(TAG, "Error while saving to likes", e);
-                            } else{
+                            } else {
                                 Log.d(TAG, "Successfully saved likes");
-                            }
-                        }
-                    });
-                    comic.put("comicId", comic.getComicId());
-                    comic.put("Title", comic.getTitle());
-                    comic.put("coverPath", comic.getCoverPath());
-                    comic.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null){
-                                Log.e(TAG, "Error while saving comic", e);
-                            } else{
-                                Log.d(TAG, "Successfully saved comic");
                             }
                         }
                     });
@@ -127,27 +135,34 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     ParseUser user = ParseUser.getCurrentUser();
-                    user.addUnique("Dislikes", comic);
+                    ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
+                    query.whereEqualTo("comicId", comic.getComicId());
+                    try {
+                        Comic existingComic = query.getFirst();
+                        user.addUnique("Dislikes", existingComic);
+                    } catch (ParseException e) {
+                        user.addUnique("Dislikes", comic);
+                        comic.put("comicId", comic.getComicId());
+                        comic.put("Title", comic.getTitle());
+                        comic.put("coverPath", comic.getCoverPath());
+                        comic.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null) {
+                                    Log.e(TAG, "Error while saving comic", e);
+                                } else {
+                                    Log.d(TAG, "Successfully saved comic");
+                                }
+                            }
+                        });
+                    }
                     user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e != null){
-                                Log.e(TAG, "Error while saving to likes", e);
-                            } else{
-                                Log.d(TAG, "Successfully saved likes");
-                            }
-                        }
-                    });
-                    comic.put("comicId", comic.getComicId());
-                    comic.put("Title", comic.getTitle());
-                    comic.put("coverPath", comic.getCoverPath());
-                    comic.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null){
-                                Log.e(TAG, "Error while saving comic", e);
-                            } else{
-                                Log.d(TAG, "Successfully saved comic");
+                            if (e != null) {
+                                Log.e(TAG, "Error while saving to dislikes", e);
+                            } else {
+                                Log.d(TAG, "Successfully saved dislikes");
                             }
                         }
                     });
@@ -156,4 +171,5 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
         }
     }
 }
+
 
