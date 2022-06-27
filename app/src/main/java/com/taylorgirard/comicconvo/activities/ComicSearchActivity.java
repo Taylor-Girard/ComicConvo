@@ -34,6 +34,7 @@ import okhttp3.Request;
 public class ComicSearchActivity extends AppCompatActivity {
 
     public static final String TAG = "ComicSearchActivity";
+    public static final int GRID_COLUMNS = 2;
     public static final String BASE_COMIC_URL = "https://gateway.marvel.com/v1/public/comics?ts=123&apikey=865d88b76772d9a6a5fadb1f268538d4&hash=70025aec317dbd24c106b1867b239b36";
 
     List<Comic> comics;
@@ -49,7 +50,7 @@ public class ComicSearchActivity extends AppCompatActivity {
 
         final ComicAdapter comicAdapter = new ComicAdapter(this, comics);
         rvComicList.setAdapter(comicAdapter);
-        rvComicList.setLayoutManager(new GridLayoutManager(this, 2));
+        rvComicList.setLayoutManager(new GridLayoutManager(this, GRID_COLUMNS));
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(BASE_COMIC_URL, new JsonHttpResponseHandler() {

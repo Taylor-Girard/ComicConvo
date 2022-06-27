@@ -2,19 +2,20 @@ package com.taylorgirard.comicconvo.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-
+import com.parse.ParseException;
+import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.IndividualMessageActivity;
+import com.taylorgirard.comicconvo.tools.Match;
 
 
 public class MatchesFragment extends Fragment {
@@ -36,13 +37,21 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        try {
+            Match.findMatch(currentUser);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         ibMessage = view.findViewById(R.id.ibMessage);
 
         ibMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), IndividualMessageActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getContext(), IndividualMessageActivity.class);
+                startActivity(intent);
             }
         });
     }

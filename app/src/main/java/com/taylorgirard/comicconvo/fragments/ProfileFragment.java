@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,21 +28,16 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.activities.LoginActivity;
-import com.taylorgirard.comicconvo.adapters.ComicAdapter;
+import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.adapters.UserListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +90,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, 'd');
+        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
         rvDislikes.setAdapter(comicAdapterDislikes);
         rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -110,7 +104,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes,'l');
+        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
         rvLikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -125,8 +119,8 @@ public class ProfileFragment extends Fragment {
         btnEditLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), ComicSearchActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getContext(), ComicSearchActivity.class);
+                startActivity(intent);
             }
         });
 
