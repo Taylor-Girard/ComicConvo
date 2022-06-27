@@ -22,8 +22,9 @@ public class Match {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         List<ParseUser> userList = query.find();
 
-        //list of previous matches of the current user, separate out into ids
+        //list of previous matches of the current user
         List<ParseUser> previousMatches = user.getList("matchedWith");
+        //separate out into ids
         ArrayList<String> previousIds = new ArrayList<>();
 
         for (ParseUser i: previousMatches){
