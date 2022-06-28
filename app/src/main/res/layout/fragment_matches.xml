@@ -8,7 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
-        android:id="@+id/ivUserProfile"
+        android:id="@+id/ivMatchProfile"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
@@ -26,10 +26,10 @@
         android:text="@string/about_me"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/ivMatchProfile" />
 
     <TextView
-        android:id="@+id/etAboutMe"
+        android:id="@+id/tvAboutMatch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -50,7 +50,7 @@
         android:text="@string/likes"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
+        app:layout_constraintTop_toBottomOf="@+id/tvAboutMatch" />
 
     <TextView
         android:id="@+id/tvDislikes"
@@ -61,10 +61,10 @@
         android:text="@string/dislikes"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvLikes" />
+        app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvLikes"
+        android:id="@+id/rvMatchLikes"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_margin="10dp"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvDislikes"
+        android:id="@+id/rvMatchDislikes"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_margin="10dp"
@@ -87,7 +87,7 @@
         android:src="@android:drawable/sym_action_chat"
         app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivUserProfile"
+        app:layout_constraintStart_toEndOf="@+id/ivMatchProfile"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
 
@@ -98,7 +98,7 @@
         android:background="#00FFFFFF"
         android:src="@android:drawable/ic_delete"
         app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
-        app:layout_constraintEnd_toStartOf="@+id/ivUserProfile"
+        app:layout_constraintEnd_toStartOf="@+id/ivMatchProfile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />

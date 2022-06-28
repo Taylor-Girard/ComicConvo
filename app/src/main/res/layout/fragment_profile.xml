@@ -67,10 +67,10 @@
                 android:text="@string/dislikes"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvLikes" />
+                app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvLikes"
+            android:id="@+id/rvMatchLikes"
             android:layout_width="match_parent"
             android:layout_height="175dp"
             android:layout_margin="10dp"
@@ -78,7 +78,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDislikes"
+            android:id="@+id/rvMatchDislikes"
             android:layout_width="match_parent"
             android:layout_height="175dp"
             android:layout_margin="10dp"
@@ -92,7 +92,7 @@
                 android:layout_marginStart="20dp"
                 android:text="@string/edit"
                 app:icon="@android:drawable/ic_menu_add"
-                app:layout_constraintBottom_toTopOf="@+id/rvLikes"
+                app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
                 app:layout_constraintStart_toEndOf="@+id/tvLikes"
                 app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
 

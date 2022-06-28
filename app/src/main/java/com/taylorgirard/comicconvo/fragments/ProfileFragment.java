@@ -46,6 +46,7 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     public static final int PICK_IMAGE = 1;
+    public static final int LIST_COLUMNS = 2;
 
     ParseUser user = ParseUser.getCurrentUser();
     ImageView ivUserProfile;
@@ -77,8 +78,8 @@ public class ProfileFragment extends Fragment {
         btnAboutMe = view.findViewById(R.id.btnAboutMe);
         btnLogout = view.findViewById(R.id.btnLogout);
         btnEditLists = view.findViewById(R.id.btnEditLists);
-        rvLikes = view.findViewById(R.id.rvLikes);
-        rvDislikes = view.findViewById(R.id.rvDislikes);
+        rvLikes = view.findViewById(R.id.rvMatchLikes);
+        rvDislikes = view.findViewById(R.id.rvMatchDislikes);
 
         //Set up list of likes
         List<Comic> userDislikes = user.getList("Dislikes");
@@ -92,7 +93,7 @@ public class ProfileFragment extends Fragment {
 
         final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
         rvDislikes.setAdapter(comicAdapterDislikes);
-        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
         //Set up list of dislikes
         List<Comic> userLikes = user.getList("Likes");
@@ -106,7 +107,7 @@ public class ProfileFragment extends Fragment {
 
         final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
-        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
