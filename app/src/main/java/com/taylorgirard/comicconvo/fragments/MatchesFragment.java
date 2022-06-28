@@ -3,6 +3,7 @@ package com.taylorgirard.comicconvo.fragments;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.IndividualMessageActivity;
 import com.taylorgirard.comicconvo.activities.MainActivity;
@@ -37,6 +39,7 @@ import java.util.List;
 
 public class MatchesFragment extends Fragment {
 
+    public static final String TAG = "Matches Fragment";
     public static final int LIST_COLUMNS = 2;
 
     ImageButton ibMessage;
@@ -66,13 +69,6 @@ public class MatchesFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseUser match = currentUser.getParseUser("bestMatch");
 
-//
-//        try {
-//            Match.findMatch(currentUser);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
         ibMessage = view.findViewById(R.id.ibMessage);
         ibSkip = view.findViewById(R.id.ibSkip);
         ivMatchProfile = view.findViewById(R.id.ivMatchProfile);
@@ -81,53 +77,6 @@ public class MatchesFragment extends Fragment {
         rvMatchDislikes = view.findViewById(R.id.rvMatchDislikes);
 
         loadInfo(match);
-
-//        List<Comic> matchDislikes = null;
-//        try {
-//            matchDislikes = match.fetchIfNeeded().getList("Dislikes");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        dislikes = new ArrayList<Comic>();
-//        try {
-//            dislikes.addAll(Comic.fromParseArray(matchDislikes));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        final MatchListAdapter comicAdapterDislikes = new MatchListAdapter(getContext(), dislikes);
-//        rvMatchDislikes.setAdapter(comicAdapterDislikes);
-//        rvMatchDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
-//
-//        List<Comic> matchLikes= null;
-//        try {
-//            matchLikes = match.fetchIfNeeded().getList("Likes");
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        likes = new ArrayList<Comic>();
-//        try {
-//            likes.addAll(Comic.fromParseArray(matchLikes));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        final MatchListAdapter comicAdapterLikes = new MatchListAdapter(getContext(), likes);
-//        rvMatchLikes.setAdapter(comicAdapterLikes);
-//        rvMatchLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
-//
-//        try {
-//            tvAboutMatch.setText(match.fetchIfNeeded().getString("aboutMe"));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        ParseFile matchPic = match.getParseFile("profilePic");
-//        if (matchPic != null) {
-//            Glide.with(getContext()).load(matchPic.getUrl()).transform(new CircleCrop()).into(ivMatchProfile);
-//        }
 
         ibMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +95,17 @@ public class MatchesFragment extends Fragment {
                     e.printStackTrace();
                 }
                 ParseUser newMatch = currentUser.getParseUser("bestMatch");
+                currentUser.addUnique("matchedWith", newMatch);
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            Log.d(TAG, "Successfully saved to match list");
+                        } else{
+                            Log.e(TAG, "Error saving to match list", e);
+                        }
+                    }
+                });
                 loadInfo(newMatch);
             }
         });

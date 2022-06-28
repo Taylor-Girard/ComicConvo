@@ -32,6 +32,7 @@ import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 import com.taylorgirard.comicconvo.models.Comic;
+import com.taylorgirard.comicconvo.tools.Match;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

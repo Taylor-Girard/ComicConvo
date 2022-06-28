@@ -103,9 +103,7 @@ public class Match {
         }
 
         //set user's "bestMatch" column to be highest Match user
-        //add Match to user's matched list
         user.put("bestMatch", bestMatch);
-        user.addUnique("matchedWith", bestMatch);
         user.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
