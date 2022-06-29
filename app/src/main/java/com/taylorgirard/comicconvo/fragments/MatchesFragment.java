@@ -31,6 +31,7 @@ import com.taylorgirard.comicconvo.adapters.MatchListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.tools.Match;
+import com.taylorgirard.comicconvo.tools.OnSwipeTouchListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,7 @@ public class MatchesFragment extends Fragment {
     RecyclerView rvMatchDislikes;
     List<Comic> likes;
     List<Comic> dislikes;
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
     public MatchesFragment(){
         //empty constructor
@@ -67,7 +69,6 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser.getParseUser("bestMatch") == null){
             try {
                 Match.findMatch(currentUser);
@@ -99,37 +100,29 @@ public class MatchesFragment extends Fragment {
 
         loadInfo(match);
 
+        clMatchLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()){
+            @Override
+            public void onSwipeLeft() {
+                skipMatch();
+            }
+
+            @Override
+            public void onSwipeRight() {
+                goToMessages();
+            }
+        });
+
         ibMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), IndividualMessageActivity.class);
-                startActivity(intent);
+               goToMessages();
             }
         });
 
         ibSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_animation);
-                clMatchLayout.startAnimation(animation);
-                try {
-                    Match.findMatch(currentUser);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                ParseUser newMatch = currentUser.getParseUser("bestMatch");
-                currentUser.addUnique("matchedWith", newMatch);
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null){
-                            Log.d(TAG, "Successfully saved to match list");
-                        } else{
-                            Log.e(TAG, "Error saving to match list", e);
-                        }
-                    }
-                });
-                loadInfo(newMatch);
+                skipMatch();
             }
         });
     }
@@ -185,5 +178,33 @@ public class MatchesFragment extends Fragment {
             Glide.with(getContext()).load(matchPic.getUrl()).transform(new CircleCrop()).into(ivMatchProfile);
         }
 
+    }
+
+    public void skipMatch(){
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_animation);
+        clMatchLayout.startAnimation(animation);
+        try {
+            Match.findMatch(currentUser);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        ParseUser newMatch = currentUser.getParseUser("bestMatch");
+        currentUser.addUnique("matchedWith", newMatch);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null){
+                    Log.d(TAG, "Successfully saved to match list");
+                } else{
+                    Log.e(TAG, "Error saving to match list", e);
+                }
+            }
+        });
+        loadInfo(newMatch);
+    }
+
+    public void goToMessages(){
+        Intent intent = new Intent(getContext(), IndividualMessageActivity.class);
+        startActivity(intent);
     }
 }
