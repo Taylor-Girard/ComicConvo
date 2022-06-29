@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
         rvDislikes = view.findViewById(R.id.rvMatchDislikes);
 
         //Set up list of likes
-        List<Comic> userDislikes = user.getList("Dislikes");
+        List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());
 
         dislikes = new ArrayList<Comic>();
         try {
@@ -99,7 +99,7 @@ public class ProfileFragment extends Fragment {
         rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
         //Set up list of dislikes
-        List<Comic> userLikes = user.getList("Likes");
+        List<Comic> userLikes = user.getList(ListType.LIKES.toString());
 
         likes = new ArrayList<Comic>();
         try {

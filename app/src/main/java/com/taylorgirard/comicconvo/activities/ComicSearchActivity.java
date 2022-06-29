@@ -78,7 +78,7 @@ public class ComicSearchActivity extends AppCompatActivity {
         svComicSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(ComicSearchActivity.this, query, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ComicSearchActivity.this, query, Toast.LENGTH_SHORT).show();
                 RequestParams params = new RequestParams();
                 params.put("titleStartsWith", query);
                 client.get(BASE_COMIC_URL, params, new JsonHttpResponseHandler() {

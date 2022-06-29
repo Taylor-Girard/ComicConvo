@@ -49,24 +49,24 @@ public class Match {
                 double matchScore = 0;
 
                 //get current user's like and dislike lists
-                List<Comic> userLikes = user.getList("Likes");
+                List<Comic> userLikes = user.getList(ListType.LIKES.toString());
                 ArrayList<String> userLikesIds = new ArrayList<>();
                 for (Comic j: userLikes){
                     userLikesIds.add(j.getObjectId());
                 }
-                List<Comic> userDislikes = user.getList("Dislikes");
+                List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());
                 ArrayList<String> userDislikesIds = new ArrayList<>();
                 for (Comic j: userDislikes){
                     userDislikesIds.add(j.getObjectId());
                 }
 
                 //get potential match's like and dislike lists to compare to
-                List<Comic> matchLikes = potentialMatch.getList("Likes");
+                List<Comic> matchLikes = potentialMatch.getList(ListType.LIKES.toString());
                 ArrayList<String> matchLikesIds = new ArrayList<>();
                 for (Comic j: matchLikes){
                     matchLikesIds.add(j.getObjectId());
                 }
-                List<Comic> matchDislikes = potentialMatch.getList("Dislikes");
+                List<Comic> matchDislikes = potentialMatch.getList(ListType.DISLIKES.toString());
                 ArrayList<String> matchDislikesIds = new ArrayList<>();
                 for (Comic j: matchDislikes){
                     matchDislikesIds.add(j.getObjectId());

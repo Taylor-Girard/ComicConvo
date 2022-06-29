@@ -26,8 +26,6 @@ import java.util.List;
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     public static final String TAG = "UserListAdapter";
-    public static final String USER_LIKES_KEY = "Likes";
-    public static final String USER_DISLIKES_KEY = "Dislikes";
 
     ParseUser user = ParseUser.getCurrentUser();
     Context context;
@@ -106,7 +104,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                     remove.add(comic);
                     switch(type){
                         case LIKES:
-                            user.removeAll(USER_LIKES_KEY, remove);
+                            user.removeAll(ListType.LIKES.toString(), remove);
                             user.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {
@@ -118,7 +116,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                                 }
                             });
                         case DISLIKES:
-                            user.removeAll(USER_DISLIKES_KEY, remove);
+                            user.removeAll(ListType.DISLIKES.toString(), remove);
                             user.saveInBackground(new SaveCallback() {
                                 @Override
                                 public void done(ParseException e) {

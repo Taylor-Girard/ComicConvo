@@ -68,6 +68,24 @@ public class MatchesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser.getParseUser("bestMatch") == null){
+            try {
+                Match.findMatch(currentUser);
+                currentUser.addUnique("matchedWith", currentUser.getParseUser("bestMatch"));
+                currentUser.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error saving to matchedWith list", e);
+                        } else{
+                            Log.i(TAG, "Success saving to matchedWith list");
+                        }
+                    }
+                });
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         ParseUser match = currentUser.getParseUser("bestMatch");
 
         tvMatchUsername = view.findViewById(R.id.tvMatchUsername);
@@ -117,7 +135,7 @@ public class MatchesFragment extends Fragment {
 
         List<Comic> matchDislikes = null;
         try {
-            matchDislikes = match.fetchIfNeeded().getList("Dislikes");
+            matchDislikes = match.fetchIfNeeded().getList(ListType.DISLIKES.toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -135,7 +153,7 @@ public class MatchesFragment extends Fragment {
 
         List<Comic> matchLikes= null;
         try {
-            matchLikes = match.fetchIfNeeded().getList("Likes");
+            matchLikes = match.fetchIfNeeded().getList(ListType.LIKES.toString());
         } catch (ParseException e) {
             e.printStackTrace();
         }
