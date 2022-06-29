@@ -83,6 +83,24 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     comics.remove(comic);
+                    int timesAdded = 0;
+                    try {
+                        timesAdded = comic.fetchIfNeeded().getInt("timesAdded");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    timesAdded -= 1;
+                    comic.put("timesAdded", timesAdded);
+                    comic.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.e(TAG, "Error decrementing timesAdded", e);
+                            } else{
+                                Log.i(TAG, "Success decrementing timesAdded");
+                            }
+                        }
+                    });
                     notifyDataSetChanged();
                     ArrayList<Comic> remove = new ArrayList<Comic>();
                     remove.add(comic);

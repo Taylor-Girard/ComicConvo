@@ -106,12 +106,26 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                     query.whereEqualTo("comicId", comic.getComicId());
                     try {
                         Comic existingComic = query.getFirst();
+                        int timesAdded = existingComic.getInt("timesAdded");
+                        timesAdded += 1;
+                        existingComic.put("timesAdded", timesAdded);
+                        existingComic.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null){
+                                    Log.e(TAG, "Error incrementing timesAdded", e);
+                                } else{
+                                    Log.i(TAG, "Success incrementing timesAdded");
+                                }
+                            }
+                        });
                         user.addUnique("Likes", existingComic);
                     } catch (ParseException e) {
                         user.addUnique("Likes", comic);
                         comic.put("comicId", comic.getComicId());
                         comic.put("Title", comic.getTitle());
                         comic.put("coverPath", comic.getCoverPath());
+                        comic.put("timesAdded", 1);
                         comic.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
@@ -145,11 +159,25 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                     try {
                         Comic existingComic = query.getFirst();
                         user.addUnique("Dislikes", existingComic);
+                        int timesAdded = existingComic.getInt("timesAdded");
+                        timesAdded += 1;
+                        existingComic.put("timesAdded", timesAdded);
+                        existingComic.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e != null){
+                                    Log.e(TAG, "Error incrementing timesAdded", e);
+                                } else{
+                                    Log.i(TAG, "Success incrementing timesAdded");
+                                }
+                            }
+                        });
                     } catch (ParseException e) {
                         user.addUnique("Dislikes", comic);
                         comic.put("comicId", comic.getComicId());
                         comic.put("Title", comic.getTitle());
                         comic.put("coverPath", comic.getCoverPath());
+                        comic.put("timesAdded", 1);
                         comic.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
