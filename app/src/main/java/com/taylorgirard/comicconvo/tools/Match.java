@@ -35,7 +35,7 @@ public class Match {
         ParseUser bestMatch = userList.get(0);
 
         //Set the highest Match score
-        int highestMatch = 0;
+        double highestMatch = -10000;
 
         //go through all of the users
         for (int i = 0; i < userList.size(); i++){
@@ -46,7 +46,7 @@ public class Match {
             if (!previousIds.contains(potentialMatch.getObjectId()) && !(potentialMatch.getObjectId().equals(user.getObjectId()))){
 
                 //will keep score of this potential Match's score
-                int matchScore = 0;
+                double matchScore = 0;
 
                 //get current user's like and dislike lists
                 List<Comic> userLikes = user.getList("Likes");
@@ -59,7 +59,6 @@ public class Match {
                 for (Comic j: userDislikes){
                     userDislikesIds.add(j.getObjectId());
                 }
-
 
                 //get potential match's like and dislike lists to compare to
                 List<Comic> matchLikes = potentialMatch.getList("Likes");
@@ -75,19 +74,23 @@ public class Match {
 
                 //go through user's likes and compare to potential Match lists
                 for (int j = 0; j < userLikesIds.size(); j++){
+                    int popularity = userLikes.get(j).fetchIfNeeded().getInt("timesAdded");
+                    double multiplier = (1.0 / popularity);
                     if (matchLikesIds.contains(userLikesIds.get(j))){
-                        matchScore += 1;
+                        matchScore += 1 * multiplier;
                     } else if (matchDislikesIds.contains(userLikesIds.get(j))){
-                        matchScore -= 1;
+                        matchScore -= 1 * multiplier;
                     }
                 }
 
                 //go through user's dislikes list and add to matchScore
                 for (int j = 0; j < userDislikes.size(); j++){
+                    int popularity = userDislikes.get(j).fetchIfNeeded().getInt("timesAdded");
+                    double multiplier = (1.0 / popularity);
                     if(matchDislikesIds.contains(userDislikesIds.get(j))){
-                        matchScore += 1;
+                        matchScore += 1 * multiplier;
                     } else if (matchLikesIds.contains(userDislikesIds.get(j))){
-                        matchScore -= 1;
+                        matchScore -= 1 * multiplier;
                     }
                 }
 
