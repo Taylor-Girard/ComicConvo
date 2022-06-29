@@ -32,6 +32,7 @@ import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 import com.taylorgirard.comicconvo.models.Comic;
+import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.tools.Match;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +47,7 @@ import java.util.List;
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> {
 
     public static final String TAG = "ComicAdapter";
+    public static final int MAX_COMICS = 20;
 
     Context context;
     List<Comic> comics;
@@ -102,51 +104,59 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     ParseUser user = ParseUser.getCurrentUser();
-                    ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
-                    query.whereEqualTo("comicId", comic.getComicId());
-                    try {
-                        Comic existingComic = query.getFirst();
-                        int timesAdded = existingComic.getInt("timesAdded");
-                        timesAdded += 1;
-                        existingComic.put("timesAdded", timesAdded);
-                        existingComic.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null){
-                                    Log.e(TAG, "Error incrementing timesAdded", e);
-                                } else{
-                                    Log.i(TAG, "Success incrementing timesAdded");
+
+                    //check if user already has the max amount of comics in their list
+                    List<Comic> userLikes = user.getList(ListType.LIKES.toString());
+                    if (userLikes.size() >= MAX_COMICS) {
+                        Toast.makeText(context, "You already have the max amount of likes!", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
+                        query.whereEqualTo("comicId", comic.getComicId());
+                        try {
+                            Comic existingComic = query.getFirst();
+                            int timesAdded = existingComic.getInt("timesAdded");
+                            timesAdded += 1;
+                            existingComic.put("timesAdded", timesAdded);
+                            existingComic.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error incrementing timesAdded", e);
+                                    } else {
+                                        Log.i(TAG, "Success incrementing timesAdded");
+                                    }
                                 }
-                            }
-                        });
-                        user.addUnique("Likes", existingComic);
-                    } catch (ParseException e) {
-                        user.addUnique("Likes", comic);
-                        comic.put("comicId", comic.getComicId());
-                        comic.put("Title", comic.getTitle());
-                        comic.put("coverPath", comic.getCoverPath());
-                        comic.put("timesAdded", 1);
-                        comic.saveInBackground(new SaveCallback() {
+                            });
+                            user.addUnique(ListType.LIKES.toString(), existingComic);
+                        } catch (ParseException e) {
+                            user.addUnique(ListType.LIKES.toString(), comic);
+                            comic.put("comicId", comic.getComicId());
+                            comic.put("Title", comic.getTitle());
+                            comic.put("coverPath", comic.getCoverPath());
+                            comic.put("timesAdded", 1);
+                            comic.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving comic", e);
+                                    } else {
+                                        Log.d(TAG, "Successfully saved comic");
+                                    }
+                                }
+                            });
+                        }
+                        user.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if (e != null) {
-                                    Log.e(TAG, "Error while saving comic", e);
+                                    Log.e(TAG, "Error while saving to likes", e);
                                 } else {
-                                    Log.d(TAG, "Successfully saved comic");
+                                    Log.d(TAG, "Successfully saved likes");
                                 }
                             }
                         });
                     }
-                    user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                Log.e(TAG, "Error while saving to likes", e);
-                            } else {
-                                Log.d(TAG, "Successfully saved likes");
-                            }
-                        }
-                    });
                 }
             });
 
@@ -154,51 +164,59 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     ParseUser user = ParseUser.getCurrentUser();
-                    ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
-                    query.whereEqualTo("comicId", comic.getComicId());
-                    try {
-                        Comic existingComic = query.getFirst();
-                        user.addUnique("Dislikes", existingComic);
-                        int timesAdded = existingComic.getInt("timesAdded");
-                        timesAdded += 1;
-                        existingComic.put("timesAdded", timesAdded);
-                        existingComic.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null){
-                                    Log.e(TAG, "Error incrementing timesAdded", e);
-                                } else{
-                                    Log.i(TAG, "Success incrementing timesAdded");
+
+                    //check if user already has the max amount of comics in their list
+                    List<Comic> userLikes = user.getList(ListType.DISLIKES.toString());
+                    if (userLikes.size() >= MAX_COMICS) {
+                        Toast.makeText(context, "You already have the max amount of dislikes!", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
+                        query.whereEqualTo("comicId", comic.getComicId());
+                        try {
+                            Comic existingComic = query.getFirst();
+                            user.addUnique(ListType.DISLIKES.toString(), existingComic);
+                            int timesAdded = existingComic.getInt("timesAdded");
+                            timesAdded += 1;
+                            existingComic.put("timesAdded", timesAdded);
+                            existingComic.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error incrementing timesAdded", e);
+                                    } else {
+                                        Log.i(TAG, "Success incrementing timesAdded");
+                                    }
                                 }
-                            }
-                        });
-                    } catch (ParseException e) {
-                        user.addUnique("Dislikes", comic);
-                        comic.put("comicId", comic.getComicId());
-                        comic.put("Title", comic.getTitle());
-                        comic.put("coverPath", comic.getCoverPath());
-                        comic.put("timesAdded", 1);
-                        comic.saveInBackground(new SaveCallback() {
+                            });
+                        } catch (ParseException e) {
+                            user.addUnique(ListType.DISLIKES.toString(), comic);
+                            comic.put("comicId", comic.getComicId());
+                            comic.put("Title", comic.getTitle());
+                            comic.put("coverPath", comic.getCoverPath());
+                            comic.put("timesAdded", 1);
+                            comic.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e != null) {
+                                        Log.e(TAG, "Error while saving comic", e);
+                                    } else {
+                                        Log.d(TAG, "Successfully saved comic");
+                                    }
+                                }
+                            });
+                        }
+                        user.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
                                 if (e != null) {
-                                    Log.e(TAG, "Error while saving comic", e);
+                                    Log.e(TAG, "Error while saving to dislikes", e);
                                 } else {
-                                    Log.d(TAG, "Successfully saved comic");
+                                    Log.d(TAG, "Successfully saved dislikes");
                                 }
                             }
                         });
                     }
-                    user.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            if (e != null) {
-                                Log.e(TAG, "Error while saving to dislikes", e);
-                            } else {
-                                Log.d(TAG, "Successfully saved dislikes");
-                            }
-                        }
-                    });
                 }
             });
         }
