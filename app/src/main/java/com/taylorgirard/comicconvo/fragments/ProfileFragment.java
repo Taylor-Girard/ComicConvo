@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -49,6 +50,7 @@ public class ProfileFragment extends Fragment {
     public static final int LIST_COLUMNS = 2;
 
     ParseUser user = ParseUser.getCurrentUser();
+    TextView tvUsername;
     ImageView ivUserProfile;
     EditText etAboutMe;
     Button btnLogout;
@@ -73,6 +75,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvUsername = view.findViewById(R.id.tvUsername);
         ivUserProfile = view.findViewById(R.id.ivUserProfile);
         etAboutMe = view.findViewById(R.id.etAboutMe);
         btnAboutMe = view.findViewById(R.id.btnAboutMe);
@@ -108,6 +111,8 @@ public class ProfileFragment extends Fragment {
         final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
         rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+
+        tvUsername.setText(user.getUsername());
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {

@@ -42,6 +42,7 @@ public class MatchesFragment extends Fragment {
     public static final String TAG = "Matches Fragment";
     public static final int LIST_COLUMNS = 2;
 
+    TextView tvMatchUsername;
     ImageButton ibMessage;
     ImageButton ibSkip;
     ImageView ivMatchProfile;
@@ -69,6 +70,7 @@ public class MatchesFragment extends Fragment {
         ParseUser currentUser = ParseUser.getCurrentUser();
         ParseUser match = currentUser.getParseUser("bestMatch");
 
+        tvMatchUsername = view.findViewById(R.id.tvMatchUsername);
         ibMessage = view.findViewById(R.id.ibMessage);
         ibSkip = view.findViewById(R.id.ibSkip);
         ivMatchProfile = view.findViewById(R.id.ivMatchProfile);
@@ -148,6 +150,8 @@ public class MatchesFragment extends Fragment {
         final MatchListAdapter comicAdapterLikes = new MatchListAdapter(getContext(), likes);
         rvMatchLikes.setAdapter(comicAdapterLikes);
         rvMatchLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+
+        tvMatchUsername.setText(match.getUsername());
 
         try {
             tvAboutMatch.setText(match.fetchIfNeeded().getString("aboutMe"));

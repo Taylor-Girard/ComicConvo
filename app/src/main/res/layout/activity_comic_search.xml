@@ -9,14 +9,14 @@
     <SearchView
         android:id="@+id/svComicSearch"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/clickable"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComicList"
         android:layout_width="match_parent"
-        android:layout_height="680dp"
+        android:layout_height="@dimen/search_recycler_view"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/ivCover"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/cover_width_list"
+        android:layout_height="@dimen/cover_height_list"
+        android:layout_marginTop="@dimen/comic_top_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
@@ -19,7 +19,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/title_top_margin"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

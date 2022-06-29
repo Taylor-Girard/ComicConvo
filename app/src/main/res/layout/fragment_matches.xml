@@ -9,20 +9,20 @@
 
     <ImageView
         android:id="@+id/ivMatchProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="@dimen/image_width_height"
+        android:layout_height="@dimen/image_width_height"
+        android:layout_marginTop="@dimen/comic_top_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMatchUsername"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/tvAboutMe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/profile_start_margins"
+        android:layout_marginTop="@dimen/profile_top_margins"
         android:text="@string/about_me"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +32,7 @@
         android:id="@+id/tvAboutMatch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/comic_list_margins"
         android:hint="User description goes here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +45,8 @@
         android:id="@+id/tvLikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/profile_start_margins"
+        android:layout_marginTop="@dimen/profile_top_margins"
         android:text="@string/likes"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,8 +56,8 @@
         android:id="@+id/tvDislikes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="@dimen/image_margin_start"
+        android:layout_marginTop="@dimen/image_margin_top"
         android:text="@string/dislikes"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -66,23 +66,23 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMatchLikes"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/comic_list_height"
+        android:layout_margin="@dimen/comic_list_margins"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMatchDislikes"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_margin="10dp"
+        android:layout_height="@dimen/comic_list_height"
+        android:layout_margin="@dimen/comic_list_margins"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
 
     <ImageButton
         android:id="@+id/ibMessage"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/clickable"
+        android:layout_height="@dimen/clickable"
         android:background="#00FFFFFF"
         android:src="@android:drawable/sym_action_chat"
         app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
@@ -93,8 +93,8 @@
 
     <ImageButton
         android:id="@+id/ibSkip"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/clickable"
+        android:layout_height="wrap_content"
         android:background="#00FFFFFF"
         android:src="@android:drawable/ic_delete"
         app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
@@ -102,6 +102,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/tvMatchUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="taylor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
