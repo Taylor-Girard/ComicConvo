@@ -3,6 +3,7 @@ package com.taylorgirard.comicconvo.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.EditText;
 
 import com.taylorgirard.comicconvo.R;
 

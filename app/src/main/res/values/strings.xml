@@ -14,4 +14,7 @@
     <string name="logout">Logout</string>
     <string name="submit">Submit</string>
     <string name="remove">Remove</string>
+    <string name="enter_title">Enter Pin Title</string>
+    <string name="enter_description">Enter Pin Description</string>
+    <string name="enter_address">Enter Full Address of Pin Location</string>
 </resources>

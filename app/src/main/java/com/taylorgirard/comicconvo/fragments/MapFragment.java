@@ -48,6 +48,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.activities.AddPinActivity;
 import com.taylorgirard.comicconvo.activities.MainActivity;
 
 public class MapFragment extends Fragment{
@@ -92,27 +93,6 @@ public class MapFragment extends Fragment{
                 getDeviceLocation(googleMap);
 
                 googleMap.setMyLocationEnabled(true);
-
-                // When map is loaded
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        // When clicked on map
-                        // Initialize marker options
-                        MarkerOptions markerOptions=new MarkerOptions();
-                        // Set position of marker
-                        markerOptions.position(latLng);
-                        // Set title of marker
-                        markerOptions.title(latLng.latitude+" : "+latLng.longitude);
-                        // Animating to zoom the marker
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
-                        // Add marker on map
-                        googleMap.addMarker(markerOptions);
-                    }
-                });
-
-
             }
         });
         // Return view
@@ -141,5 +121,13 @@ public class MapFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ibAddPin = view.findViewById(R.id.ibAddPin);
+
+        ibAddPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), AddPinActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

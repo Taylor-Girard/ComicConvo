@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:autofillHints="@string/enter_title"
+    tools:context=".activities.AddPinActivity">
+
+    <EditText
+        android:id="@+id/etPinTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clickable"
+        android:layout_margin="@dimen/image_margin_top"
+        android:layout_marginStart="20dp"
+        android:hint="@string/enter_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPinAddress"></EditText>
+
+    <EditText
+        android:id="@+id/etPinAddress"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clickable"
+        android:layout_marginStart="@dimen/image_margin_top"
+        android:layout_marginTop="@dimen/cover_height_list"
+        android:layout_marginEnd="@dimen/image_margin_top"
+        android:hint="@string/enter_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></EditText>
+
+    <EditText
+        android:id="@+id/etPinDescription"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/clickable"
+        android:layout_margin="@dimen/image_margin_top"
+        android:layout_marginStart="20dp"
+        android:hint="@string/enter_description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPinTitle"></EditText>
+
+    <Button
+        android:id="@+id/btnSubmitPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_between_items"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPinDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
