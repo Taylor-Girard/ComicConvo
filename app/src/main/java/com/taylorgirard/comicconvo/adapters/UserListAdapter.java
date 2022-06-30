@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.models.Comic;
 
@@ -30,12 +30,12 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
     ParseUser user = ParseUser.getCurrentUser();
     Context context;
     List<Comic> comics;
-    char tag;
+    ListType type;
 
-    public UserListAdapter(Context context, List<Comic> comics, char tag){
+    public UserListAdapter(Context context, List<Comic> comics, ListType type){
         this.comics = comics;
         this.context = context;
-        this.tag = tag;
+        this.type = type;
     }
 
     @NonNull
@@ -81,33 +81,52 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     comics.remove(comic);
+                    int timesAdded = 0;
+                    try {
+                        timesAdded = comic.fetchIfNeeded().getInt("timesAdded");
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    timesAdded -= 1;
+                    comic.put("timesAdded", timesAdded);
+                    comic.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null){
+                                Log.e(TAG, "Error decrementing timesAdded", e);
+                            } else{
+                                Log.i(TAG, "Success decrementing timesAdded");
+                            }
+                        }
+                    });
                     notifyDataSetChanged();
                     ArrayList<Comic> remove = new ArrayList<Comic>();
                     remove.add(comic);
-                    if (tag == 'l') {
-                        user.removeAll("Likes", remove);
-                        user.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e == null){
-                                    Log.d(TAG, "success removing item");
-                                } else{
-                                    Log.e(TAG, "error removing item", e);
+                    switch(type){
+                        case LIKES:
+                            user.removeAll(ListType.LIKES.toString(), remove);
+                            user.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null){
+                                        Log.d(TAG, "success removing item");
+                                    } else{
+                                        Log.e(TAG, "error removing item", e);
+                                    }
                                 }
-                            }
-                        });
-                    } else if (tag == 'd') {
-                        user.removeAll("Dislikes", remove);
-                        user.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e == null){
-                                    Log.d(TAG, "success removing item");
-                                } else{
-                                    Log.e(TAG, "error removing item", e);
+                            });
+                        case DISLIKES:
+                            user.removeAll(ListType.DISLIKES.toString(), remove);
+                            user.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    if (e == null){
+                                        Log.d(TAG, "success removing item");
+                                    } else{
+                                        Log.e(TAG, "error removing item", e);
+                                    }
                                 }
-                            }
-                        });
+                            });
                     }
                 }
             });

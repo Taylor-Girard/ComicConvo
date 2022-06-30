@@ -8,9 +8,9 @@
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/username_password_width"
+        android:layout_height="@dimen/clickable"
+        android:layout_marginTop="@dimen/space_between_items"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,9 +22,9 @@
 
     <EditText
         android:id="@+id/etUsername"
-        android:layout_width="300dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="@dimen/username_password_width"
+        android:layout_height="@dimen/clickable"
+        android:layout_marginTop="@dimen/username_margin_top"
         android:hint="@string/username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/login_margin_top"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +46,7 @@
         android:id="@+id/btnSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/space_between_items"
         android:text="@string/sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

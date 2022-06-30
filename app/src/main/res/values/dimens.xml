@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Comic Search-->
+    <dimen name="clickable">48dp</dimen>
+    <dimen name="search_recycler_view">680dp</dimen>
+
+    <!--Log In-->
+    <dimen name="username_password_width">300dp</dimen>
+    <dimen name="username_margin_top">200dp</dimen>
+    <dimen name="space_between_items">10dp</dimen>
+    <dimen name="login_margin_top">20dp</dimen>
+
+    <!--Sign Up-->
+    <dimen name="signup_username_top">250dp</dimen>
+    <dimen name="signup_button_top">4dp</dimen>
+
+    <!--Profiles-->
+    <dimen name="image_width_height">100dp</dimen>
+    <dimen name="image_margin_top">20dp</dimen>
+    <dimen name="image_margin_start">40dp</dimen>
+    <dimen name="comic_list_height">175dp</dimen>
+    <dimen name="comic_list_margins">10dp</dimen>
+    <dimen name="profile_top_margins">20dp</dimen>
+    <dimen name="profile_start_margins">40dp</dimen>
+    <dimen name="about_me_width">300dp</dimen>
+    <dimen name="profile_about_me">10dp</dimen>
+    <dimen name="profile_logout_top">5dp</dimen>
+    <dimen name="profile_logout_width">85dp</dimen>
+
+    <!--Comic items-->
+    <dimen name="cover_width_search">200dp</dimen>
+    <dimen name="cover_height_search">300dp</dimen>
+    <dimen name="comic_top_margin">10dp</dimen>
+    <dimen name="cover_width_list">150dp</dimen>
+    <dimen name="cover_height_list">200dp</dimen>
+    <dimen name="title_top_margin">5dp</dimen>
+
+</resources>

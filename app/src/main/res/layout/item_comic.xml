@@ -17,9 +17,9 @@
 
     <ImageView
         android:id="@+id/ivCover"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/cover_width_search"
+        android:layout_height="@dimen/cover_height_search"
+        android:layout_marginTop="@dimen/comic_top_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
@@ -29,7 +29,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/title_top_margin"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

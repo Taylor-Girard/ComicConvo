@@ -14,22 +14,23 @@
         android:layout_height="match_parent"
         tools:context=".fragments.ProfileFragment">
 
-            <ImageView
-                android:id="@+id/ivUserProfile"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+        <ImageView
+            android:id="@+id/ivUserProfile"
+            android:layout_width="@dimen/image_width_height"
+            android:layout_height="@dimen/image_width_height"
+            android:layout_marginTop="@dimen/comic_list_margins"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvUsername"
+            tools:src="@tools:sample/avatars" />
 
-            <TextView
+        <TextView
                 android:id="@+id/tvAboutMe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/profile_start_margins"
+                android:layout_marginTop="@dimen/profile_top_margins"
                 android:text="@string/about_me"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +38,9 @@
 
             <EditText
                 android:id="@+id/etAboutMe"
-                android:layout_width="300dp"
+                android:layout_width="@dimen/about_me_width"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/profile_about_me"
                 android:hint="User description goes here"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAboutMe"
@@ -51,8 +52,8 @@
                 android:id="@+id/tvLikes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/profile_start_margins"
+                android:layout_marginTop="@dimen/profile_top_margins"
                 android:text="@string/likes"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,26 +63,26 @@
                 android:id="@+id/tvDislikes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="@dimen/profile_start_margins"
+                android:layout_marginTop="@dimen/profile_top_margins"
                 android:text="@string/dislikes"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvLikes" />
+                app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvLikes"
+            android:id="@+id/rvMatchLikes"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:layout_margin="10dp"
+            android:layout_height="@dimen/comic_list_height"
+            android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvDislikes"
+            android:id="@+id/rvMatchDislikes"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:layout_margin="10dp"
+            android:layout_height="@dimen/comic_list_height"
+            android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
 
@@ -89,18 +90,18 @@
                 android:id="@+id/btnEditLists"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="@dimen/profile_start_margins"
                 android:text="@string/edit"
                 app:icon="@android:drawable/ic_menu_add"
-                app:layout_constraintBottom_toTopOf="@+id/rvLikes"
+                app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
                 app:layout_constraintStart_toEndOf="@+id/tvLikes"
                 app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
 
             <Button
                 android:id="@+id/btnLogout"
-                android:layout_width="85dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="5dp"
+                android:layout_width="@dimen/profile_logout_width"
+                android:layout_height="@dimen/clickable"
+                android:layout_marginTop="@dimen/profile_logout_top"
                 android:text="@string/logout"
                 android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,12 +111,22 @@
             <Button
                 android:id="@+id/btnAboutMe"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/clickable"
+                android:layout_marginTop="@dimen/profile_about_me"
                 android:text="@string/submit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/etAboutMe"
                 app:layout_constraintTop_toBottomOf="@+id/tvAboutMe" />
+
+        <TextView
+            android:id="@+id/tvUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="taylor" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.taylorgirard.comicconvo;
+package com.taylorgirard.comicconvo.tools;
 
 import android.app.Application;
 

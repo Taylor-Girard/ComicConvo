@@ -45,8 +45,8 @@ public class SignUpActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         if (e == null){
                             Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(SignUpActivity.this, MainActivity.class);
-                            startActivity(i);
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            startActivity(intent);
                             finish();
                         } else{
                             Log.e(TAG, "Issues with login", e);

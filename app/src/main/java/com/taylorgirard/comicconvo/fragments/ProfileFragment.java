@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,27 +22,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.ComicSearchActivity;
 import com.taylorgirard.comicconvo.activities.LoginActivity;
-import com.taylorgirard.comicconvo.adapters.ComicAdapter;
+import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.adapters.UserListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +47,10 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     public static final int PICK_IMAGE = 1;
+    public static final int LIST_COLUMNS = 2;
 
     ParseUser user = ParseUser.getCurrentUser();
+    TextView tvUsername;
     ImageView ivUserProfile;
     EditText etAboutMe;
     Button btnLogout;
@@ -78,16 +75,17 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvUsername = view.findViewById(R.id.tvUsername);
         ivUserProfile = view.findViewById(R.id.ivUserProfile);
         etAboutMe = view.findViewById(R.id.etAboutMe);
         btnAboutMe = view.findViewById(R.id.btnAboutMe);
         btnLogout = view.findViewById(R.id.btnLogout);
         btnEditLists = view.findViewById(R.id.btnEditLists);
-        rvLikes = view.findViewById(R.id.rvLikes);
-        rvDislikes = view.findViewById(R.id.rvDislikes);
+        rvLikes = view.findViewById(R.id.rvMatchLikes);
+        rvDislikes = view.findViewById(R.id.rvMatchDislikes);
 
         //Set up list of likes
-        List<Comic> userDislikes = user.getList("Dislikes");
+        List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());
 
         dislikes = new ArrayList<Comic>();
         try {
@@ -96,12 +94,12 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, 'd');
+        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
         rvDislikes.setAdapter(comicAdapterDislikes);
-        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
         //Set up list of dislikes
-        List<Comic> userLikes = user.getList("Likes");
+        List<Comic> userLikes = user.getList(ListType.LIKES.toString());
 
         likes = new ArrayList<Comic>();
         try {
@@ -110,9 +108,11 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes,'l');
+        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
-        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+
+        tvUsername.setText(user.getUsername());
 
         ParseFile profilePic = user.getParseFile("profilePic");
         if (profilePic != null) {
@@ -125,8 +125,8 @@ public class ProfileFragment extends Fragment {
         btnEditLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), ComicSearchActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(getContext(), ComicSearchActivity.class);
+                startActivity(intent);
             }
         });
 
