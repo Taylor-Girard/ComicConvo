@@ -6,6 +6,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
     <string name="matches">Matches</string>
+    <string name="map">Map</string>
     <string name="about_me">About Me</string>
     <string name="likes">Likes</string>
     <string name="dislikes">Dislikes</string>
@@ -13,5 +14,7 @@
     <string name="logout">Logout</string>
     <string name="submit">Submit</string>
     <string name="remove">Remove</string>
-    <string name="hello_matches_fragment">Hello matches fragment</string>
+    <string name="google_maps_api_key">AIzaSyAbTQZ9PuQN3e0Wuf87A9y0pS-__tA90F4</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

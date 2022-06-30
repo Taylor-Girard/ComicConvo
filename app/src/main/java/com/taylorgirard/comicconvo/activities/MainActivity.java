@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_matches:
                         fragment = new MatchesFragment();
+                        break;
+                    case R.id.action_map:
+                        fragment = new MapFragment();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
