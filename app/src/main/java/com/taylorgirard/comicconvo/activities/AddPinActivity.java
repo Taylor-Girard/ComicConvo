@@ -11,6 +11,7 @@ import android.widget.EditText;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.taylorgirard.comicconvo.BuildConfig;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.models.Comic;
 
@@ -18,12 +19,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Properties;
+
 import okhttp3.Headers;
 
 public class AddPinActivity extends AppCompatActivity {
 
     public static final String TAG = "AddPinActivity";
-    public static final String GOOGLE_GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDoKhZT8b-MhuxU44ANpry8ELusa3R4hYg";
+    public static final String GOOGLE_GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + BuildConfig.MAPS_API_KEY;
+
 
     EditText etPinAddress;
     EditText etPinTitle;
