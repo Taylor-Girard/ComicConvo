@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
@@ -64,28 +65,39 @@ public class AddPinActivity extends AppCompatActivity {
                         try {
                             JSONArray results = jsonObject.getJSONArray("results");
                             Log.i(TAG, "Results" + results.toString());
-                            JSONObject addressComponents = results.getJSONObject(0);
-                            Log.i(TAG, "Address components" + addressComponents.toString());
-                            JSONObject geometry = addressComponents.getJSONObject("geometry");
-                            Log.i(TAG, "Geometry" + geometry.toString());
-                            JSONObject location = geometry.getJSONObject("location");
-                            Log.i(TAG, "Location" + location.toString());
-                            Double lat = location.getDouble("lat");
-                            Log.i(TAG, "Lat" + lat);
-                            Double lng = location.getDouble("lng");
-                            Log.i(TAG, "Lng" + lng);
+                            if (results.length() == 0){
+                                Toast.makeText(AddPinActivity.this, "Invalid address. Make sure to include city and state abbreviation", Toast.LENGTH_SHORT).show();
+                            } else if (etPinTitle.getText().toString().length() == 0){
+                                Toast.makeText(AddPinActivity.this, "Pin must have a title", Toast.LENGTH_SHORT).show();
+                            } else if (etPinDescription.getText().toString().length() == 0){
+                                Toast.makeText(AddPinActivity.this, "Pin must have a description", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                JSONObject addressComponents = results.getJSONObject(0);
+                                Log.i(TAG, "Address components" + addressComponents.toString());
+                                JSONObject geometry = addressComponents.getJSONObject("geometry");
+                                Log.i(TAG, "Geometry" + geometry.toString());
+                                JSONObject location = geometry.getJSONObject("location");
+                                Log.i(TAG, "Location" + location.toString());
+                                Double lat = location.getDouble("lat");
+                                Log.i(TAG, "Lat" + lat);
+                                Double lng = location.getDouble("lng");
+                                Log.i(TAG, "Lng" + lng);
 
-                            Pin pin = new Pin();
-                            pin.put("Title", etPinTitle.getText().toString());
-                            pin.put("Description", etPinDescription.getText().toString());
-                            ParseGeoPoint point = new ParseGeoPoint(lat, lng);
-                            pin.put("Location", point);
-                            pin.saveInBackground(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    Log.i(TAG, "Successfully saved pin");
-                                }
-                            });
+                                Pin pin = new Pin();
+                                pin.put("Title", etPinTitle.getText().toString());
+                                pin.put("Description", etPinDescription.getText().toString());
+                                ParseGeoPoint point = new ParseGeoPoint(lat, lng);
+                                pin.put("Location", point);
+                                pin.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Log.i(TAG, "Successfully saved pin");
+                                    }
+                                });
+                                Intent intent = new Intent(AddPinActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -96,9 +108,6 @@ public class AddPinActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure " + statusCode);
                     }
                 });
-
-                Intent intent = new Intent(AddPinActivity.this, MainActivity.class);
-                startActivity(intent);
             }
         });
 
