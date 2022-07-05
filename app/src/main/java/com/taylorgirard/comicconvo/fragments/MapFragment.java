@@ -47,13 +47,21 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseQuery;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.AddPinActivity;
 import com.taylorgirard.comicconvo.activities.MainActivity;
+import com.taylorgirard.comicconvo.models.Pin;
+
+import java.util.List;
 
 public class MapFragment extends Fragment{
 
     public static final int DEFAULT_ZOOM = 200;
+    public static final String TAG = "MapFragment";
 
     ImageButton ibAddPin;
 
@@ -91,8 +99,27 @@ public class MapFragment extends Fragment{
             public void onMapReady(GoogleMap googleMap) {
 
                 getDeviceLocation(googleMap);
-
                 googleMap.setMyLocationEnabled(true);
+
+                ParseQuery<Pin> query = ParseQuery.getQuery(Pin.class);
+                query.findInBackground(new FindCallback<Pin>() {
+                    @Override
+                    public void done(List<Pin> pins, ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Issue with getting pins", e);
+                            return;
+                        }
+
+                        for (Pin pin: pins){
+                            ParseGeoPoint location = pin.getParseGeoPoint("Location");
+                            LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
+                            String title = pin.getString("Title");
+                            String description = pin.getString("Description");
+                            googleMap.addMarker(new MarkerOptions().position(position).title(title).snippet(description));
+                        }
+                    }
+                });
+
             }
         });
         // Return view
