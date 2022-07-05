@@ -11,9 +11,13 @@ import android.widget.EditText;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.BuildConfig;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.models.Comic;
+import com.taylorgirard.comicconvo.models.Pin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,6 +73,18 @@ public class AddPinActivity extends AppCompatActivity {
                             Log.i(TAG, "Lat" + lat);
                             Double lng = location.getDouble("lng");
                             Log.i(TAG, "Lng" + lng);
+
+                            Pin pin = new Pin();
+                            pin.put("Title", etPinTitle.getText().toString());
+                            pin.put("Description", etPinDescription.getText().toString());
+                            ParseGeoPoint point = new ParseGeoPoint(lat, lng);
+                            pin.put("Location", point);
+                            pin.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    Log.i(TAG, "Successfully saved pin");
+                                }
+                            });
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
