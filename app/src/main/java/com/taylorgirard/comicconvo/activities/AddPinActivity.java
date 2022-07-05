@@ -2,6 +2,7 @@ package com.taylorgirard.comicconvo.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -95,6 +96,9 @@ public class AddPinActivity extends AppCompatActivity {
                         Log.e(TAG, "onFailure " + statusCode);
                     }
                 });
+
+                Intent intent = new Intent(AddPinActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 

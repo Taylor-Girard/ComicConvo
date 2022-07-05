@@ -115,7 +115,7 @@ public class ComicSearchActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
