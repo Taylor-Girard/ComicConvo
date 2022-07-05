@@ -20,7 +20,6 @@
             android:layout_height="@dimen/image_width_height"
             android:layout_marginTop="@dimen/comic_list_margins"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvUsername"
             tools:src="@tools:sample/avatars" />

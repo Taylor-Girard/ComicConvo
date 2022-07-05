@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="@dimen/username_password_width"
-        android:layout_height="@dimen/clickable"
+        android:layout_height="@dimen/user_password_height"
         android:layout_marginTop="@dimen/space_between_items"
         android:hint="@string/password"
         android:inputType="textPassword"

@@ -9,6 +9,7 @@
     <dimen name="username_margin_top">200dp</dimen>
     <dimen name="space_between_items">10dp</dimen>
     <dimen name="login_margin_top">20dp</dimen>
+    <dimen name="user_password_height">48dp</dimen>
 
     <!--Sign Up-->
     <dimen name="signup_username_top">250dp</dimen>
