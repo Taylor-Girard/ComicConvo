@@ -15,6 +15,7 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.BuildConfig;
 import com.taylorgirard.comicconvo.R;
@@ -89,6 +90,7 @@ public class AddPinActivity extends AppCompatActivity {
                                 pin.put("Description", etPinDescription.getText().toString());
                                 ParseGeoPoint point = new ParseGeoPoint(lat, lng);
                                 pin.put("Location", point);
+                                pin.put("Author", ParseUser.getCurrentUser());
                                 pin.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {

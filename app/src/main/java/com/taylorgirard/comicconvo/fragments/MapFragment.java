@@ -7,6 +7,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Build;
@@ -22,10 +24,13 @@ import androidx.fragment.app.Fragment;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -114,8 +119,43 @@ public class MapFragment extends Fragment{
                             ParseGeoPoint location = pin.getParseGeoPoint("Location");
                             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
                             String title = pin.getString("Title");
-                            String description = pin.getString("Description");
+                            String description = null;
+                            try {
+                                description = pin.getString("Description") + "\n Posted by " + pin.getParseUser("Author").fetchIfNeeded().getUsername();
+                            } catch (ParseException ex) {
+                                ex.printStackTrace();
+                            }
                             googleMap.addMarker(new MarkerOptions().position(position).title(title).snippet(description));
+
+                            googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                                @Override
+                                public View getInfoWindow(Marker arg0) {
+                                    return null;
+                                }
+
+                                @Override
+                                public View getInfoContents(Marker marker) {
+
+                                    LinearLayout info = new LinearLayout(getContext());
+                                    info.setOrientation(LinearLayout.VERTICAL);
+
+                                    TextView title = new TextView(getContext());
+                                    title.setTextColor(Color.BLACK);
+                                    title.setGravity(Gravity.CENTER);
+                                    title.setTypeface(null, Typeface.BOLD);
+                                    title.setText(marker.getTitle());
+
+                                    TextView snippet = new TextView(getContext());
+                                    snippet.setTextColor(Color.GRAY);
+                                    snippet.setText(marker.getSnippet());
+
+                                    info.addView(title);
+                                    info.addView(snippet);
+
+                                    return info;
+                                }
+                            });
                         }
                     }
                 });
