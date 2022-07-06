@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -53,6 +55,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
@@ -69,8 +72,13 @@ public class MapFragment extends Fragment{
     public static final String TAG = "MapFragment";
 
     ImageButton ibAddPin;
+    EditText etPinRadius;
+    ImageButton ibRadiusSubmit;
 
-    GoogleMap googleMap;
+    LatLng userPos;
+    int radius = 0;
+
+    GoogleMap map;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
@@ -103,62 +111,19 @@ public class MapFragment extends Fragment{
             @Override
             public void onMapReady(GoogleMap googleMap) {
 
-                getDeviceLocation(googleMap);
-                googleMap.setMyLocationEnabled(true);
+                map = googleMap;
 
-                ParseQuery<Pin> query = ParseQuery.getQuery(Pin.class);
-                query.findInBackground(new FindCallback<Pin>() {
-                    @Override
-                    public void done(List<Pin> pins, ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Issue with getting pins", e);
-                            return;
+                if  (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+                    locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Location> task) {
+                            Location location = task.getResult();
+                            userPos = new LatLng(location.getLatitude(), location.getLongitude());
+                            setUpMap();
                         }
-
-                        for (Pin pin: pins){
-                            ParseGeoPoint location = pin.getParseGeoPoint("Location");
-                            LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
-                            String title = pin.getString("Title");
-                            String description = null;
-                            try {
-                                description = pin.getString("Description") + "\n Posted by " + pin.getParseUser("Author").fetchIfNeeded().getUsername();
-                            } catch (ParseException ex) {
-                                ex.printStackTrace();
-                            }
-                            googleMap.addMarker(new MarkerOptions().position(position).title(title).snippet(description));
-
-                            googleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
-
-                                @Override
-                                public View getInfoWindow(Marker arg0) {
-                                    return null;
-                                }
-
-                                @Override
-                                public View getInfoContents(Marker marker) {
-
-                                    LinearLayout info = new LinearLayout(getContext());
-                                    info.setOrientation(LinearLayout.VERTICAL);
-
-                                    TextView title = new TextView(getContext());
-                                    title.setTextColor(Color.BLACK);
-                                    title.setGravity(Gravity.CENTER);
-                                    title.setTypeface(null, Typeface.BOLD);
-                                    title.setText(marker.getTitle());
-
-                                    TextView snippet = new TextView(getContext());
-                                    snippet.setTextColor(Color.GRAY);
-                                    snippet.setText(marker.getSnippet());
-
-                                    info.addView(title);
-                                    info.addView(snippet);
-
-                                    return info;
-                                }
-                            });
-                        }
-                    }
-                });
+                    });
+                }
 
             }
         });
@@ -166,28 +131,26 @@ public class MapFragment extends Fragment{
         return view;
     }
 
-    @SuppressLint("MissingPermission")
-    public void getDeviceLocation(GoogleMap googleMap){
-
-        if  (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-            locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
-                @Override
-                public void onComplete(@NonNull Task<Location> task) {
-                    Location location = task.getResult();
-                    LatLng currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                    CameraUpdate update = CameraUpdateFactory.newLatLngZoom(currentLatLng, DEFAULT_ZOOM);
-                    googleMap.moveCamera(update);
-                }
-            });
-        }
-
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ibAddPin = view.findViewById(R.id.ibAddPin);
+        ibRadiusSubmit = view.findViewById(R.id.ibRadiusSubmit);
+        etPinRadius = view.findViewById(R.id.etPinRadius);
+
+        ibRadiusSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    radius = Integer.parseInt(etPinRadius.getText().toString());
+                    map.clear();
+                    addPins(radius, userPos);
+                } catch(Exception e){
+                    Toast.makeText(getContext(), "Enter a valid radius", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         ibAddPin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,4 +160,78 @@ public class MapFragment extends Fragment{
             }
         });
     }
+
+    @SuppressLint("MissingPermission")
+    public void setUpMap(){
+
+        map.setMyLocationEnabled(true);
+        addPins(radius, userPos);
+
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(userPos, DEFAULT_ZOOM);
+        map.moveCamera(update);
+
+    }
+
+
+    public void addPins(int radius, LatLng userPos){
+        ParseQuery<Pin> query = ParseQuery.getQuery(Pin.class);
+        if (radius != 0){
+            ParseGeoPoint userLocation = new ParseGeoPoint(userPos.latitude, userPos.longitude);
+            query.whereWithinMiles("Location", userLocation, radius);
+        }
+        query.findInBackground(new FindCallback<Pin>() {
+            @Override
+            public void done(List<Pin> pins, ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Issue with getting pins", e);
+                    return;
+                }
+
+                for (Pin pin: pins){
+                    ParseGeoPoint location = pin.getParseGeoPoint("Location");
+                    LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
+                    String title = pin.getString("Title");
+                    String description = null;
+                    try {
+                        description = pin.getString("Description") + "\n Posted by " + pin.getParseUser("Author").fetchIfNeeded().getUsername();
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    map.addMarker(new MarkerOptions().position(position).title(title).snippet(description));
+
+                    map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+
+                        @Override
+                        public View getInfoWindow(Marker arg0) {
+                            return null;
+                        }
+
+                        @Override
+                        public View getInfoContents(Marker marker) {
+
+                            LinearLayout info = new LinearLayout(getContext());
+                            info.setOrientation(LinearLayout.VERTICAL);
+
+                            TextView title = new TextView(getContext());
+                            title.setTextColor(Color.BLACK);
+                            title.setGravity(Gravity.CENTER);
+                            title.setTypeface(null, Typeface.BOLD);
+                            title.setText(marker.getTitle());
+
+                            TextView snippet = new TextView(getContext());
+                            snippet.setTextColor(Color.GRAY);
+                            snippet.setText(marker.getSnippet());
+
+                            info.addView(title);
+                            info.addView(snippet);
+
+                            return info;
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 }

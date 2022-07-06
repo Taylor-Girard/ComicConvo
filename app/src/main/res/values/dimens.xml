@@ -36,4 +36,7 @@
     <dimen name="cover_height_list">200dp</dimen>
     <dimen name="title_top_margin">5dp</dimen>
 
+    <!--Map-->
+    <dimen name="radius_filter_width">100dp</dimen>
+    <dimen name="map_bottom_margin">50dp</dimen>
 </resources>
