@@ -34,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.load.resource.bitmap.BitmapResource;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -46,6 +47,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.internal.ICameraUpdateFactoryDelegate;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -216,7 +218,21 @@ public class MapFragment extends Fragment{
                         ex.printStackTrace();
                     }
 
-                    map.addMarker(new MarkerOptions().position(position).title(title).snippet(description));
+                    String tag = pin.getString("Tag");
+                    BitmapDescriptor icon;
+
+                    if(tag.equals("Store")){
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.storeicon);
+                    } else if (tag.equals("Convention")){
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.conventionicon);
+                    } else if (tag.equals("Meetup")){
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.meetupicon);
+                    } else{
+                        Log.i(TAG, "Issue with setting icon");
+                        icon = BitmapDescriptorFactory.fromResource(R.drawable.defaulticon);
+                    }
+
+                    map.addMarker(new MarkerOptions().position(position).title(title).snippet(description).icon(icon));
 
                     map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
