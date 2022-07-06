@@ -17,5 +17,11 @@
     <string name="enter_title">Enter Pin Title</string>
     <string name="enter_description">Enter Pin Description</string>
     <string name="enter_address">Enter Full Address of Pin Location</string>
+    <string name="Tag">Tag</string>
     <string name="radius_filter">Radius (mi)</string>
+    <string-array name="tag_list">
+        <item name="store_tag">Store</item>
+        <item name="convention_tag">Convention</item>
+        <item name="meetup_tag">Meetup</item>
+    </string-array>
 </resources>

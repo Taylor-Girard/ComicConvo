@@ -39,4 +39,9 @@
     <!--Map-->
     <dimen name="radius_filter_width">100dp</dimen>
     <dimen name="map_bottom_margin">50dp</dimen>
+
+    <!--Add Pin-->
+    <dimen name="margin_sides_pins">20dp</dimen>
+    <dimen name="margin_top_pins">175dp</dimen>
+    <dimen name="margin_top_tag">30dp</dimen>
 </resources>

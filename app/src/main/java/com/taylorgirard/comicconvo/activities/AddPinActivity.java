@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -19,27 +22,25 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.BuildConfig;
 import com.taylorgirard.comicconvo.R;
-import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.models.Pin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Properties;
-
 import okhttp3.Headers;
 
-public class AddPinActivity extends AppCompatActivity {
+public class AddPinActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = "AddPinActivity";
     public static final String GOOGLE_GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + BuildConfig.MAPS_API_KEY;
-
 
     EditText etPinAddress;
     EditText etPinTitle;
     EditText etPinDescription;
     Button btnSubmitPin;
+    Spinner spTag;
+    String pinTag = "Store";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,12 @@ public class AddPinActivity extends AppCompatActivity {
         etPinTitle = findViewById(R.id.etPinTitle);
         etPinDescription = findViewById(R.id.etPinDescription);
         btnSubmitPin = findViewById(R.id.btnSubmitPin);
+        spTag = findViewById(R.id.spTag);
+
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tag_list, android.R.layout.simple_spinner_dropdown_item);
+        spTag.setAdapter(adapter);
+        spTag.setOnItemSelectedListener(this);
 
         btnSubmitPin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +97,7 @@ public class AddPinActivity extends AppCompatActivity {
                                 pin.put("Description", etPinDescription.getText().toString());
                                 ParseGeoPoint point = new ParseGeoPoint(lat, lng);
                                 pin.put("Location", point);
+                                pin.put("Tag", pinTag);
                                 pin.put("Author", ParseUser.getCurrentUser());
                                 pin.saveInBackground(new SaveCallback() {
                                     @Override
@@ -112,6 +120,16 @@ public class AddPinActivity extends AppCompatActivity {
                 });
             }
         });
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        pinTag = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
