@@ -68,6 +68,8 @@ import java.util.List;
 
 public class MapFragment extends Fragment{
 
+    public static final int REQUEST_GETMYLOCATION = 0;
+    public static final String[] PERMISSION_GETMYLOCATION = new String[]{"android.permission.ACCESS_FINE_LOCATION","android.permission.ACCESS_COARSE_LOCATION"};
     public static final int DEFAULT_ZOOM = 200;
     public static final String TAG = "MapFragment";
 
@@ -113,16 +115,10 @@ public class MapFragment extends Fragment{
 
                 map = googleMap;
 
-                if  (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-                    Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                    locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Location> task) {
-                            Location location = task.getResult();
-                            userPos = new LatLng(location.getLatitude(), location.getLongitude());
-                            setUpMap();
-                        }
-                    });
+                if  (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                    requestPermissions(PERMISSION_GETMYLOCATION, REQUEST_GETMYLOCATION);
+                } else{
+                    getPositionAndSetUp();
                 }
 
             }
@@ -159,6 +155,28 @@ public class MapFragment extends Fragment{
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            getPositionAndSetUp();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    public void getPositionAndSetUp(){
+        Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+        locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
+            @Override
+            public void onComplete(@NonNull Task<Location> task) {
+                Location location = task.getResult();
+                userPos = new LatLng(location.getLatitude(), location.getLongitude());
+                setUpMap();
+            }
+        });
+
     }
 
     @SuppressLint("MissingPermission")
