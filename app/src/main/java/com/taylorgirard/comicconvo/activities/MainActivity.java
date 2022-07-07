@@ -17,9 +17,12 @@ import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 
+import me.ibrahimsn.lib.OnItemSelectedListener;
+import me.ibrahimsn.lib.SmoothBottomBar;
+
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    SmoothBottomBar bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
@@ -27,31 +30,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final Fragment[] fragment = new Fragment[1];
+        fragment[0] = new MapFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+        bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment;
-                switch (item.getItemId()) {
-                    case R.id.action_profile:
-                        fragment = new ProfileFragment();
+            public boolean onItemSelect(int i) {
+                switch (i) {
+                    case 0:
+                        fragment[0] = new ProfileFragment();
                         break;
-                    case R.id.action_matches:
-                        fragment = new MatchesFragment();
+                    case 1:
+                        fragment[0] = new MatchesFragment();
                         break;
-                    case R.id.action_map:
-                        fragment = new MapFragment();
+                    case 2:
+                        fragment[0] = new MapFragment();
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value: " + item.getItemId());
+                        throw new IllegalStateException("Unexpected value: " + i);
                 }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment[0]).commit();
                 return true;
             }
         });
         //Set default
-        bottomNavigationView.setSelectedItemId(R.id.action_map);
+        fragmentManager.beginTransaction().replace(R.id.flContainer, fragment[0]).commit();
     }
 
 

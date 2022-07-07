@@ -40,6 +40,8 @@ ext {
 
 dependencies {
 
+    implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
     implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
 
