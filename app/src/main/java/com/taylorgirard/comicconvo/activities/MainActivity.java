@@ -1,15 +1,19 @@
 package com.taylorgirard.comicconvo.activities;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 
@@ -36,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_matches:
                         fragment = new MatchesFragment();
                         break;
+                    case R.id.action_map:
+                        fragment = new MapFragment();
+                        break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + item.getItemId());
                 }
@@ -44,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //Set default
-        bottomNavigationView.setSelectedItemId(R.id.action_profile);
+        bottomNavigationView.setSelectedItemId(R.id.action_map);
     }
+
+
 }

@@ -2,11 +2,14 @@ package com.taylorgirard.comicconvo.tools;
 
 import android.util.Log;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.taylorgirard.comicconvo.adapters.MatchListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 
 import java.util.ArrayList;
@@ -15,6 +18,26 @@ import java.util.List;
 public class Match {
 
     public static final String TAG = "matchUtil";
+
+    public static List<Comic> loadMatchComics(ListType listType, ParseUser match){
+
+        List<Comic> matchList = null;
+        try {
+            matchList = match.fetchIfNeeded().getList(listType.toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<Comic> comicList = new ArrayList<Comic>();
+        try {
+            comicList.addAll(Comic.fromParseArray(matchList));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return comicList;
+
+    }
 
     public static void findMatch(ParseUser user) throws ParseException {
 

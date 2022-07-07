@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/clickable"
+        android:layout_height="@dimen/user_password_height"
         android:layout_marginTop="@dimen/signup_username_top"
         android:hint="@string/username"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/clickable"
+        android:layout_height="@dimen/user_password_height"
         android:hint="@string/password"
         android:inputType="textPassword"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,6 +6,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
     <string name="matches">Matches</string>
+    <string name="map">Map</string>
     <string name="about_me">About Me</string>
     <string name="likes">Likes</string>
     <string name="dislikes">Dislikes</string>
@@ -13,5 +14,17 @@
     <string name="logout">Logout</string>
     <string name="submit">Submit</string>
     <string name="remove">Remove</string>
-    <string name="hello_matches_fragment">Hello matches fragment</string>
+    <string name="enter_title">Enter Pin Title</string>
+    <string name="enter_description">Enter Pin Description</string>
+    <string name="enter_address">Enter Full Address of Pin Location</string>
+    <string name="Tag">Tag</string>
+    <string name="radius_filter">Radius (mi)</string>
+    <string name="store_checkbox">Store</string>
+    <string name="convention_checkbox">Convention</string>
+    <string name="meetup_checkbox">Meetup</string>
+    <string-array name="tag_list">
+        <item name="store_tag">Store</item>
+        <item name="convention_tag">Convention</item>
+        <item name="meetup_tag">Meetup</item>
+    </string-array>
 </resources>

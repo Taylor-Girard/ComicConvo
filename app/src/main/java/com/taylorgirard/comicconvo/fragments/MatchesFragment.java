@@ -69,7 +69,9 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (currentUser.getParseUser("bestMatch") == null){
+        ParseUser match = currentUser.getParseUser("bestMatch");
+
+        if (match == null){
             try {
                 Match.findMatch(currentUser);
                 currentUser.addUnique("matchedWith", currentUser.getParseUser("bestMatch"));
@@ -83,11 +85,11 @@ public class MatchesFragment extends Fragment {
                         }
                     }
                 });
+                match = currentUser.getParseUser("bestMatch");
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        ParseUser match = currentUser.getParseUser("bestMatch");
 
         clMatchLayout = view.findViewById(R.id.clMatchLayout);
         tvMatchUsername = view.findViewById(R.id.tvMatchUsername);
@@ -129,37 +131,13 @@ public class MatchesFragment extends Fragment {
 
     public void loadInfo(ParseUser match){
 
-        List<Comic> matchDislikes = null;
-        try {
-            matchDislikes = match.fetchIfNeeded().getList(ListType.DISLIKES.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        dislikes = new ArrayList<Comic>();
-        try {
-            dislikes.addAll(Comic.fromParseArray(matchDislikes));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        dislikes = Match.loadMatchComics(ListType.DISLIKES, match);
 
         final MatchListAdapter comicAdapterDislikes = new MatchListAdapter(getContext(), dislikes);
         rvMatchDislikes.setAdapter(comicAdapterDislikes);
         rvMatchDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
-        List<Comic> matchLikes= null;
-        try {
-            matchLikes = match.fetchIfNeeded().getList(ListType.LIKES.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        likes = new ArrayList<Comic>();
-        try {
-            likes.addAll(Comic.fromParseArray(matchLikes));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        likes = Match.loadMatchComics(ListType.LIKES, match);
 
         final MatchListAdapter comicAdapterLikes = new MatchListAdapter(getContext(), likes);
         rvMatchLikes.setAdapter(comicAdapterLikes);

@@ -20,8 +20,8 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
 
     private final class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 100;
-        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+        private static final int SWIPE_THRESHOLD_PIXELS = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD_PIXELS_PER_SECOND = 100;
 
         @Override
         public boolean onDown(MotionEvent e) {
@@ -35,7 +35,7 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
                 if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (Math.abs(diffX) > SWIPE_THRESHOLD_PIXELS && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD_PIXELS_PER_SECOND) {
                         if (diffX > 0) {
                             onSwipeRight();
                         } else {

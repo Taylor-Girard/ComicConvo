@@ -9,6 +9,7 @@
     <dimen name="username_margin_top">200dp</dimen>
     <dimen name="space_between_items">10dp</dimen>
     <dimen name="login_margin_top">20dp</dimen>
+    <dimen name="user_password_height">48dp</dimen>
 
     <!--Sign Up-->
     <dimen name="signup_username_top">250dp</dimen>
@@ -35,4 +36,12 @@
     <dimen name="cover_height_list">200dp</dimen>
     <dimen name="title_top_margin">5dp</dimen>
 
+    <!--Map-->
+    <dimen name="radius_filter_width">100dp</dimen>
+    <dimen name="map_bottom_margin">50dp</dimen>
+
+    <!--Add Pin-->
+    <dimen name="margin_sides_pins">20dp</dimen>
+    <dimen name="margin_top_pins">175dp</dimen>
+    <dimen name="margin_top_tag">30dp</dimen>
 </resources>

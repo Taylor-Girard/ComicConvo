@@ -1,5 +1,11 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
+def getAPIKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("MAPS_API_KEY");
 }
 
 android {
@@ -11,6 +17,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "API_KEY", "\""+getAPIKey()+"\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,7 +34,14 @@ android {
     }
 }
 
+ext {
+    googlePlayVersion = "17.0.0"
+}
+
 dependencies {
+
+    implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"
+    implementation "com.google.android.gms:play-services-location:$googlePlayVersion"
 
     implementation "com.github.parse-community.Parse-SDK-Android:parse:4.0.0"
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
