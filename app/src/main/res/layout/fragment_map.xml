@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="0dp" />
 
     <ImageButton
         android:id="@+id/ibAddPin"
@@ -41,6 +43,50 @@
         android:layout_toEndOf="@+id/etPinRadius"
         android:background="#67A33D"
         android:src="?android:attr/textCheckMark" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/clickable"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="@dimen/map_bottom_margin"
+        android:layout_toEndOf="@+id/ibRadiusSubmit"
+        android:background="#FFFFFF">
+
+        <CheckBox
+            android:id="@+id/cbStore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="@android:drawable/editbox_dropdown_light_frame"
+            android:backgroundTint="#00FFFFFF"
+            android:text="@string/store_checkbox" />
+
+        <CheckBox
+            android:id="@+id/cbMeetup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_toEndOf="@+id/cbConvention"
+            android:text="@string/meetup_checkbox" />
+
+        <CheckBox
+            android:id="@+id/cbConvention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_toEndOf="@+id/cbStore"
+            android:text="@string/convention_checkbox" />
+    </RelativeLayout>
 
 
 </RelativeLayout>

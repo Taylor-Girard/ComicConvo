@@ -28,6 +28,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -66,6 +68,8 @@ import com.taylorgirard.comicconvo.activities.AddPinActivity;
 import com.taylorgirard.comicconvo.activities.MainActivity;
 import com.taylorgirard.comicconvo.models.Pin;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapFragment extends Fragment{
@@ -78,6 +82,9 @@ public class MapFragment extends Fragment{
     ImageButton ibAddPin;
     EditText etPinRadius;
     ImageButton ibRadiusSubmit;
+    CheckBox cbStore;
+    CheckBox cbConvention;
+    CheckBox cbMeetup;
 
     LatLng userPos;
     int radius = 0;
@@ -135,13 +142,36 @@ public class MapFragment extends Fragment{
         ibAddPin = view.findViewById(R.id.ibAddPin);
         ibRadiusSubmit = view.findViewById(R.id.ibRadiusSubmit);
         etPinRadius = view.findViewById(R.id.etPinRadius);
+        cbStore = view.findViewById(R.id.cbStore);
+        cbConvention = view.findViewById(R.id.cbConvention);
+        cbMeetup = view.findViewById(R.id.cbMeetup);
+
+        cbStore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addPins(radius, userPos);
+            }
+        });
+
+        cbConvention.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addPins(radius, userPos);
+            }
+        });
+
+        cbMeetup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                addPins(radius, userPos);
+            }
+        });
 
         ibRadiusSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
                     radius = Integer.parseInt(etPinRadius.getText().toString());
-                    map.clear();
                     addPins(radius, userPos);
                 } catch(Exception e){
                     Toast.makeText(getContext(), "Enter a valid radius", Toast.LENGTH_SHORT).show();
@@ -194,11 +224,36 @@ public class MapFragment extends Fragment{
 
 
     public void addPins(int radius, LatLng userPos){
-        ParseQuery<Pin> query = ParseQuery.getQuery(Pin.class);
+        map.clear();
+        ParseQuery<Pin> query;
+        List<ParseQuery<Pin>> filterList = new ArrayList<ParseQuery<Pin>>();
+        if (cbStore.isChecked()){
+            ParseQuery<Pin> filterStore = ParseQuery.getQuery(Pin.class);
+            filterStore.whereEqualTo("Tag", "Store");
+            filterList.add(filterStore);
+        }
+        if (cbConvention.isChecked()) {
+            ParseQuery<Pin> filterConvention = ParseQuery.getQuery(Pin.class);
+            filterConvention.whereEqualTo("Tag", "Convention");
+            filterList.add(filterConvention);
+        }
+        if (cbMeetup.isChecked()) {
+            ParseQuery<Pin> filterMeetup = ParseQuery.getQuery(Pin.class);
+            filterMeetup.whereEqualTo("Tag", "Meetup");
+            filterList.add(filterMeetup);
+        }
+
+        if (filterList.size() > 0){
+            query = ParseQuery.or(filterList);
+        } else {
+            query = new ParseQuery<Pin>(Pin.class);
+        }
+
         if (radius != 0){
             ParseGeoPoint userLocation = new ParseGeoPoint(userPos.latitude, userPos.longitude);
             query.whereWithinMiles("Location", userLocation, radius);
         }
+
         query.findInBackground(new FindCallback<Pin>() {
             @Override
             public void done(List<Pin> pins, ParseException e) {

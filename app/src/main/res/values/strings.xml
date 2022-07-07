@@ -19,6 +19,9 @@
     <string name="enter_address">Enter Full Address of Pin Location</string>
     <string name="Tag">Tag</string>
     <string name="radius_filter">Radius (mi)</string>
+    <string name="store_checkbox">Store</string>
+    <string name="convention_checkbox">Convention</string>
+    <string name="meetup_checkbox">Meetup</string>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>
