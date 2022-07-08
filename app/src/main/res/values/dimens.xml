@@ -47,4 +47,9 @@
 
     <!--Navigation-->
     <dimen name="bottom_navigation_height">50dp</dimen>
+
+    <!--Messages-->
+    <dimen name="send_margin_right">10dp</dimen>
+    <dimen name="send_padding_top">5dp</dimen>
+    <dimen name="send_padding_bottom">10dp</dimen>
 </resources>

@@ -22,6 +22,7 @@
     <string name="store_checkbox">Store</string>
     <string name="convention_checkbox">Convention</string>
     <string name="meetup_checkbox">Meetup</string>
+    <string name="message_hint">Send a message</string>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>
