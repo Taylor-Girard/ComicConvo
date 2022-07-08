@@ -6,18 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".activities.IndividualMessageActivity">
 
-    <TextView
-        android:id="@+id/tvSampleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <RelativeLayout
         android:id="@+id/rlSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="@dimen/body_elevation"
         android:paddingLeft="0dp"
         android:paddingTop="@dimen/send_padding_top"
         android:paddingRight="0dp"
@@ -29,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/ibSend"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/writing_margin_top"
             android:layout_toLeftOf="@+id/ibSend"
             android:gravity="top"
             android:hint="@string/message_hint"
@@ -46,4 +43,12 @@
             android:src="@android:drawable/ic_menu_send"
             android:textSize="18sp" />
     </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMessages"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/messages_list_height"
+        app:layout_constraintBottom_toTopOf="@+id/rlSend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

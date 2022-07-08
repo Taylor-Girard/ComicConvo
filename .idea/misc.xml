@@ -9,9 +9,11 @@
         <entry key="app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.1825" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1825" />
+        <entry key="app/src/main/res/drawable/message_incoming.xml" value="0.225" />
+        <entry key="app/src/main/res/drawable/message_outgoing.xml" value="0.225" />
         <entry key="app/src/main/res/layout/activity_add_pin.xml" value="0.15989583333333332" />
         <entry key="app/src/main/res/layout/activity_comic_search.xml" value="0.33424657534246577" />
-        <entry key="app/src/main/res/layout/activity_individual_message.xml" value="0.5294102986653646" />
+        <entry key="app/src/main/res/layout/activity_individual_message.xml" value="0.361863488624052" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.32689450222882616" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.335" />
@@ -23,6 +25,9 @@
         <entry key="app/src/main/res/layout/item_match_list.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/item_user_dislikes.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/item_user_list.xml" value="0.17395833333333333" />
+        <entry key="app/src/main/res/layout/message_incoming.xml" value="0.17291666666666666" />
+        <entry key="app/src/main/res/layout/message_outgoing.xml" value="0.18385416666666668" />
+        <entry key="app/src/main/res/layout/messages_outgoing.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/menu/menu_bottom_navigation.xml" value="0.38666666666666666" />
       </map>
     </option>

@@ -52,4 +52,17 @@
     <dimen name="send_margin_right">10dp</dimen>
     <dimen name="send_padding_top">5dp</dimen>
     <dimen name="send_padding_bottom">10dp</dimen>
+    <dimen name="writing_margin_top">8dp</dimen>
+    <dimen name="messages_list_height">665dp</dimen>
+    <dimen name="message_image_dimen">64dp</dimen>
+    <dimen name="message_type_padding">60dp</dimen>
+    <dimen name="message_side_padding">15dp</dimen>
+    <dimen name="message_vertical_padding">10dp</dimen>
+    <dimen name="name_margin_left">15dp</dimen>
+    <dimen name="name_padding_bottom">4dp</dimen>
+    <dimen name="body_padding_vertical">12dp</dimen>
+    <dimen name="body_padding_horizontal">16dp</dimen>
+    <dimen name="body_elevation">2dp</dimen>
+    <dimen name="body_text_size">18dp</dimen>
+    <dimen name="body_padding">8dp</dimen>
 </resources>
