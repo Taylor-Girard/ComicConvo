@@ -19,10 +19,14 @@ import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.livequery.ParseLiveQueryClient;
+import com.parse.livequery.SubscriptionHandling;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.adapters.MessageAdapter;
 import com.taylorgirard.comicconvo.models.Message;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +91,16 @@ public class IndividualMessageActivity extends AppCompatActivity {
     }
 
     void loadMessages(){
+
+        String websocketUrl = "wss://comicconvo.b4a.io/";
+
+        ParseLiveQueryClient parseLiveQueryClient = null;
+        try {
+            parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         List<ParseQuery<Message>> queryList = new ArrayList<>();
 
         ParseQuery<Message> querySender= ParseQuery.getQuery(Message.class);
@@ -99,13 +113,28 @@ public class IndividualMessageActivity extends AppCompatActivity {
         queryReceiver.whereEqualTo("Receiver", user);
         queryList.add(queryReceiver);
 
-        ParseQuery<Message> query = ParseQuery.or(queryList);
+        ParseQuery<Message> finalQuery = ParseQuery.or(queryList);
+
+        SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(finalQuery);
+
+        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
+            messages.add(0, object);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                    rvMessages.scrollToPosition(0);
+                }
+            });
+        });
+
 
         // get the latest 50 messages, order will show up newest to oldest of this group
-        query.orderByDescending("createdAt");
+        finalQuery.orderByDescending("createdAt");
         // Execute query to fetch all messages from Parse asynchronously
         // This is equivalent to a SELECT query with SQL
-        query.findInBackground(new FindCallback<Message>() {
+        finalQuery.findInBackground(new FindCallback<Message>() {
             @Override
             public void done(List<Message> newMessages, ParseException e) {
                 if (e == null) {
