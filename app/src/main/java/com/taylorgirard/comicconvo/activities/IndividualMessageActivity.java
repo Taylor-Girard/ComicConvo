@@ -36,6 +36,8 @@ public class IndividualMessageActivity extends AppCompatActivity {
     RecyclerView rvMessages;
     ArrayList<Message> messages;
     MessageAdapter adapter;
+    ParseUser match;
+    ParseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class IndividualMessageActivity extends AppCompatActivity {
         rvMessages = findViewById(R.id.rvMessages);
         messages = new ArrayList<>();
 
-        ParseUser match = getIntent().getParcelableExtra("Match");
+        match = getIntent().getParcelableExtra("Match");
+        user = ParseUser.getCurrentUser();
 
         adapter = new MessageAdapter(IndividualMessageActivity.this, match, messages);
         rvMessages.setAdapter(adapter);
@@ -84,9 +87,19 @@ public class IndividualMessageActivity extends AppCompatActivity {
     }
 
     void loadMessages(){
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        // Configure limit and sort order
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        List<ParseQuery<Message>> queryList = new ArrayList<>();
+
+        ParseQuery<Message> querySender= ParseQuery.getQuery(Message.class);
+        querySender.whereEqualTo("Sender", user);
+        querySender.whereEqualTo("Receiver", match);
+        queryList.add(querySender);
+
+        ParseQuery<Message> queryReceiver= ParseQuery.getQuery(Message.class);
+        queryReceiver.whereEqualTo("Sender", match);
+        queryReceiver.whereEqualTo("Receiver", user);
+        queryList.add(queryReceiver);
+
+        ParseQuery<Message> query = ParseQuery.or(queryList);
 
         // get the latest 50 messages, order will show up newest to oldest of this group
         query.orderByDescending("createdAt");
