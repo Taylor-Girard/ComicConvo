@@ -40,6 +40,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
     EditText etMessage;
     ImageButton ibSend;
+    ImageButton ibMakePin;
     RecyclerView rvMessages;
     ArrayList<Message> messages;
     MessageAdapter adapter;
@@ -57,6 +58,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
     void setupMessagePosting(){
         etMessage = findViewById(R.id.etMessage);
         ibSend = findViewById(R.id.ibSend);
+        ibMakePin = findViewById(R.id.ibMakePin);
         rvMessages = findViewById(R.id.rvMessages);
         messages = new ArrayList<>();
 
@@ -69,6 +71,15 @@ public class IndividualMessageActivity extends AppCompatActivity {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(IndividualMessageActivity.this);
         linearLayoutManager.setReverseLayout(true);
         rvMessages.setLayoutManager(linearLayoutManager);
+
+        ibMakePin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(IndividualMessageActivity.this, AddPinActivity.class);
+                intent.putExtra("Match", match);
+                startActivity(intent);
+            }
+        });
 
         ibSend.setOnClickListener(new View.OnClickListener() {
             @Override
