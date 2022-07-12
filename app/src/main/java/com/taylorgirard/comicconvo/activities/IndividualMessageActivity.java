@@ -33,7 +33,6 @@ import java.util.List;
 public class IndividualMessageActivity extends AppCompatActivity {
 
     public static final String TAG = "IndividualMessageActivity";
-    static final int MAX_CHAT_MESSAGES_TO_SHOW = 50;
 
     EditText etMessage;
     ImageButton ibSend;
@@ -75,6 +74,19 @@ public class IndividualMessageActivity extends AppCompatActivity {
                 message.put("Body", body);
                 message.put("Receiver", match);
                 message.put("Sender", ParseUser.getCurrentUser());
+
+                String userId = user.getObjectId();
+                String matchId = match.getObjectId();
+                String pairId;
+
+                if (userId.compareTo(matchId) < 0){
+                    pairId = userId + matchId;
+                } else {
+                    pairId = matchId + userId;
+                }
+
+                message.put("PairID", pairId);
+
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -86,6 +98,30 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     }
                 });
                 etMessage.setText("");
+
+                user.addUnique("Messaged", match);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error saving user messaged list", e);
+                        } else{
+                            Log.d(TAG, "Successfully saved user messaged list");
+                        }
+                    }
+                });
+
+                match.addUnique("Messaged", user);
+                match.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null){
+                            Log.e(TAG, "Error saving matched messaged list", e);
+                        } else{
+                            Log.d(TAG, "Successfully saved matched messaged list");
+                        }
+                    }
+                });
             }
         });
     }

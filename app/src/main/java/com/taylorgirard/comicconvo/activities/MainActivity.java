@@ -15,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
+import com.taylorgirard.comicconvo.fragments.MessagesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Fragment[] fragment = new Fragment[1];
-        fragment[0] = new MapFragment();
+        fragment[0] = new MessagesFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                         fragment[0] = new MatchesFragment();
                         break;
                     case 2:
+                        fragment[0] = new MessagesFragment();
+                        break;
+                    case 3:
                         fragment[0] = new MapFragment();
                         break;
                     default:

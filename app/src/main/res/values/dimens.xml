@@ -65,4 +65,5 @@
     <dimen name="body_elevation">2dp</dimen>
     <dimen name="body_text_size">18dp</dimen>
     <dimen name="body_padding">8dp</dimen>
+    <dimen name="body_margin_left">15dp</dimen>
 </resources>

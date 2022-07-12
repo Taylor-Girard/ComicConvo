@@ -18,7 +18,6 @@ public class ComicUtility {
 
     public static void addComic(Comic comic, ParseUser user, ListType comicType){
 
-
             ParseQuery<Comic> query = new ParseQuery<Comic>("Comic");
             query.whereEqualTo("comicId", comic.getComicId());
             try {

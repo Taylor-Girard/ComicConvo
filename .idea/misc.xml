@@ -20,9 +20,11 @@
         <entry key="app/src/main/res/layout/fragment_map.xml" value="0.3302083333333333" />
         <entry key="app/src/main/res/layout/fragment_maps.xml" value="0.159375" />
         <entry key="app/src/main/res/layout/fragment_matches.xml" value="0.58125" />
+        <entry key="app/src/main/res/layout/fragment_messages.xml" value="0.16979166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.23623445825932504" />
         <entry key="app/src/main/res/layout/item_comic.xml" value="0.17291666666666666" />
         <entry key="app/src/main/res/layout/item_match_list.xml" value="0.18958333333333333" />
+        <entry key="app/src/main/res/layout/item_message.xml" value="0.1828125" />
         <entry key="app/src/main/res/layout/item_user_dislikes.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/item_user_list.xml" value="0.17395833333333333" />
         <entry key="app/src/main/res/layout/message_incoming.xml" value="0.17291666666666666" />
