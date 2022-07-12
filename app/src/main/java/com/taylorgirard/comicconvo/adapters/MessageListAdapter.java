@@ -1,6 +1,7 @@
 package com.taylorgirard.comicconvo.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
+import com.taylorgirard.comicconvo.activities.IndividualMessageActivity;
 import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.models.Message;
 
@@ -49,7 +51,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         return messages.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivMatchPhoto;
         TextView tvMatchName;
@@ -60,19 +62,16 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             ivMatchPhoto = itemView.findViewById(R.id.ivMatchPhoto);
             tvMatchName = itemView.findViewById(R.id.tvMatchName);
             tvMessageBody = itemView.findViewById(R.id.tvMessageBody);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Message message){
             ParseUser match;
-            Boolean isUser;
-            String senderId = message.getSenderId();
-            String userId = ParseUser.getCurrentUser().getObjectId();
-            if (!senderId.equals(userId)){
+            Boolean isUser = isUser(message);
+            if (!isUser){
                 match = message.getSender();
-                isUser = false;
             } else {
                 match = message.getReceiver();
-                isUser = true;
             }
             try {
                 tvMatchName.setText(match.fetchIfNeeded().getUsername());
@@ -86,6 +85,38 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             }
             ParseFile profile = match.getParseFile("profilePic");
             Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivMatchPhoto);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            ParseUser match;
+
+            if (position != RecyclerView.NO_POSITION){
+                Message message = messages.get(position);
+                Boolean isUser = isUser(message);
+                if (!isUser){
+                    match = message.getSender();
+                } else {
+                    match = message.getReceiver();
+                }
+                //Create intent to go to the individual message activity
+                Intent intent = new Intent(context, IndividualMessageActivity.class);
+                intent.putExtra("Match", match);
+                context.startActivity(intent);
+
+            }
+        }
+
+        public boolean isUser(Message message){
+            String senderId = message.getSenderId();
+            String userId = ParseUser.getCurrentUser().getObjectId();
+
+            if (!senderId.equals(userId)){
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 }
