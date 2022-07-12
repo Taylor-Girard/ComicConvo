@@ -53,6 +53,7 @@ public class MatchesFragment extends Fragment {
     List<Comic> likes;
     List<Comic> dislikes;
     ParseUser currentUser = ParseUser.getCurrentUser();
+    ParseUser match;
 
     public MatchesFragment(){
         //empty constructor
@@ -69,7 +70,7 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ParseUser match = currentUser.getParseUser("bestMatch");
+        match = currentUser.getParseUser("bestMatch");
 
         if (match == null){
             try {
@@ -100,7 +101,7 @@ public class MatchesFragment extends Fragment {
         rvMatchLikes = view.findViewById(R.id.rvMatchLikes);
         rvMatchDislikes = view.findViewById(R.id.rvMatchDislikes);
 
-        loadInfo(match);
+        loadInfo();
 
         clMatchLayout.setOnTouchListener(new OnSwipeTouchListener(getContext()){
             @Override
@@ -129,7 +130,7 @@ public class MatchesFragment extends Fragment {
         });
     }
 
-    public void loadInfo(ParseUser match){
+    public void loadInfo(){
 
         dislikes = Match.loadMatchComics(ListType.DISLIKES, match);
 
@@ -166,8 +167,8 @@ public class MatchesFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        ParseUser newMatch = currentUser.getParseUser("bestMatch");
-        currentUser.addUnique("matchedWith", newMatch);
+        match = currentUser.getParseUser("bestMatch");
+        currentUser.addUnique("matchedWith", match);
         currentUser.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -178,11 +179,12 @@ public class MatchesFragment extends Fragment {
                 }
             }
         });
-        loadInfo(newMatch);
+        loadInfo();
     }
 
     public void goToMessages(){
         Intent intent = new Intent(getContext(), IndividualMessageActivity.class);
+        intent.putExtra("Match", match);
         startActivity(intent);
     }
 }

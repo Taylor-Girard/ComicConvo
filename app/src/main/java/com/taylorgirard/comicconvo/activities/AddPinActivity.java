@@ -41,6 +41,7 @@ public class AddPinActivity extends AppCompatActivity implements AdapterView.OnI
     Button btnSubmitPin;
     Spinner spTag;
     String pinTag = "Store";
+    ParseUser match;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,17 @@ public class AddPinActivity extends AppCompatActivity implements AdapterView.OnI
         btnSubmitPin = findViewById(R.id.btnSubmitPin);
         spTag = findViewById(R.id.spTag);
 
+        match = getIntent().getParcelableExtra("Match");
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tag_list, android.R.layout.simple_spinner_dropdown_item);
         spTag.setAdapter(adapter);
         spTag.setOnItemSelectedListener(this);
+
+        if (match != null){
+            etPinTitle.setText("Meetup with " + match.getUsername());
+            etPinDescription.setText("Meeting up with " + match.getUsername());
+            spTag.setSelection(2);
+        }
 
         btnSubmitPin.setOnClickListener(new View.OnClickListener() {
             @Override

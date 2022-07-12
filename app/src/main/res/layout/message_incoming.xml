@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="false"
+    android:paddingVertical="@dimen/message_vertical_padding"
+    android:paddingLeft="@dimen/message_side_padding"
+    android:paddingRight="@dimen/message_type_padding"
+    app:layout_constraintTop_toTopOf="parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivProfileOther"
+        android:layout_marginLeft="@dimen/name_margin_left"
+        android:layout_toRightOf="@+id/ivProfileOther"
+        android:paddingBottom="@dimen/name_padding_bottom"
+        android:text="Johny Lindsey" />
+
+    <ImageView
+        android:id="@+id/ivProfileOther"
+        android:layout_width="@dimen/message_image_dimen"
+        android:layout_height="@dimen/message_image_dimen"
+        android:layout_alignParentLeft="true"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_alignLeft="@+id/tvName"
+        android:background="@drawable/message_incoming"
+        android:elevation="@dimen/body_elevation"
+        android:paddingHorizontal="@dimen/body_padding_horizontal"
+        android:paddingVertical="@dimen/body_padding_vertical"
+        android:text="Someone else's message"
+        android:textColor="#101010"
+        android:textSize="@dimen/body_text_size" />
+</RelativeLayout>

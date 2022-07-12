@@ -5,6 +5,7 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.taylorgirard.comicconvo.models.Comic;
+import com.taylorgirard.comicconvo.models.Message;
 import com.taylorgirard.comicconvo.models.Pin;
 
 import okhttp3.OkHttpClient;
@@ -15,6 +16,7 @@ public class ParseApplication extends Application {
         super.onCreate();
         ParseObject.registerSubclass(Comic.class);
         ParseObject.registerSubclass(Pin.class);
+        ParseObject.registerSubclass(Message.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("ImIcGutoZYOh1JNfJpE8PtDkWDOST0hH7Hgw6W0f")
@@ -22,5 +24,6 @@ public class ParseApplication extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
     }
 }

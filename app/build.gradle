@@ -40,6 +40,8 @@ ext {
 
 dependencies {
 
+    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
+
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
 
     implementation "com.google.android.gms:play-services-maps:$googlePlayVersion"

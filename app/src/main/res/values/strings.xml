@@ -7,6 +7,7 @@
     <string name="profile">Profile</string>
     <string name="matches">Matches</string>
     <string name="map">Map</string>
+    <string name="messages">Chat</string>
     <string name="about_me">About Me</string>
     <string name="likes">Likes</string>
     <string name="dislikes">Dislikes</string>
@@ -22,9 +23,12 @@
     <string name="store_checkbox">Store</string>
     <string name="convention_checkbox">Convention</string>
     <string name="meetup_checkbox">Meetup</string>
+    <string name="message_hint">Send a message</string>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>
         <item name="meetup_tag">Meetup</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
