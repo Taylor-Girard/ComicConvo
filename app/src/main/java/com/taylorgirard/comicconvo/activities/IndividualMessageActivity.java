@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.Parse;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -28,6 +31,7 @@ import com.taylorgirard.comicconvo.models.Message;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class IndividualMessageActivity extends AppCompatActivity {
@@ -111,14 +115,16 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     }
                 });
 
-                match.addUnique("Messaged", user);
-                match.saveInBackground(new SaveCallback() {
+                HashMap<String, Object> params = new HashMap<>();
+                params.put("user" , user.getObjectId());
+                params.put("match", match.getObjectId());
+                ParseCloud.callFunctionInBackground("saveMessaged", params, new FunctionCallback<Boolean>() {
                     @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error saving matched messaged list", e);
+                    public void done(Boolean object, ParseException e) {
+                        if (e==null && object){
+                            Log.i(TAG, "Successfully saved match messaged list");
                         } else{
-                            Log.d(TAG, "Successfully saved matched messaged list");
+                            Log.e(TAG, "Error saving match messaged list", e);
                         }
                     }
                 });

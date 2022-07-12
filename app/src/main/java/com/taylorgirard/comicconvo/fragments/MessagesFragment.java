@@ -62,9 +62,20 @@ public class MessagesFragment extends Fragment {
         List<ParseUser> messaged = user.getList("Messaged");
         for (ParseUser match: messaged){
 
+            String userId = user.getObjectId();
+            String matchId = match.getObjectId();
+            String pairId;
+
+            if (userId.compareTo(matchId) < 0){
+                pairId = userId + matchId;
+            } else {
+                pairId = matchId + userId;
+            }
+
             ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-            query.whereContains("PairID", user.getObjectId());
-            query.whereContains("PairID", match.getObjectId());
+            query.orderByDescending("createdAt");
+            query.whereEqualTo("PairID", pairId);
+
             try {
                 Message message = query.getFirst();
                 recents.add(message);
