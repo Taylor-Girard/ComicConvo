@@ -148,7 +148,10 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     }
                 });
 
-                HashMap<String,String> map = new HashMap<String, String>();
+                HashMap<String,Object> map = new HashMap<String, Object>();
+                map.put("username", user.getUsername());
+                map.put("matchId", match.getObjectId());
+                map.put("message", body);
                 ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object object, ParseException e) {
