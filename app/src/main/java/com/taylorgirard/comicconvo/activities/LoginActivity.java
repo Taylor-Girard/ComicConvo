@@ -12,8 +12,11 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
+
+import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -73,9 +76,15 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     return;
                 }
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                ArrayList<String> channel = new ArrayList<>();
+                channel.add(user.getObjectId());
+                installation.put("channels", channel);
+                installation.saveInBackground();
+
                 // navigate to the main activity if the user has signed in properly
                 goMainActivity();
-                //Toast.makeText(LoginActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

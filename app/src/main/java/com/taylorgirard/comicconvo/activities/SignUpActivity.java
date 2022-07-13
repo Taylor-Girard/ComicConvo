@@ -49,6 +49,11 @@ public class SignUpActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         if (e == null){
                             //Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                            ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                            ArrayList<String> channel = new ArrayList<>();
+                            channel.add(user.getObjectId());
+                            installation.put("channels", channel);
+                            installation.saveInBackground();
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

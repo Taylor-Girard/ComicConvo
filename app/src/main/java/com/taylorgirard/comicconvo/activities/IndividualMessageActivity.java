@@ -149,8 +149,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                 });
 
                 HashMap<String,String> map = new HashMap<String, String>();
-                map.put("deviceId", "1234567890");
-                map.put("message", "test message");
                 ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
                     @Override
                     public void done(Object object, ParseException e) {
