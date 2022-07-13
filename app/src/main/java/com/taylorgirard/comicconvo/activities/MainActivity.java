@@ -1,22 +1,38 @@
 package com.taylorgirard.comicconvo.activities;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
 import com.taylorgirard.comicconvo.fragments.MessagesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
@@ -61,6 +77,5 @@ public class MainActivity extends AppCompatActivity {
         //Set default
         fragmentManager.beginTransaction().replace(R.id.flContainer, fragment[0]).commit();
     }
-
 
 }

@@ -11,9 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.taylorgirard.comicconvo.R;
+
+import java.util.ArrayList;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -44,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseException e) {
                         if (e == null){
-                            Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();

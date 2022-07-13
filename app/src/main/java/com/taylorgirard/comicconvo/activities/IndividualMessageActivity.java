@@ -19,6 +19,8 @@ import com.parse.FunctionCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -142,6 +144,26 @@ public class IndividualMessageActivity extends AppCompatActivity {
                             Log.i(TAG, "Successfully saved match messaged list");
                         } else{
                             Log.e(TAG, "Error saving match messaged list", e);
+                        }
+                    }
+                });
+
+                ArrayList<String> channels = new ArrayList<>();
+                channels.add("News");
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+// don't forget to change the line below with the sender ID you obtained at Firebase
+                installation.put("channels", channels);
+                installation.saveInBackground();
+                HashMap<String,String> map = new HashMap<String, String>();
+                map.put("deviceId", "1234567890");
+                map.put("message", "test message");
+                ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
+                    @Override
+                    public void done(Object object, ParseException e) {
+                        if (e==null){
+                            Log.i(TAG, "Successfully launched push function");
+                        } else{
+                            Log.e(TAG, "Error launching push function", e);
                         }
                     }
                 });
