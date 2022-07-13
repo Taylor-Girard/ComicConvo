@@ -148,12 +148,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     }
                 });
 
-                ArrayList<String> channels = new ArrayList<>();
-                channels.add("News");
-                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-// don't forget to change the line below with the sender ID you obtained at Firebase
-                installation.put("channels", channels);
-                installation.saveInBackground();
                 HashMap<String,String> map = new HashMap<String, String>();
                 map.put("deviceId", "1234567890");
                 map.put("message", "test message");

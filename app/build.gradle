@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
+
 }
 def getAPIKey() {
     Properties properties = new Properties()
@@ -36,9 +38,19 @@ android {
 
 ext {
     googlePlayVersion = "17.0.0"
+    parseVersion = "4.10.11"
 }
 
 dependencies {
+
+    implementation "com.github.parse-community.Parse-SDK-Android:fcm:4.0.0"
+    implementation 'com.parse.bolts:bolts-android:1.4.0'
+
+    implementation 'com.google.firebase:firebase-messaging:23.0.6'
+
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+
+    implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
 
