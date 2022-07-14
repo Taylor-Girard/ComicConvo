@@ -7,8 +7,9 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="profile">Profile</string>
-    <string name="matches">Matches</string>
+    <string name="matches">Match</string>
     <string name="map">Map</string>
+    <string name="settings">Settings</string>
     <string name="messages">Chat</string>
     <string name="about_me">About Me</string>
     <string name="likes">Likes</string>
@@ -26,6 +27,7 @@
     <string name="convention_checkbox">Convention</string>
     <string name="meetup_checkbox">Meetup</string>
     <string name="message_hint">Send a message</string>
+    <string name="notification_toggle">Notifications</string>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>

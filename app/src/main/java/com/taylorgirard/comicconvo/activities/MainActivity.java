@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
 import com.taylorgirard.comicconvo.fragments.MessagesFragment;
 import com.taylorgirard.comicconvo.fragments.ProfileFragment;
+import com.taylorgirard.comicconvo.fragments.SettingsFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Fragment[] fragment = new Fragment[1];
-        fragment[0] = new MessagesFragment();
+        fragment[0] = new SettingsFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -59,13 +61,16 @@ public class MainActivity extends AppCompatActivity {
                         fragment[0] = new ProfileFragment();
                         break;
                     case 1:
-                        fragment[0] = new MatchesFragment();
+                        fragment[0] = new MessagesFragment();
                         break;
                     case 2:
-                        fragment[0] = new MessagesFragment();
+                        fragment[0] = new MatchesFragment();
                         break;
                     case 3:
                         fragment[0] = new MapFragment();
+                        break;
+                    case 4:
+                        fragment[0] = new SettingsFragment();
                         break;
                     default:
                         throw new IllegalStateException("Unexpected value: " + i);

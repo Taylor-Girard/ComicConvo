@@ -9,21 +9,27 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_matches"
-        android:icon="@drawable/ic_baseline_favorite_24"
-        android:title="@string/matches"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_messages"
         android:icon="@drawable/ic_baseline_message_24"
         android:title="@string/messages"
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_matches"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/matches"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_map"
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/map"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="@string/settings"
         app:showAsAction="always" />
 
 </menu>

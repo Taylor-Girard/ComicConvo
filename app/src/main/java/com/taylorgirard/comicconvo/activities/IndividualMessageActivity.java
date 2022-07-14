@@ -148,20 +148,31 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     }
                 });
 
-                HashMap<String,Object> map = new HashMap<String, Object>();
-                map.put("username", user.getUsername());
-                map.put("matchId", match.getObjectId());
-                map.put("message", body);
-                ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
-                    @Override
-                    public void done(Object object, ParseException e) {
-                        if (e==null){
-                            Log.i(TAG, "Successfully launched push function");
-                        } else{
-                            Log.e(TAG, "Error launching push function", e);
+                ParseQuery<ParseUser> query = new ParseQuery<ParseUser>(ParseUser.class);
+                ParseUser checkMatch = null;
+                try {
+                    checkMatch = query.get(match.getObjectId());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if (checkMatch != null && checkMatch.getBoolean("Notifications")){
+                    HashMap<String,Object> map = new HashMap<String, Object>();
+                    map.put("username", user.getUsername());
+                    map.put("matchId", match.getObjectId());
+                    map.put("message", body);
+                    ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
+                        @Override
+                        public void done(Object object, ParseException e) {
+                            if (e==null){
+                                Log.i(TAG, "Successfully launched push function");
+                            } else{
+                                Log.e(TAG, "Error launching push function", e);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
     }
