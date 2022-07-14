@@ -28,6 +28,10 @@
     <string name="meetup_checkbox">Meetup</string>
     <string name="message_hint">Send a message</string>
     <string name="notification_toggle">Notifications</string>
+    <string name="do_not_disturb">Do Not Disturb</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="save_time">Save Time</string>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>
