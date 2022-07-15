@@ -29,10 +29,12 @@ import com.parse.livequery.SubscriptionHandling;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.adapters.MessageAdapter;
 import com.taylorgirard.comicconvo.models.Message;
+import com.taylorgirard.comicconvo.tools.TimeUtility;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -156,7 +158,32 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                if (checkMatch != null && checkMatch.getBoolean("Notifications")){
+                Boolean inDNDTime;
+                Calendar calendar = Calendar.getInstance();
+                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int startDND = checkMatch.getInt("StartDND");
+                int endDND = checkMatch.getInt("EndDND");
+                if (startDND == 0 && endDND == 0){
+                    inDNDTime = false;
+                } else{
+                    int startDNDLocal = TimeUtility.UTCtoDevice(startDND);
+                    int endDNDLocal = TimeUtility.UTCtoDevice(endDND);
+                    if (endDNDLocal > startDNDLocal){
+                        if (currentHour >= startDNDLocal && currentHour < endDNDLocal){
+                            inDNDTime = true;
+                        } else{
+                            inDNDTime = false;
+                        }
+                    } else{
+                        if (currentHour >= startDNDLocal || currentHour < endDNDLocal){
+                            inDNDTime = true;
+                        } else{
+                            inDNDTime = false;
+                        }
+                    }
+                }
+
+                if (checkMatch != null && checkMatch.getBoolean("Notifications") && !inDNDTime){
                     HashMap<String,Object> map = new HashMap<String, Object>();
                     map.put("username", user.getUsername());
                     map.put("matchId", match.getObjectId());

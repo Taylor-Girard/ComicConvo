@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment {
                 try {
                     int startTime = Integer.parseInt(etTimeStart.getText().toString());
                     int endTime = Integer.parseInt(etTimeEnd.getText().toString());
-                    if (startTime < 0 || endTime > 24 || startTime > endTime){
+                    if (startTime < 0 || endTime > 24 || startTime == endTime){
                         throw new Exception();
                     }
 
@@ -97,7 +97,7 @@ public class SettingsFragment extends Fragment {
                     });
 
                 } catch(Exception e){
-                    Toast.makeText(getContext(), "Enter valid times (24 hour format)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Enter valid hours (24 hour format)", Toast.LENGTH_SHORT).show();
                 }
             }
         });
