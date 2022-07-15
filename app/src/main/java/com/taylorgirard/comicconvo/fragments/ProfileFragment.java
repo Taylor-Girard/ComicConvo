@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
@@ -151,6 +152,10 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ParseUser.logOutInBackground();
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                ArrayList<String> channel = new ArrayList<>();
+                installation.put("channels", channel);
+                installation.saveInBackground();
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 Intent i = new Intent(getContext(), LoginActivity.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // this makes sure the Back button won't work

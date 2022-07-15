@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "389146853598",
+    "project_id": "capstone-16523",
+    "storage_bucket": "capstone-16523.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389146853598:android:7e2670d9d1933420a7824f",
+        "android_client_info": {
+          "package_name": "com.taylorgirard.comicconvo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "389146853598-f7j2ng928rsjpsbrr9ogga3n02vepp5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa5dJYsxTEsTlVJzpm_kpF6zESJVoIcmc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "389146853598-f7j2ng928rsjpsbrr9ogga3n02vepp5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

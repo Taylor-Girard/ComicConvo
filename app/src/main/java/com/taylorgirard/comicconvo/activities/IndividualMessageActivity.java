@@ -19,6 +19,8 @@ import com.parse.FunctionCallback;
 import com.parse.Parse;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -27,10 +29,12 @@ import com.parse.livequery.SubscriptionHandling;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.adapters.MessageAdapter;
 import com.taylorgirard.comicconvo.models.Message;
+import com.taylorgirard.comicconvo.tools.TimeUtility;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -145,6 +149,57 @@ public class IndividualMessageActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                ParseQuery<ParseUser> query = new ParseQuery<ParseUser>(ParseUser.class);
+                ParseUser checkMatch = null;
+                try {
+                    checkMatch = query.get(match.getObjectId());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                Boolean inDNDTime;
+                Calendar calendar = Calendar.getInstance();
+                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+                int startDND = checkMatch.getInt("StartDND");
+                int endDND = checkMatch.getInt("EndDND");
+                if (startDND == 0 && endDND == 0){
+                    inDNDTime = false;
+                } else{
+                    int startDNDLocal = TimeUtility.UTCtoDevice(startDND);
+                    int endDNDLocal = TimeUtility.UTCtoDevice(endDND);
+                    if (endDNDLocal > startDNDLocal){
+                        if (currentHour >= startDNDLocal && currentHour < endDNDLocal){
+                            inDNDTime = true;
+                        } else{
+                            inDNDTime = false;
+                        }
+                    } else{
+                        if (currentHour >= startDNDLocal || currentHour < endDNDLocal){
+                            inDNDTime = true;
+                        } else{
+                            inDNDTime = false;
+                        }
+                    }
+                }
+
+                if (checkMatch != null && checkMatch.getBoolean("Notifications") && !inDNDTime){
+                    HashMap<String,Object> map = new HashMap<String, Object>();
+                    map.put("username", user.getUsername());
+                    map.put("matchId", match.getObjectId());
+                    map.put("message", body);
+                    ParseCloud.callFunctionInBackground("pushsample", map, new FunctionCallback<Object>() {
+                        @Override
+                        public void done(Object object, ParseException e) {
+                            if (e==null){
+                                Log.i(TAG, "Successfully launched push function");
+                            } else{
+                                Log.e(TAG, "Error launching push function", e);
+                            }
+                        }
+                    });
+                }
+
             }
         });
     }
