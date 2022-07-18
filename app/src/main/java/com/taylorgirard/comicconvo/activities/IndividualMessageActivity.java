@@ -42,6 +42,7 @@ import java.util.List;
 
 public class IndividualMessageActivity extends AppCompatActivity {
 
+    public static final String WEBSOCKET_URL = "wss://comicconvo.b4a.io/";
     public static final String TAG = "IndividualMessageActivity";
 
     EditText etMessage;
@@ -185,11 +186,9 @@ public class IndividualMessageActivity extends AppCompatActivity {
 
     void loadMessages(){
 
-        String websocketUrl = "wss://comicconvo.b4a.io/";
-
         ParseLiveQueryClient parseLiveQueryClient = null;
         try {
-            parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
+            parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(WEBSOCKET_URL));
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
