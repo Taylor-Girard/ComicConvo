@@ -121,9 +121,7 @@ public class MapFragment extends Fragment{
             @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap googleMap) {
-
                 map = googleMap;
-
                 if  (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
                     requestPermissions(PERMISSION_GETMYLOCATION, REQUEST_GETMYLOCATION);
                 } else{
@@ -222,26 +220,24 @@ public class MapFragment extends Fragment{
 
     }
 
+    public void updateFilterList (CheckBox check, String tagName, List<ParseQuery<Pin>> filters){
+
+        if (check.isChecked()){
+            ParseQuery<Pin> filterStore = ParseQuery.getQuery(Pin.class);
+            filterStore.whereEqualTo("Tag", tagName);
+            filters.add(filterStore);
+        }
+
+    }
+
 
     public void addPins(int radius, LatLng userPos){
         map.clear();
         ParseQuery<Pin> query;
         List<ParseQuery<Pin>> filterList = new ArrayList<ParseQuery<Pin>>();
-        if (cbStore.isChecked()){
-            ParseQuery<Pin> filterStore = ParseQuery.getQuery(Pin.class);
-            filterStore.whereEqualTo("Tag", "Store");
-            filterList.add(filterStore);
-        }
-        if (cbConvention.isChecked()) {
-            ParseQuery<Pin> filterConvention = ParseQuery.getQuery(Pin.class);
-            filterConvention.whereEqualTo("Tag", "Convention");
-            filterList.add(filterConvention);
-        }
-        if (cbMeetup.isChecked()) {
-            ParseQuery<Pin> filterMeetup = ParseQuery.getQuery(Pin.class);
-            filterMeetup.whereEqualTo("Tag", "Meetup");
-            filterList.add(filterMeetup);
-        }
+        updateFilterList(cbStore, "Store", filterList);
+        updateFilterList(cbConvention, "Convention", filterList);
+        updateFilterList(cbMeetup, "Meetup", filterList);
 
         if (filterList.size() > 0){
             query = ParseQuery.or(filterList);
@@ -276,15 +272,21 @@ public class MapFragment extends Fragment{
                     String tag = pin.getString("Tag");
                     BitmapDescriptor icon;
 
-                    if(tag.equals("Store")){
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.storeicon);
-                    } else if (tag.equals("Convention")){
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.conventionicon);
-                    } else if (tag.equals("Meetup")){
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.meetupicon);
-                    } else{
-                        Log.i(TAG, "Issue with setting icon");
-                        icon = BitmapDescriptorFactory.fromResource(R.drawable.defaulticon);
+                    switch (tag){
+                        case "Store":
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.storeicon);
+                            break;
+                        case "Convention":
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.conventionicon);
+                            break;
+                        case "Meetup":
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.meetupicon);
+                            break;
+                        default:
+                            Log.i(TAG, "Issue with setting icon");
+                            icon = BitmapDescriptorFactory.fromResource(R.drawable.defaulticon);
+                            break;
+
                     }
 
                     map.addMarker(new MarkerOptions().position(position).title(title).snippet(description).icon(icon));
