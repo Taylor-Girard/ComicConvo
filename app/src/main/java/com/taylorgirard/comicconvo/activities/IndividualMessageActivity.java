@@ -158,30 +158,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Boolean inDNDTime;
-                Calendar calendar = Calendar.getInstance();
-                int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
-                int startDND = checkMatch.getInt("StartDND");
-                int endDND = checkMatch.getInt("EndDND");
-                if (startDND == 0 && endDND == 0){
-                    inDNDTime = false;
-                } else{
-                    int startDNDLocal = TimeUtility.UTCtoDevice(startDND);
-                    int endDNDLocal = TimeUtility.UTCtoDevice(endDND);
-                    if (endDNDLocal > startDNDLocal){
-                        if (currentHour >= startDNDLocal && currentHour < endDNDLocal){
-                            inDNDTime = true;
-                        } else{
-                            inDNDTime = false;
-                        }
-                    } else{
-                        if (currentHour >= startDNDLocal || currentHour < endDNDLocal){
-                            inDNDTime = true;
-                        } else{
-                            inDNDTime = false;
-                        }
-                    }
-                }
+                Boolean inDNDTime = TimeUtility.inDNDTime(checkMatch);
 
                 if (checkMatch != null && checkMatch.getBoolean("Notifications") && !inDNDTime){
                     HashMap<String,Object> map = new HashMap<String, Object>();

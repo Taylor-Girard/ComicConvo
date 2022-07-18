@@ -48,7 +48,6 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseException e) {
                         if (e == null){
-                            //Toast.makeText(SignUpActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                             ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                             ArrayList<String> channel = new ArrayList<>();
                             channel.add(user.getObjectId());

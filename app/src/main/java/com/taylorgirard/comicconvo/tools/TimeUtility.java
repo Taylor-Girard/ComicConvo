@@ -1,8 +1,11 @@
 package com.taylorgirard.comicconvo.tools;
 
+import com.parse.ParseUser;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -51,6 +54,30 @@ public class TimeUtility {
         int intTime = Integer.parseInt(timeUTC.substring(0, 2));
 
         return intTime;
+    }
+
+    public static boolean inDNDTime(ParseUser match){
+        Boolean inDNDTime;
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int startDND = match.getInt("StartDND");
+        int endDND = match.getInt("EndDND");
+        if (startDND == 0 && endDND == 0){
+            inDNDTime = false;
+        } else{
+            int startDNDLocal = TimeUtility.UTCtoDevice(startDND);
+            int endDNDLocal = TimeUtility.UTCtoDevice(endDND);
+            if (endDNDLocal > startDNDLocal){
+                inDNDTime = (currentHour >= startDNDLocal && currentHour < endDNDLocal) ? true : false;
+            } else{
+                if (currentHour >= startDNDLocal || currentHour < endDNDLocal){
+                    inDNDTime = true;
+                } else{
+                    inDNDTime = false;
+                }
+            }
+        }
+        return inDNDTime;
     }
 
 

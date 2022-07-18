@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment {
                 try {
                     int startTime = Integer.parseInt(etTimeStart.getText().toString());
                     int endTime = Integer.parseInt(etTimeEnd.getText().toString());
-                    if (startTime < 0 || endTime > 24 || startTime == endTime){
+                    if (startTime < 0 || endTime >= 24 || startTime == endTime){
                         throw new Exception();
                     }
 
@@ -102,7 +102,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Boolean notifications = null;
+        Boolean notifications = false;
         try {
             notifications = user.fetchIfNeeded().getBoolean("Notifications");
         } catch (ParseException e) {
