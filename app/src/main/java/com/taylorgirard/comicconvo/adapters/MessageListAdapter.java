@@ -18,7 +18,6 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.IndividualMessageActivity;
-import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.models.Message;
 
 import java.util.List;
@@ -67,22 +66,15 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
         public void bind(Message message){
             ParseUser match;
-            Boolean isUser = isUser(message);
-            if (!isUser){
-                match = message.getSender();
-            } else {
-                match = message.getReceiver();
-            }
+            Boolean isUser = isUserMessage(message);
+            match = (isUser) ? message.getReceiver() : message.getSender();
             try {
                 tvMatchName.setText(match.fetchIfNeeded().getUsername());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (isUser){
-                tvMessageBody.setText("You: " + message.getBody());
-            } else{
-                tvMessageBody.setText(match.getUsername() + ": " + message.getBody());
-            }
+            tvMessageBody.setText((isUser) ? "You: " + message.getBody() :
+                            match.getUsername() + ": " + message.getBody());
             ParseFile profile = match.getParseFile("profilePic");
             Glide.with(context).load(profile.getUrl()).transform(new CircleCrop()).into(ivMatchPhoto);
         }
@@ -94,7 +86,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
             if (position != RecyclerView.NO_POSITION){
                 Message message = messages.get(position);
-                Boolean isUser = isUser(message);
+                Boolean isUser = isUserMessage(message);
                 if (!isUser){
                     match = message.getSender();
                 } else {
@@ -108,15 +100,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             }
         }
 
-        public boolean isUser(Message message){
+        public boolean isUserMessage(Message message){
             String senderId = message.getSenderId();
             String userId = ParseUser.getCurrentUser().getObjectId();
 
-            if (!senderId.equals(userId)){
-                return false;
-            } else {
-                return true;
-            }
+            return senderId.equals(userId);
         }
     }
 }

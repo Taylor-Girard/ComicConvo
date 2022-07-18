@@ -17,10 +17,13 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.models.Message;
+import com.taylorgirard.comicconvo.viewholders.IncomingMessageViewHolder;
+import com.taylorgirard.comicconvo.viewholders.MessageViewHolder;
+import com.taylorgirard.comicconvo.viewholders.OutgoingMessageViewHolder;
 
 import java.util.List;
 
-public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
+public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     private static final int MESSAGE_OUTGOING = 123;
     private static final int MESSAGE_INCOMING = 321;
@@ -47,15 +50,19 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        if (viewType == MESSAGE_INCOMING){
-            View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
-            return new IncomingMessageViewHolder(contactView);
-        } else if (viewType == MESSAGE_OUTGOING){
-            View contactView = inflater.inflate(R.layout.message_outgoing, parent, false);
-            return new OutgoingMessageViewHolder(contactView);
-        } else{
-            throw new IllegalArgumentException("Unknown view type");
+        View contactView;
+
+        switch(viewType){
+            case MESSAGE_INCOMING:
+                contactView = inflater.inflate(R.layout.message_incoming, parent, false);
+                return new IncomingMessageViewHolder(contactView, context);
+            case MESSAGE_OUTGOING:
+                contactView = inflater.inflate(R.layout.message_outgoing, parent, false);
+                return new OutgoingMessageViewHolder(contactView, context);
+            default:
+                throw new IllegalArgumentException("Unknown view type");
         }
+
     }
 
     @Override
@@ -78,72 +85,4 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         return message.getSenderId() != null && message.getSenderId().equals(user.getObjectId());
     }
 
-    public abstract class MessageViewHolder extends RecyclerView.ViewHolder{
-
-        public MessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
-        abstract void bindMessage(Message message);
-    }
-
-    public class IncomingMessageViewHolder extends MessageViewHolder{
-
-        ImageView imageOther;
-        TextView body;
-        TextView name;
-
-        public IncomingMessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageOther = (ImageView) itemView.findViewById(R.id.ivProfileOther);
-            body = (TextView) itemView.findViewById(R.id.tvBody);
-            name = (TextView) itemView.findViewById(R.id.tvName);
-        }
-
-        @Override
-        void bindMessage(Message message) {
-            body.setText(message.getBody());
-            try {
-                name.setText(message.getSender().fetchIfNeeded().getUsername());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            ParseFile profilePic = null;
-            try {
-                profilePic = message.getSender().fetchIfNeeded().getParseFile("profilePic");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (profilePic != null) {
-                Glide.with(context).load(profilePic.getUrl()).transform(new CircleCrop()).into(imageOther);
-            }
-        }
-    }
-
-    public class OutgoingMessageViewHolder extends MessageViewHolder{
-
-        ImageView imageMe;
-        TextView body;
-
-        public OutgoingMessageViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageMe = (ImageView) itemView.findViewById(R.id.ivProfileMe);
-            body = (TextView) itemView.findViewById(R.id.tvBody);
-
-        }
-
-        @Override
-        void bindMessage(Message message){
-            ParseFile profilePic = null;
-            try {
-                profilePic = message.getSender().fetchIfNeeded().getParseFile("profilePic");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            if (profilePic != null) {
-                Glide.with(context).load(profilePic.getUrl()).transform(new CircleCrop()).into(imageMe);
-            }
-            body.setText(message.getBody());
-        }
-    }
 }

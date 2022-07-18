@@ -33,6 +33,7 @@ import okhttp3.Headers;
 public class AddPinActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = "AddPinActivity";
+    public static final int MEETUP_TAG = 2;
     public static final String GOOGLE_GEOCODING_URL = "https://maps.googleapis.com/maps/api/geocode/json?key=" + BuildConfig.MAPS_API_KEY;
 
     EditText etPinAddress;
@@ -63,7 +64,7 @@ public class AddPinActivity extends AppCompatActivity implements AdapterView.OnI
         if (match != null){
             etPinTitle.setText("Meetup with " + match.getUsername());
             etPinDescription.setText("Meeting up with " + match.getUsername());
-            spTag.setSelection(2);
+            spTag.setSelection(MEETUP_TAG);
         }
 
         btnSubmitPin.setOnClickListener(new View.OnClickListener() {

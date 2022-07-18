@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Fragment[] fragment = new Fragment[1];
-        fragment[0] = new SettingsFragment();
+        fragment[0] = new MatchesFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {

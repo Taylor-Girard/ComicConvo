@@ -53,7 +53,6 @@ public class MessagesFragment extends Fragment {
         rvMessageList.setAdapter(adapter);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        //linearLayoutManager.setReverseLayout(true);
         rvMessageList.setLayoutManager(linearLayoutManager);
     }
 
