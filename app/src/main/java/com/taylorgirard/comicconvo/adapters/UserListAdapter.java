@@ -23,6 +23,8 @@ import com.taylorgirard.comicconvo.models.Comic;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Adapter that binds comic object to the list of likes/dislikes on the user's profile page*/
+
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ViewHolder> {
 
     public static final String TAG = "UserListAdapter";

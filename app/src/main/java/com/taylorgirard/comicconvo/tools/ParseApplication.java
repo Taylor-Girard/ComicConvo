@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 
+/**File that sets up connection to Parse*/
+
 public class ParseApplication extends Application {
     @Override
     public void onCreate() {

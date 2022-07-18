@@ -44,6 +44,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Fragment where user can see their profile and change different attributes about themselves*/
+
 public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";

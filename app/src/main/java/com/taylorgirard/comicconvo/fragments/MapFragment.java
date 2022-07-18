@@ -72,6 +72,8 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Fragment that displays the map and adds pins taken from the Parse pin class*/
+
 public class MapFragment extends Fragment{
 
     public static final int REQUEST_GETMYLOCATION = 0;

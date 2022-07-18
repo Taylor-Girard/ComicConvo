@@ -19,6 +19,8 @@ import com.taylorgirard.comicconvo.R;
 
 import java.util.ArrayList;
 
+/**Activity that allows the user to create a new account on Parse with a username and password*/
+
 public class SignUpActivity extends AppCompatActivity {
 
     public static final String TAG = "SignUpActivity";

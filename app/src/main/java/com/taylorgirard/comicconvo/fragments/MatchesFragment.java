@@ -36,6 +36,7 @@ import com.taylorgirard.comicconvo.tools.OnSwipeTouchListener;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Fragment that calculates new matches and displays their information*/
 
 public class MatchesFragment extends Fragment {
 

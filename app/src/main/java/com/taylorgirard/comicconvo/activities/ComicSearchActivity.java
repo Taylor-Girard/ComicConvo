@@ -31,6 +31,8 @@ import java.util.List;
 import okhttp3.Headers;
 import okhttp3.Request;
 
+/**Activity where user can search for comics by name from the Marvel Comics API and add them to their likes or dislikes list*/
+
 public class ComicSearchActivity extends AppCompatActivity {
 
     public static final String TAG = "ComicSearchActivity";

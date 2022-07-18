@@ -16,6 +16,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Parse class for a comic to get the comic's id, cover path, and title*/
+
 @ParseClassName("Comic")
 public class Comic extends ParseObject {
 

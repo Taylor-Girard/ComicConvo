@@ -15,6 +15,8 @@ import com.taylorgirard.comicconvo.models.Comic;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Utility file for all things related to calculating matches or loading a match's information*/
+
 public class Match {
 
     public static final String TAG = "matchUtil";

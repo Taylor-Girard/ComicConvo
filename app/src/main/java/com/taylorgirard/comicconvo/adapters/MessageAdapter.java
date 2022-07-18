@@ -23,6 +23,8 @@ import com.taylorgirard.comicconvo.viewholders.OutgoingMessageViewHolder;
 
 import java.util.List;
 
+/**Adapter that binds message objects to the messages on each individual message conversation page*/
+
 public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     private static final int MESSAGE_OUTGOING = 123;

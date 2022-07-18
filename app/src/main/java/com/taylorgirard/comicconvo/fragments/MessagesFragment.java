@@ -24,6 +24,8 @@ import com.taylorgirard.comicconvo.models.Message;
 import java.util.ArrayList;
 import java.util.List;
 
+/**Fragment where users can see their previous conversations and then go to those individual message pages*/
+
 public class MessagesFragment extends Fragment {
 
     List<Message> recents = new ArrayList<>();

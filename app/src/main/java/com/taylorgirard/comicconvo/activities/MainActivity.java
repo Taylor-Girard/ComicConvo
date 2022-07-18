@@ -39,6 +39,8 @@ import java.util.HashMap;
 import me.ibrahimsn.lib.OnItemSelectedListener;
 import me.ibrahimsn.lib.SmoothBottomBar;
 
+/**Activity that sets up the bottom navigation menu*/
+
 public class MainActivity extends AppCompatActivity {
 
     SmoothBottomBar bottomNavigationView;

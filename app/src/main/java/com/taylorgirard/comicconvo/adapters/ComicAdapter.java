@@ -45,6 +45,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+/**Adapter that binds comic object to the comic recycler view for the search*/
+
 public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> {
 
     public static final String TAG = "ComicAdapter";

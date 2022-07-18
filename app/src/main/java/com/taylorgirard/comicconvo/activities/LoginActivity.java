@@ -18,6 +18,8 @@ import com.taylorgirard.comicconvo.R;
 
 import java.util.ArrayList;
 
+/**Activity where user can login or go to a sign up page*/
+
 public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";

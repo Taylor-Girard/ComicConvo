@@ -17,6 +17,8 @@ import com.taylorgirard.comicconvo.models.Comic;
 
 import java.util.List;
 
+/**Adapter that binds comic objects to a match's liked/disliked lists on their match page*/
+
 public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.ViewHolder> {
 
     Context context;

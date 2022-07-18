@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 import okhttp3.Headers;
 
+/**Activity where user can create a pin in the Parse Pin class with a location, title, and description*/
+
 public class AddPinActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     public static final String TAG = "AddPinActivity";

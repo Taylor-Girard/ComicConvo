@@ -22,6 +22,8 @@ import com.taylorgirard.comicconvo.models.Message;
 
 import java.util.List;
 
+/**Adapter that binds message objects to the list of previous conversations on the messages page*/
+
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.ViewHolder>{
 
     Context context;

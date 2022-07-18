@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**Fragment where user can set notifications on or off and change do not disturb times*/
+
 public class SettingsFragment extends Fragment {
 
     public static final String TAG = "SettingsFragment";

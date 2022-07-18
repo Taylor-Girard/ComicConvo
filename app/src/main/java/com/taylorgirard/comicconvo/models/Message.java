@@ -4,6 +4,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+/**Parse class for a message to get its sender, receiver, and body*/
+
 @ParseClassName("Message")
 public class Message extends ParseObject {
 

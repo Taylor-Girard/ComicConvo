@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.taylorgirard.comicconvo.models.Message;
 
+
+/**Parent ViewHolder class for both incoming and outgoing messages*/
+
 public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
 
     public MessageViewHolder(@NonNull View itemView, Context context) {

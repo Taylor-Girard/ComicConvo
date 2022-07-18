@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**Utility file for all things related to converting between timezones or checking times*/
+
 public class TimeUtility {
 
     public static int deviceToUTC(int time){

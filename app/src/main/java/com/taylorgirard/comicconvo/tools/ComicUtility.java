@@ -12,6 +12,8 @@ import com.taylorgirard.comicconvo.models.Comic;
 
 import java.util.List;
 
+/**Utility file for all things related to adding comics to user lists*/
+
 public class ComicUtility {
 
     public static final String TAG = "ComicUtility";

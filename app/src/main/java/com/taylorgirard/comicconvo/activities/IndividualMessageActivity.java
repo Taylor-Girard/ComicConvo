@@ -38,6 +38,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+/**Activity where the user can message another user directly and see their messages*/
+
 public class IndividualMessageActivity extends AppCompatActivity {
 
     public static final String TAG = "IndividualMessageActivity";

@@ -14,6 +14,8 @@ import com.parse.ParseFile;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.models.Message;
 
+/**ViewHolder for incoming messages on the individual messaging page*/
+
 public class IncomingMessageViewHolder extends MessageViewHolder{
 
     ImageView imageOther;

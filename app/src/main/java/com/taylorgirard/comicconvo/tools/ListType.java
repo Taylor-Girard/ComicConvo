@@ -1,5 +1,7 @@
 package com.taylorgirard.comicconvo.tools;
 
+/**Enum for the type of comic lists a user can have*/
+
 public enum ListType {
     LIKES("Likes"),
     DISLIKES("Dislikes");
