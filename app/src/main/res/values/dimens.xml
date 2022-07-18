@@ -53,7 +53,7 @@
     <dimen name="send_padding_top">5dp</dimen>
     <dimen name="send_padding_bottom">10dp</dimen>
     <dimen name="writing_margin_top">8dp</dimen>
-    <dimen name="messages_list_height">665dp</dimen>
+    <dimen name="messages_list_height">600dp</dimen>
     <dimen name="message_image_dimen">64dp</dimen>
     <dimen name="message_type_padding">60dp</dimen>
     <dimen name="message_side_padding">15dp</dimen>
