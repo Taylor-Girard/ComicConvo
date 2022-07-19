@@ -71,27 +71,28 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        match = currentUser.getParseUser("bestMatch");
-
-        if (match == null){
+        List<ParseUser> matchList = currentUser.getList("matchList");
+        if (matchList.size() <= 0) {
             try {
                 Match.findMatch(currentUser);
-                currentUser.addUnique("matchedWith", currentUser.getParseUser("bestMatch"));
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error saving to matchedWith list", e);
-                        } else{
-                            Log.i(TAG, "Success saving to matchedWith list");
-                        }
-                    }
-                });
-                match = currentUser.getParseUser("bestMatch");
+                matchList = currentUser.getList("matchList");
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+
+        match = matchList.get(matchList.size() - 1);
+        currentUser.addUnique("matchedWith", match);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Error saving to matchedWith list", e);
+                } else{
+                    Log.i(TAG, "Success saving to matchedWith list");
+                }
+            }
+        });
 
         clMatchLayout = view.findViewById(R.id.clMatchLayout);
         tvMatchUsername = view.findViewById(R.id.tvMatchUsername);
@@ -163,12 +164,19 @@ public class MatchesFragment extends Fragment {
     public void skipMatch(){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_animation);
         clMatchLayout.startAnimation(animation);
-        try {
-            Match.findMatch(currentUser);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        List<ParseUser> matchList = currentUser.getList("matchList");
+        matchList.remove(matchList.size() - 1);
+        if (matchList.size() <= 0) {
+            try {
+                Match.findMatch(currentUser);
+                matchList =  currentUser.getList("matchList");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
-        match = currentUser.getParseUser("bestMatch");
+
+        match = matchList.get(matchList.size() - 1);
+        currentUser.put("matchList", matchList);
         currentUser.addUnique("matchedWith", match);
         currentUser.saveInBackground(new SaveCallback() {
             @Override

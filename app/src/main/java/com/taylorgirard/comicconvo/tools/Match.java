@@ -63,12 +63,6 @@ public class Match {
 
         ArrayList<PotentialMatch> matchListSorted = new ArrayList<>();
 
-        //Initialize bestMatch as the first user for now
-        //ParseUser bestMatch = userList.get(0);
-
-        //Set the highest Match score
-        //double highestMatch = -10000;
-
         //go through all of the users
         for (int i = 0; i < userList.size(); i++){
 
@@ -150,16 +144,11 @@ public class Match {
                         matchListSorted.remove(0);
                     }
 
-//                    bestMatch = potentialMatch;
-//                    highestMatch = matchScore;
                 }
 
             }
 
         }
-
-        //set user's "bestMatch" column to be highest Match user
-        //user.put("bestMatch", bestMatch);
 
         //create empty list
         ArrayList<ParseUser> matches = new ArrayList<>();
