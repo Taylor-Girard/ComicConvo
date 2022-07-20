@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -63,6 +64,8 @@ import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.AddPinActivity;
 import com.taylorgirard.comicconvo.activities.MainActivity;
@@ -87,6 +90,7 @@ public class MapFragment extends Fragment{
     CheckBox cbStore;
     CheckBox cbConvention;
     CheckBox cbMeetup;
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
     LatLng userPos;
     int radius = 0;
@@ -260,13 +264,15 @@ public class MapFragment extends Fragment{
                     return;
                 }
 
+                List<String> pinFavorites = currentUser.getList("favoritePins");
+
                 for (Pin pin: pins){
                     ParseGeoPoint location = pin.getParseGeoPoint("Location");
                     LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
                     String title = pin.getString("Title");
                     String description = null;
                     try {
-                        description = pin.getString("Description") + "\n Posted by " + pin.getParseUser("Author").fetchIfNeeded().getUsername();
+                        description = pin.getString("Description") + "\nPosted by " + pin.getParseUser("Author").fetchIfNeeded().getUsername();
                     } catch (ParseException ex) {
                         ex.printStackTrace();
                     }
@@ -291,7 +297,14 @@ public class MapFragment extends Fragment{
 
                     }
 
-                    map.addMarker(new MarkerOptions().position(position).title(title).snippet(description).icon(icon));
+                    Marker marker = map.addMarker(new MarkerOptions().position(position).title(title).snippet(description).icon(icon));
+                    if (pinFavorites.contains(pin.getObjectId())){
+                        marker.setTag("T" + pin.getObjectId());
+                    } else{
+                        marker.setTag("F" + pin.getObjectId());
+                    }
+
+
 
                     map.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
 
@@ -316,10 +329,58 @@ public class MapFragment extends Fragment{
                             snippet.setTextColor(Color.GRAY);
                             snippet.setText(marker.getSnippet());
 
+                            TextView beenTo = new TextView(getContext());
+                            if (marker.getTag().toString().charAt(0) == 'T'){
+                                beenTo.setText("I have been here");
+                                beenTo.setTextColor(Color.GREEN);
+                            } else {
+                                beenTo.setText("I have not been here");
+                                beenTo.setTextColor(Color.RED);
+                            }
+
                             info.addView(title);
                             info.addView(snippet);
+                            info.addView(beenTo);
 
                             return info;
+                        }
+                    });
+
+                    map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            if (marker.getTag().toString().charAt(0) != 'T'){
+                                String tagString = marker.getTag().toString();
+                                currentUser.addUnique("favoritePins", tagString.substring(1));
+                                currentUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null){
+                                            Log.i(TAG, "Successfully saved to favorite pins list");
+                                        } else{
+                                            Log.e(TAG, "Error saving to favorite pins list", e);
+                                        }
+                                    }
+                                });
+                                marker.setTag("F" + marker.getTag().toString().substring(1));
+                            } else {
+                                List<Object> removePins = new ArrayList<>();
+                                String tagString = marker.getTag().toString();
+                                removePins.add(tagString.substring(1));
+                                currentUser.removeAll("favoritePins", removePins);
+                                currentUser.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null){
+                                            Log.i(TAG, "Successfully saved to favorite pins list");
+                                        } else{
+                                            Log.e(TAG, "Error saving to favorite pins list", e);
+                                        }
+                                    }
+                                });
+                                marker.setTag("T" + marker.getTag().toString().substring(1));
+                            }
+                            addPins(radius, userPos);
                         }
                     });
                 }
