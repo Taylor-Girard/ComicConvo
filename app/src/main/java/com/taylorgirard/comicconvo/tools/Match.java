@@ -129,6 +129,16 @@ public class Match {
                     }
                 }
 
+                //compare the visited pins of both the user and the potential match
+                List<String> userPins = user.getList("favoritePins");
+                List<String> matchPins = potentialMatch.getList("favoritePins");
+
+                for (String p : userPins){
+                    if (matchPins.contains(p)){
+                        matchScore += 1;
+                    }
+                }
+
 
                 //if Match score is higher than the threshold, replace lowest Match user with this potential Match
                 if (matchListSorted.size() < MAX_MATCH_LIST || matchScore > minScore){
