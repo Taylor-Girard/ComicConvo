@@ -65,6 +65,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(IndividualMessageActivity.this, MainActivity.class);
+        intent.putExtra("Page", 1);
         startActivity(intent);
     }
 

@@ -32,6 +32,12 @@
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
     <string name="save_time">Save Time</string>
+    <string name="favorite_genre">Favorite Genre</string>
+    <string-array name="genre_list">
+        <item name="adventure">Adventure</item>
+        <item name="comedy">Comedy</item>
+        <item name="mystery">Mystery</item>
+    </string-array>
     <string-array name="tag_list">
         <item name="store_tag">Store</item>
         <item name="convention_tag">Convention</item>

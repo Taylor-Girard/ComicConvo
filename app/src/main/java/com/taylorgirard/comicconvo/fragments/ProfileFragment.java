@@ -19,9 +19,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,10 +62,12 @@ public class ProfileFragment extends Fragment {
     Button btnLogout;
     Button btnAboutMe;
     Button btnEditLists;
+    Spinner spGenreList;
     RecyclerView rvLikes;
     RecyclerView rvDislikes;
     List<Comic> likes;
     List<Comic> dislikes;
+    String genre = user.getString("Genre");
 
     public ProfileFragment() {
         //Empty constructor
@@ -86,6 +91,39 @@ public class ProfileFragment extends Fragment {
         btnEditLists = view.findViewById(R.id.btnEditLists);
         rvLikes = view.findViewById(R.id.rvMatchLikes);
         rvDislikes = view.findViewById(R.id.rvMatchDislikes);
+        spGenreList = view.findViewById(R.id.spGenreList);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.genre_list, android.R.layout.simple_spinner_dropdown_item);
+        spGenreList.setAdapter(adapter);
+        if(genre.equals("Adventure")){
+            spGenreList.setSelection(0);
+        } else if (genre.equals("Comedy")){
+            spGenreList.setSelection(1);
+        } else{
+            spGenreList.setSelection(2);
+        }
+        spGenreList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genre = parent.getItemAtPosition(position).toString();
+                user.put("Genre", genre);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            Log.i(TAG, "Successfully saved genre tag");
+                        } else{
+                            Log.e(TAG, "Error saving to genre tag", e);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //Set up list of likes
         List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());

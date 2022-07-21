@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
@@ -45,15 +46,28 @@ public class MainActivity extends AppCompatActivity {
 
     SmoothBottomBar bottomNavigationView;
     final FragmentManager fragmentManager = getSupportFragmentManager();
+    final Fragment[] fragment = new Fragment[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Fragment[] fragment = new Fragment[1];
-        fragment[0] = new MatchesFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        int page = getIntent().getIntExtra("Page", 10);
+
+        if (page == 0){
+            fragment[0] = new ProfileFragment();
+            bottomNavigationView.setItemActiveIndex(0);
+        }
+        else if (page == 1){
+            fragment[0] = new MessagesFragment();
+            bottomNavigationView.setItemActiveIndex(1);
+        } else{
+            fragment[0] = new MatchesFragment();
+            bottomNavigationView.setItemActiveIndex(2);
+        }
 
         bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override

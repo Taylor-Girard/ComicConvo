@@ -50,6 +50,8 @@ public class Match {
 
         //query list of all users
         ParseQuery<ParseUser> query = ParseUser.getQuery();
+        String userGenre = user.getString("Genre");
+        query.whereEqualTo("Genre", userGenre);
         List<ParseUser> userList = query.find();
 
         //list of previous matches of the current user

@@ -47,16 +47,16 @@
 
             </EditText>
 
-            <TextView
-                android:id="@+id/tvLikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/profile_start_margins"
-                android:layout_marginTop="@dimen/profile_top_margins"
-                android:text="@string/likes"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
+        <TextView
+            android:id="@+id/tvLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_start_margins"
+            android:text="@string/likes"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <TextView
                 android:id="@+id/tvDislikes"
@@ -75,7 +75,7 @@
             android:layout_height="@dimen/comic_list_height"
             android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
+            app:layout_constraintTop_toBottomOf="@+id/btnEditLists" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMatchDislikes"
@@ -85,18 +85,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
 
-            <Button
-                android:id="@+id/btnEditLists"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/profile_start_margins"
-                android:text="@string/edit"
-                app:icon="@android:drawable/ic_menu_add"
-                app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
-                app:layout_constraintStart_toEndOf="@+id/tvLikes"
-                app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
+        <Button
+            android:id="@+id/btnEditLists"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_buttons_start"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:text="@string/edit"
+            app:icon="@android:drawable/ic_menu_add"
+            app:layout_constraintStart_toEndOf="@+id/tvLikes"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <Button
+        <Button
                 android:id="@+id/btnLogout"
                 android:layout_width="@dimen/profile_logout_width"
                 android:layout_height="@dimen/clickable"
@@ -126,6 +126,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="taylor" />
+
+        <Spinner
+            android:id="@+id/spGenreList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_buttons_start"
+            app:layout_constraintBottom_toTopOf="@+id/btnEditLists"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/favorite_genre_start"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:text="@string/favorite_genre"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
