@@ -13,8 +13,11 @@ import com.taylorgirard.comicconvo.adapters.MatchListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.models.PotentialMatch;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
@@ -64,14 +67,25 @@ public class Match {
         }
 
         ArrayList<PotentialMatch> matchListSorted = new ArrayList<>();
+        Date currentDay = new Date();
 
         //go through all of the users
         for (int i = 0; i < userList.size(); i++){
 
             ParseUser potentialMatch = userList.get(i);
+            Date lastLogin = potentialMatch.getDate("lastLogin");
+            Boolean inactive = false;
+            if (lastLogin != null){
+                Instant now = currentDay.toInstant();
+                Instant login = lastLogin.toInstant();
+                long daysNotLoggedIn = ChronoUnit.DAYS.between(now, login);
+                if (daysNotLoggedIn > 30){
+                    inactive = true;
+                }
+            }
 
             //check if user has been matched to the current user before
-            if (!previousIds.contains(potentialMatch.getObjectId()) && !(potentialMatch.getObjectId().equals(user.getObjectId()))){
+            if (!previousIds.contains(potentialMatch.getObjectId()) && !(potentialMatch.getObjectId().equals(user.getObjectId())) && !inactive){
 
                 double minScore;
 

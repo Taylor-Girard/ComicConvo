@@ -27,6 +27,8 @@ import com.parse.FunctionCallback;
 import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.fragments.MapFragment;
 import com.taylorgirard.comicconvo.fragments.MatchesFragment;
@@ -35,6 +37,7 @@ import com.taylorgirard.comicconvo.fragments.ProfileFragment;
 import com.taylorgirard.comicconvo.fragments.SettingsFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import me.ibrahimsn.lib.OnItemSelectedListener;
@@ -44,12 +47,29 @@ import me.ibrahimsn.lib.SmoothBottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
+    ParseUser user = ParseUser.getCurrentUser();
     SmoothBottomBar bottomNavigationView;
+
+    public static final String TAG = "MainActivity";
     final FragmentManager fragmentManager = getSupportFragmentManager();
     final Fragment[] fragment = new Fragment[1];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Date rightNow = new Date();
+        user.put("lastLogin", rightNow);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e == null){
+                    Log.i(TAG, "Successfully saved to lastLogin date");
+                } else{
+                    Log.e(TAG, "Error saving to lastLogin date");
+                }
+            }
+        });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
