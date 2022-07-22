@@ -13,13 +13,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**Parse class for a comic to get the comic's id, cover path, and title*/
 
 @ParseClassName("Comic")
-public class Comic extends ParseObject {
+public class Comic extends ParseObject implements Serializable {
 
     String coverPath;
     String title;

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.activities.IndividualMessageActivity;
+import com.taylorgirard.comicconvo.activities.MainActivity;
 import com.taylorgirard.comicconvo.models.Message;
 
 import java.util.List;

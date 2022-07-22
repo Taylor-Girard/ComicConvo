@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,8 @@ public class ComicSearchActivity extends AppCompatActivity {
 
     List<Comic> comics;
     SearchView svComicSearch;
+    List<Comic> likes;
+    List<Comic> dislikes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class ComicSearchActivity extends AppCompatActivity {
         RecyclerView rvComicList = findViewById(R.id.rvComicList);
         svComicSearch = findViewById(R.id.svComicSearch);
         comics = new ArrayList<>();
+
+        likes = getIntent().getParcelableExtra("Likes");
+        dislikes = (List<Comic>) getIntent().getSerializableExtra("Dislikes");
 
         final ComicAdapter comicAdapter = new ComicAdapter(this, comics);
         rvComicList.setAdapter(comicAdapter);
@@ -115,4 +122,20 @@ public class ComicSearchActivity extends AppCompatActivity {
         });
     }
 
+//    public void addLikes(Comic comic){
+//        likes.add(comic);
+//    }
+//
+//    public void addDislikes(Comic comic){
+//        dislikes.add(comic);
+//    }
+//
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent();
+//        intent.putExtra("Likes", (Serializable) likes);
+//        intent.putExtra("Dislikes", (Serializable) dislikes);
+//        setResult(Activity.RESULT_OK, intent);
+//        finish();
+//    }
 }

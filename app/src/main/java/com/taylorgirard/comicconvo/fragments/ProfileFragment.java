@@ -8,6 +8,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -41,9 +45,11 @@ import com.taylorgirard.comicconvo.activities.LoginActivity;
 import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.adapters.UserListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
+import com.taylorgirard.comicconvo.tools.Match;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +74,8 @@ public class ProfileFragment extends Fragment {
     List<Comic> likes;
     List<Comic> dislikes;
     String genre;
+    UserListAdapter comicAdapterDislikes;
+    UserListAdapter comicAdapterLikes;
 
     public ProfileFragment() {
         //Empty constructor
@@ -106,6 +114,9 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ComicSearchActivity.class);
                 startActivity(intent);
+//                intent.putExtra("Likes", (Serializable) likes);
+//                intent.putExtra("Dislikes", (Serializable) dislikes);
+//                activityResultLauncher.launch(intent);
             }
         });
 
@@ -206,6 +217,11 @@ public class ProfileFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 genre = parent.getItemAtPosition(position).toString();
                 user.put("Genre", genre);
+                try {
+                    Match.findMatch(user);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 user.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -234,7 +250,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
+        comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
         rvDislikes.setAdapter(comicAdapterDislikes);
         rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
@@ -248,7 +264,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
+        comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
         rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
 
@@ -263,6 +279,24 @@ public class ProfileFragment extends Fragment {
         etAboutMe.setText(AboutMe);
 
     }
+
+//    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+//            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//                @Override
+//                public void onActivityResult(ActivityResult result) {
+//                    if (result.getResultCode() == Activity.RESULT_OK) {
+//                        Intent data = result.getData();
+//                        List<Comic> newLikes = (List<Comic>) data.getSerializableExtra("Likes");
+//                        List<Comic> newDislikes = (List<Comic>)data.getSerializableExtra("Dislikes");
+//                        likes.clear();
+//                        likes.addAll(newLikes);
+//                        dislikes.clear();
+//                        dislikes.addAll(newDislikes);
+//                        comicAdapterDislikes.notifyDataSetChanged();
+//                        comicAdapterLikes.notifyDataSetChanged();
+//                    }
+//                }
+//            });
 
     public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;
