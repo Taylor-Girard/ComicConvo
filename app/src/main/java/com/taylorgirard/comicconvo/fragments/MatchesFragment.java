@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -71,26 +72,32 @@ public class MatchesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        match = currentUser.getParseUser("bestMatch");
-
-        if (match == null){
+        List<ParseUser> matchList = currentUser.getList("matchList");
+        if (matchList.size() <= 0) {
             try {
                 Match.findMatch(currentUser);
-                currentUser.addUnique("matchedWith", currentUser.getParseUser("bestMatch"));
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e != null){
-                            Log.e(TAG, "Error saving to matchedWith list", e);
-                        } else{
-                            Log.i(TAG, "Success saving to matchedWith list");
-                        }
-                    }
-                });
-                match = currentUser.getParseUser("bestMatch");
+                matchList = currentUser.getList("matchList");
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (matchList.size() > 0) {
+            match = matchList.get(matchList.size() - 1);
+            currentUser.addUnique("matchedWith", match);
+            currentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error saving to matchedWith list", e);
+                    } else {
+                        Log.i(TAG, "Success saving to matchedWith list");
+                    }
+                }
+            });
+        } else {
+            match = currentUser;
+            Toast.makeText(getContext(), "No more matches are available!", Toast.LENGTH_SHORT).show();
         }
 
         clMatchLayout = view.findViewById(R.id.clMatchLayout);
@@ -163,23 +170,36 @@ public class MatchesFragment extends Fragment {
     public void skipMatch(){
         Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_animation);
         clMatchLayout.startAnimation(animation);
-        try {
-            Match.findMatch(currentUser);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        List<ParseUser> matchList = currentUser.getList("matchList");
+        if (matchList.size() > 0){
+            matchList.remove(matchList.size() - 1);
         }
-        match = currentUser.getParseUser("bestMatch");
-        currentUser.addUnique("matchedWith", match);
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null){
-                    Log.d(TAG, "Successfully saved to match list");
-                } else{
-                    Log.e(TAG, "Error saving to match list", e);
-                }
+        if (matchList.size() <= 0) {
+            try {
+                Match.findMatch(currentUser);
+                matchList =  currentUser.getList("matchList");
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+        }
+
+        if (matchList.size() > 0) {
+            match = matchList.get(matchList.size() - 1);
+            currentUser.addUnique("matchedWith", match);
+            currentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        Log.e(TAG, "Error saving to matchedWith list", e);
+                    } else {
+                        Log.i(TAG, "Success saving to matchedWith list");
+                    }
+                }
+            });
+        } else {
+            match = currentUser;
+            Toast.makeText(getContext(), "No more matches are available!", Toast.LENGTH_SHORT).show();
+        }
         loadInfo();
     }
 

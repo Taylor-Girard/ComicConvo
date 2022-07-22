@@ -14,9 +14,11 @@ import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**Activity where user can login or go to a sign up page*/
 
