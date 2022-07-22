@@ -38,6 +38,12 @@ public class MessagesFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        makeMessageList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -49,16 +55,19 @@ public class MessagesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvMessageList = view.findViewById(R.id.rvMessageList);
-        makeMessageList();
 
         adapter = new MessageListAdapter(getContext(), recents);
         rvMessageList.setAdapter(adapter);
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvMessageList.setLayoutManager(linearLayoutManager);
+
+        makeMessageList();
     }
 
     public void makeMessageList(){
+
+        recents.clear();
 
         List<ParseUser> messaged = user.getList("Messaged");
         for (ParseUser match: messaged){
@@ -84,6 +93,8 @@ public class MessagesFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+
+        adapter.notifyDataSetChanged();
 
     }
 }

@@ -62,13 +62,6 @@ public class IndividualMessageActivity extends AppCompatActivity {
         loadMessages();
     }
 
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(IndividualMessageActivity.this, MainActivity.class);
-        intent.putExtra("Page", 1);
-        startActivity(intent);
-    }
-
     void setupMessagePosting(){
         etMessage = findViewById(R.id.etMessage);
         ibSend = findViewById(R.id.ibSend);

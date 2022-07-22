@@ -67,10 +67,16 @@ public class ProfileFragment extends Fragment {
     RecyclerView rvDislikes;
     List<Comic> likes;
     List<Comic> dislikes;
-    String genre = user.getString("Genre");
+    String genre;
 
     public ProfileFragment() {
         //Empty constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadInformation();
     }
 
     @Override
@@ -93,75 +99,7 @@ public class ProfileFragment extends Fragment {
         rvDislikes = view.findViewById(R.id.rvMatchDislikes);
         spGenreList = view.findViewById(R.id.spGenreList);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.genre_list, android.R.layout.simple_spinner_dropdown_item);
-        spGenreList.setAdapter(adapter);
-        if(genre.equals("Adventure")){
-            spGenreList.setSelection(0);
-        } else if (genre.equals("Comedy")){
-            spGenreList.setSelection(1);
-        } else{
-            spGenreList.setSelection(2);
-        }
-        spGenreList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                genre = parent.getItemAtPosition(position).toString();
-                user.put("Genre", genre);
-                user.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null){
-                            Log.i(TAG, "Successfully saved genre tag");
-                        } else{
-                            Log.e(TAG, "Error saving to genre tag", e);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //Set up list of likes
-        List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());
-
-        dislikes = new ArrayList<Comic>();
-        try {
-            dislikes.addAll(Comic.fromParseArray(userDislikes));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
-        rvDislikes.setAdapter(comicAdapterDislikes);
-        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
-
-        //Set up list of dislikes
-        List<Comic> userLikes = user.getList(ListType.LIKES.toString());
-
-        likes = new ArrayList<Comic>();
-        try {
-            likes.addAll(Comic.fromParseArray(userLikes));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
-        rvLikes.setAdapter(comicAdapterLikes);
-        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
-
-        tvUsername.setText(user.getUsername());
-
-        ParseFile profilePic = user.getParseFile("profilePic");
-        if (profilePic != null) {
-            Glide.with(getContext()).load(profilePic.getUrl()).transform(new CircleCrop()).into(ivUserProfile);
-        }
-
-        String AboutMe = user.getString("aboutMe");
-        etAboutMe.setText(AboutMe);
+        loadInformation();
 
         btnEditLists.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,6 +188,80 @@ public class ProfileFragment extends Fragment {
                 });
             }
         }
+    }
+
+    public void loadInformation(){
+        genre = user.getString("Genre");
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.genre_list, android.R.layout.simple_spinner_dropdown_item);
+        spGenreList.setAdapter(adapter);
+        if(genre.equals("Adventure")){
+            spGenreList.setSelection(0);
+        } else if (genre.equals("Comedy")){
+            spGenreList.setSelection(1);
+        } else{
+            spGenreList.setSelection(2);
+        }
+        spGenreList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                genre = parent.getItemAtPosition(position).toString();
+                user.put("Genre", genre);
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            Log.i(TAG, "Successfully saved genre tag");
+                        } else{
+                            Log.e(TAG, "Error saving to genre tag", e);
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //Set up list of likes
+        List<Comic> userDislikes = user.getList(ListType.DISLIKES.toString());
+
+        dislikes = new ArrayList<Comic>();
+        try {
+            dislikes.addAll(Comic.fromParseArray(userDislikes));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        final UserListAdapter comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
+        rvDislikes.setAdapter(comicAdapterDislikes);
+        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+
+        //Set up list of dislikes
+        List<Comic> userLikes = user.getList(ListType.LIKES.toString());
+
+        likes = new ArrayList<Comic>();
+        try {
+            likes.addAll(Comic.fromParseArray(userLikes));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        final UserListAdapter comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
+        rvLikes.setAdapter(comicAdapterLikes);
+        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+
+        tvUsername.setText(user.getUsername());
+
+        ParseFile profilePic = user.getParseFile("profilePic");
+        if (profilePic != null) {
+            Glide.with(getContext()).load(profilePic.getUrl()).transform(new CircleCrop()).into(ivUserProfile);
+        }
+
+        String AboutMe = user.getString("aboutMe");
+        etAboutMe.setText(AboutMe);
+
     }
 
     public Bitmap loadFromUri(Uri photoUri) {

@@ -74,20 +74,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        int page = getIntent().getIntExtra("Page", 10);
-
-        if (page == 0){
-            fragment[0] = new ProfileFragment();
-            bottomNavigationView.setItemActiveIndex(0);
-        }
-        else if (page == 1){
-            fragment[0] = new MessagesFragment();
-            bottomNavigationView.setItemActiveIndex(1);
-        } else{
-            fragment[0] = new MatchesFragment();
-            bottomNavigationView.setItemActiveIndex(2);
-        }
+        fragment[0] = new MatchesFragment();
 
         bottomNavigationView.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
