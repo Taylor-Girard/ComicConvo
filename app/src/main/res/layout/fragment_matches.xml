@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/profile_start_margins"
         android:layout_marginTop="@dimen/profile_top_margins"
+        android:fontFamily="@font/mouse_memoirs"
         android:text="@string/about_me"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivMatchProfile" />
@@ -47,7 +49,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/profile_start_margins"
         android:layout_marginTop="@dimen/profile_top_margins"
+        android:fontFamily="@font/mouse_memoirs"
         android:text="@string/likes"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAboutMatch" />
@@ -58,7 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/image_margin_start"
         android:layout_marginTop="@dimen/image_margin_top"
+        android:fontFamily="@font/mouse_memoirs"
         android:text="@string/dislikes"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
@@ -107,6 +113,8 @@
         android:id="@+id/tvMatchUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/mouse_memoirs"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

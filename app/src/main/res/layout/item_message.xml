@@ -18,6 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/name_margin_left"
+        android:fontFamily="@font/mouse_memoirs"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/ivMatchPhoto"
         app:layout_constraintTop_toTopOf="parent"

@@ -14,23 +14,26 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/toggle_margin_top"
         android:ellipsize="none"
+        android:fontFamily="@font/mouse_memoirs"
         android:scaleX="1"
         android:scaleY="1"
         android:text="@string/notification_toggle"
-        android:textSize="30sp" />
+        android:textColor="#808080"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvDoNotDisturb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/swNotifications"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/label_margins"
         android:layout_marginTop="@dimen/label_margins"
         android:layout_marginEnd="@dimen/label_margins"
         android:layout_marginBottom="@dimen/label_margins"
+        android:fontFamily="@font/mouse_memoirs"
         android:text="@string/do_not_disturb"
-        android:textSize="20sp"
+        android:textColor="#808080"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
     <EditText
@@ -60,7 +63,10 @@
         android:layout_marginTop="@dimen/label_margins"
         android:layout_marginEnd="@dimen/label_margins"
         android:layout_marginBottom="@dimen/label_margins"
-        android:text="@string/start_time" />
+        android:fontFamily="@font/mouse_memoirs"
+        android:text="@string/start_time"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textView3"
@@ -68,10 +74,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/etTimeEnd"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/label_margins"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="67dp"
-        android:text="@string/end_time" />
+        android:layout_marginStart="@dimen/label_margins"
+        android:layout_marginTop="@dimen/label_margins"
+        android:layout_marginEnd="@dimen/label_margins"
+        android:layout_marginBottom="@dimen/label_margins"
+        android:fontFamily="@font/mouse_memoirs"
+        android:text="@string/end_time"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnChangeTime"

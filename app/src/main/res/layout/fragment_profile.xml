@@ -25,15 +25,17 @@
             tools:src="@tools:sample/avatars" />
 
         <TextView
-                android:id="@+id/tvAboutMe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/profile_start_margins"
-                android:layout_marginTop="@dimen/profile_top_margins"
-                android:text="@string/about_me"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
+            android:id="@+id/tvAboutMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_start_margins"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:fontFamily="@font/mouse_memoirs"
+            android:text="@string/about_me"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
 
             <EditText
                 android:id="@+id/etAboutMe"
@@ -52,22 +54,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/profile_start_margins"
+            android:fontFamily="@font/mouse_memoirs"
             android:text="@string/likes"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-            <TextView
-                android:id="@+id/tvDislikes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/profile_start_margins"
-                android:layout_marginTop="@dimen/profile_top_margins"
-                android:text="@string/dislikes"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
+        <TextView
+            android:id="@+id/tvDislikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_start_margins"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:fontFamily="@font/mouse_memoirs"
+            android:text="@string/dislikes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMatchLikes"
@@ -122,6 +128,8 @@
             android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/mouse_memoirs"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +151,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/favorite_genre_start"
             android:layout_marginTop="@dimen/profile_top_margins"
+            android:fontFamily="@font/mouse_memoirs"
             android:text="@string/favorite_genre"
+            android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etAboutMe" />
