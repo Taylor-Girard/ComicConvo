@@ -17,8 +17,10 @@
         android:layout_alignTop="@+id/ivProfileOther"
         android:layout_marginLeft="@dimen/name_margin_left"
         android:layout_toRightOf="@+id/ivProfileOther"
+        android:fontFamily="@font/mouse_memoirs"
         android:paddingBottom="@dimen/name_padding_bottom"
-        android:text="Johny Lindsey" />
+        android:text="Johny Lindsey"
+        android:textSize="20sp" />
 
     <ImageView
         android:id="@+id/ivProfileOther"

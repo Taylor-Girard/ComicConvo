@@ -65,8 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top_tag"
         android:layout_marginEnd="@dimen/margin_sides_pins"
+        android:fontFamily="@font/mouse_memoirs"
         android:text="@string/Tag"
-        android:textSize="20sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/spTag"
         app:layout_constraintTop_toBottomOf="@+id/etPinDescription" />
 
