@@ -29,6 +29,7 @@
     <dimen name="profile_logout_width">85dp</dimen>
     <dimen name="profile_buttons_start">36dp</dimen>
     <dimen name="favorite_genre_start">10dp</dimen>
+    <dimen name="search_button_top">10dp</dimen>
 
     <!--Comic items-->
     <dimen name="cover_width_search">200dp</dimen>

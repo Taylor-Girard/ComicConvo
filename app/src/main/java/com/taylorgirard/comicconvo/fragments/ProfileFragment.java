@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -65,9 +66,9 @@ public class ProfileFragment extends Fragment {
     TextView tvUsername;
     ImageView ivUserProfile;
     EditText etAboutMe;
-    Button btnLogout;
-    Button btnAboutMe;
-    Button btnEditLists;
+    ImageButton btnLogout;
+    ImageButton btnAboutMe;
+    ImageButton btnEditLists;
     Spinner spGenreList;
     RecyclerView rvLikes;
     RecyclerView rvDislikes;
@@ -213,15 +214,11 @@ public class ProfileFragment extends Fragment {
             spGenreList.setSelection(2);
         }
         spGenreList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 genre = parent.getItemAtPosition(position).toString();
                 user.put("Genre", genre);
-                try {
-                    Match.findMatch(user);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
                 user.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

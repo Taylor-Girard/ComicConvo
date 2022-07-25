@@ -92,37 +92,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
 
-        <Button
+        <ImageButton
             android:id="@+id/btnEditLists"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/profile_buttons_start"
-            android:layout_marginTop="@dimen/profile_top_margins"
+            android:layout_width="@dimen/clickable"
+            android:layout_height="@dimen/clickable"
+            android:layout_marginTop="@dimen/search_button_top"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_baseline_manage_search_24"
             android:text="@string/edit"
             app:icon="@android:drawable/ic_menu_add"
             app:layout_constraintStart_toEndOf="@+id/tvLikes"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="@dimen/profile_logout_width"
-                android:layout_height="@dimen/clickable"
-                android:layout_marginTop="@dimen/profile_logout_top"
-                android:text="@string/logout"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivUserProfile"
-                app:layout_constraintTop_toTopOf="parent" />
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="@dimen/profile_logout_width"
+            android:layout_height="@dimen/clickable"
+            android:layout_marginTop="@dimen/profile_logout_top"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_baseline_logout_24"
+            android:text="@string/logout"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/btnAboutMe"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/clickable"
-                android:layout_marginTop="@dimen/profile_about_me"
-                android:text="@string/submit"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/etAboutMe"
-                app:layout_constraintTop_toBottomOf="@+id/tvAboutMe" />
+        <ImageButton
+            android:id="@+id/btnAboutMe"
+            android:layout_width="@dimen/clickable"
+            android:layout_height="@dimen/clickable"
+            android:layout_marginTop="@dimen/profile_about_me"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_baseline_check_24"
+            android:text="@string/submit"
+            app:layout_constraintStart_toEndOf="@+id/etAboutMe"
+            app:layout_constraintTop_toBottomOf="@+id/tvAboutMe" />
 
         <TextView
             android:id="@+id/tvUsername"
