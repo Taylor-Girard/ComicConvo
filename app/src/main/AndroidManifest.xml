@@ -9,13 +9,11 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -38,7 +36,16 @@
         android:theme="@style/Theme.ComicConvo"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.AddPinActivity"
             android:exported="false" />
@@ -68,11 +75,6 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data
@@ -81,24 +83,27 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-
-        <meta-data android:name="com.parse.push.gcm_sender_id"
+        <meta-data
+            android:name="com.parse.push.gcm_sender_id"
             android:value="389146853598" />
 
-        <service android:name="com.parse.fcm.ParseFirebaseMessagingService" android:exported="false">
+        <service
+            android:name="com.parse.fcm.ParseFirebaseMessagingService"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <receiver android:name="com.parse.ParsePushBroadcastReceiver" android:exported="false">
+        <receiver
+            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
                 <action android:name="com.parse.push.intent.OPEN" />
                 <action android:name="com.parse.push.intent.DELETE" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
