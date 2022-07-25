@@ -51,9 +51,11 @@
             android:exported="false" />
         <activity
             android:name=".activities.IndividualMessageActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".activities.ComicSearchActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
 
         <provider
