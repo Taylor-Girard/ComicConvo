@@ -11,7 +11,6 @@
 Keeps track of users' likes/dislikes with the comics they read and matches them with others to trade and talk about comics. Can be used to meet others while enjoying your favorite heroes!
 
 ### App Evaluation
-[Evaluation of your app across the following attributes]
 - **Category:** Social networking
 - **Mobile:** App will be made for mobile but may be applicable to a web environment. Mobile version may look smoother or have swiping feature.
 - **Story:** User can list out their comic preferences and is matched with others with similar preferences. Users can then message these people and keep a log of their conversations.
