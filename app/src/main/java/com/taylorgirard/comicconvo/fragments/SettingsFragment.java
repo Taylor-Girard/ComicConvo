@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.text.format.Time;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,23 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.taylorgirard.comicconvo.R;
 import com.taylorgirard.comicconvo.tools.TimeUtility;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
-import java.time.ZoneId;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 /**Fragment where user can set notifications on or off and change do not disturb times*/
 
@@ -39,9 +35,11 @@ public class SettingsFragment extends Fragment {
     public static final String TAG = "SettingsFragment";
 
     Switch swNotifications;
-    Button btnChangeTime;
-    EditText etTimeStart;
-    EditText etTimeEnd;
+    ImageButton btnChangeStart;
+    ImageButton btnChangeEnd;
+    Button btnClear;
+    TextView tvTimeStart;
+    TextView tvTimeEnd;
     ParseUser user;
 
     public SettingsFragment() {
@@ -59,48 +57,103 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         swNotifications = view.findViewById(R.id.swNotifications);
-        btnChangeTime = view.findViewById(R.id.btnChangeTime);
-        etTimeStart = view.findViewById(R.id.etTimeStart);
-        etTimeEnd = view.findViewById(R.id.etTimeEnd);
+        btnChangeStart = view.findViewById(R.id.btnChangeStart);
+        btnChangeEnd = view.findViewById(R.id.btnChangeEnd);
+        tvTimeStart = view.findViewById(R.id.tvTimeStart);
+        tvTimeEnd = view.findViewById(R.id.tvTimeEnd);
+        btnClear = view.findViewById(R.id.btnClear);
 
         user = ParseUser.getCurrentUser();
 
-        if (user.getNumber("StartDND") != null && user.getNumber("EndDND") != null){
+        if (user.getNumber("StartDND") != null && !user.getNumber("StartDND").equals("")){
             int timeStart = user.getNumber("StartDND").intValue();
+            tvTimeStart.setText(Integer.toString(TimeUtility.UTCtoDevice(timeStart)));
+        } else {
+            tvTimeStart.setText("Set a start time!");
+        }
+        if (user.getNumber("EndDND") != null){
             int timeEnd = user.getNumber("EndDND").intValue();
-            etTimeStart.setText(Integer.toString(TimeUtility.UTCtoDevice(timeStart)));
-            etTimeEnd.setText(Integer.toString(TimeUtility.UTCtoDevice(timeEnd)));
+            tvTimeEnd.setText(Integer.toString(TimeUtility.UTCtoDevice(timeEnd)));
+        } else {
+            tvTimeEnd.setText("Set an end time!");
         }
 
-        btnChangeTime.setOnClickListener(new View.OnClickListener() {
+        btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    int startTime = Integer.parseInt(etTimeStart.getText().toString());
-                    int endTime = Integer.parseInt(etTimeEnd.getText().toString());
-                    if (startTime < 0 || endTime >= 24 || startTime == endTime){
-                        throw new Exception();
+                user.put("StartDND", "");
+                user.put("EndDND", "");
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null){
+                            Log.i(TAG, "Successfully cleared DND times");
+                        } else{
+                            Log.e(TAG, "Error clearing DND times", e);
+                        }
                     }
+                });
+                tvTimeStart.setText("Set a start time!");
+                tvTimeEnd.setText("Set an end time!");
+            }
+        });
 
-                    int intStart = TimeUtility.deviceToUTC(startTime);
-                    int intEnd = TimeUtility.deviceToUTC(endTime);
+        btnChangeStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    user.put("StartDND", intStart);
-                    user.put("EndDND", intEnd);
-                    user.saveInBackground(new SaveCallback() {
+                TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+                        tvTimeStart.setText(hourOfDay + "");
+                        if (tvTimeEnd.getText().equals("Set an end time!")){
+                            Toast.makeText(getContext(), "Set end time to set up Do Not Disturb!", Toast.LENGTH_SHORT).show();
+                        }
+                        int intStart = TimeUtility.deviceToUTC(hourOfDay);
+                        user.put("StartDND", intStart);
+                        user.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
                             if (e == null){
-                                Log.i(TAG, "Successfully saved DND times");
+                                Log.i(TAG, "Successfully saved start time");
                             } else {
-                                Log.e(TAG, "Error saving DND times", e);
+                                Log.e(TAG, "Error saving start time", e);
                             }
                         }
                     });
+                    }
+                }, new Date().getHours(), new Date().getMinutes(), true);
+                timePickerDialog.enableMinutes(false);
+                timePickerDialog.show(getFragmentManager(), "TimePickerDialog");
+            }
+        });
 
-                } catch(Exception e){
-                    Toast.makeText(getContext(), "Enter valid hours (24 hour format)", Toast.LENGTH_SHORT).show();
-                }
+        btnChangeEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePickerDialog = TimePickerDialog.newInstance(new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+                        tvTimeEnd.setText(hourOfDay + "");
+                        if (tvTimeStart.getText().equals("Set a start time!")){
+                            Toast.makeText(getContext(), "Set start time to set up Do Not Disturb!", Toast.LENGTH_SHORT).show();
+                        }
+                        int intEnd = TimeUtility.deviceToUTC(hourOfDay);
+                        user.put("EndDND", intEnd);
+                        user.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null){
+                                    Log.i(TAG, "Successfully saved end time");
+                                } else {
+                                    Log.e(TAG, "Error saving end time", e);
+                                }
+                            }
+                        });
+                    }
+                }, new Date().getHours(), new Date().getMinutes(), true);
+                timePickerDialog.enableMinutes(false);
+                timePickerDialog.show(getFragmentManager(), "TimePickerDialog");
             }
         });
 

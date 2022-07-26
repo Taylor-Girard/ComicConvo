@@ -33,6 +33,7 @@
     <string name="end_time">End Hour</string>
     <string name="save_time">Save Time</string>
     <string name="favorite_genre">Favorite Genre</string>
+    <string name="clear">Clear</string>
     <string-array name="genre_list">
         <item name="adventure">Adventure</item>
         <item name="comedy">Comedy</item>

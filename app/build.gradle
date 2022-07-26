@@ -43,6 +43,8 @@ ext {
 
 dependencies {
 
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+
     implementation "com.github.parse-community.Parse-SDK-Android:fcm:4.0.0"
     implementation 'com.parse.bolts:bolts-android:1.4.0'
 
