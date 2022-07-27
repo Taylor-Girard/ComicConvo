@@ -9,7 +9,7 @@
     <FrameLayout
         android:id="@+id/flContainer"
         android:layout_width="match_parent"
-        android:layout_height="680dp"
+        android:layout_height="@dimen/frame_layout_height"
         android:layout_above="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,7 +18,7 @@
     <me.ibrahimsn.lib.SmoothBottomBar
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height='@dimen/bottom_navigation_height'
         android:layout_alignParentBottom="true"
         app:activeItem="2"
         app:backgroundColor="#6521DD"

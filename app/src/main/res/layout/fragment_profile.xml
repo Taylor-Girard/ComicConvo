@@ -54,12 +54,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/profile_start_margins"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/profile_top_margins"
             android:fontFamily="@font/mouse_memoirs"
             android:text="@string/likes"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/rvMatchLikes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -80,7 +79,7 @@
             android:id="@+id/cvLikesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/comic_border_radius"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintTop_toBottomOf="@+id/btnEditLists">
@@ -97,7 +96,7 @@
             android:id="@+id/cvDislikesList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/comic_border_radius"
             android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintTop_toBottomOf="@+id/tvDislikes"
             app:layout_constraintBottom_toBottomOf="parent"

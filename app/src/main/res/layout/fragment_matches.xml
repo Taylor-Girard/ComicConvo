@@ -78,7 +78,7 @@
             android:id="@+id/cvMatchLikes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/comic_border_radius"
             android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLikes">
@@ -95,7 +95,7 @@
             android:id="@+id/cvMatchDislikes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
+            app:cardCornerRadius="@dimen/comic_border_radius"
             android:layout_margin="@dimen/comic_list_margins"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDislikes">

@@ -45,7 +45,6 @@ import java.util.List;
 public class MatchesFragment extends Fragment {
 
     public static final String TAG = "Matches Fragment";
-    public static final int LIST_COLUMNS = 2;
 
     ScrollView clMatchLayout;
     TextView tvMatchUsername;
@@ -182,6 +181,8 @@ public class MatchesFragment extends Fragment {
         List<ParseUser> matchList = currentUser.getList("matchList");
         if (matchList.size() > 0){
             matchList.remove(matchList.size() - 1);
+            currentUser.put("matchList", matchList);
+            currentUser.saveInBackground();
         }
         if (matchList.size() <= 0) {
             try {

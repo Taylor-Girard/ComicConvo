@@ -121,21 +121,4 @@ public class ComicSearchActivity extends AppCompatActivity {
             }
         });
     }
-
-//    public void addLikes(Comic comic){
-//        likes.add(comic);
-//    }
-//
-//    public void addDislikes(Comic comic){
-//        dislikes.add(comic);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        Intent intent = new Intent();
-//        intent.putExtra("Likes", (Serializable) likes);
-//        intent.putExtra("Dislikes", (Serializable) dislikes);
-//        setResult(Activity.RESULT_OK, intent);
-//        finish();
-//    }
 }

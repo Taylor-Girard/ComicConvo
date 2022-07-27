@@ -116,7 +116,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                         Toast.makeText(context, "You already have the max amount of likes!", Toast.LENGTH_SHORT).show();
                     } else {
                         ComicUtility.addComic(comic, user, ListType.LIKES);
-//                        activity.addLikes(comic);
                     }
                 }
             });
@@ -132,7 +131,6 @@ public class ComicAdapter extends RecyclerView.Adapter<ComicAdapter.ViewHolder> 
                         Toast.makeText(context, "You already have the max amount of dislikes!", Toast.LENGTH_SHORT).show();
                     } else {
                         ComicUtility.addComic(comic, user, ListType.DISLIKES);
-//                        activity.addDislikes(comic);
                     }
                 }
             });

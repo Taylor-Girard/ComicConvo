@@ -59,9 +59,9 @@ public class ComicUtility {
                 @Override
                 public void done(ParseException e) {
                     if (e != null) {
-                        Log.e(TAG, "Error while saving to dislikes", e);
+                        Log.e(TAG, "Error while saving to comic list", e);
                     } else {
-                        Log.d(TAG, "Successfully saved dislikes");
+                        Log.d(TAG, "Successfully saved to comic list");
                     }
                 }
             });

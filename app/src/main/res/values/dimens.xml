@@ -31,6 +31,7 @@
     <dimen name="profile_buttons_start">36dp</dimen>
     <dimen name="favorite_genre_start">10dp</dimen>
     <dimen name="search_button_top">10dp</dimen>
+    <dimen name="comic_border_radius">10dp</dimen>
 
     <!--Comic items-->
     <dimen name="cover_width_search">200dp</dimen>
@@ -51,6 +52,7 @@
 
     <!--Navigation-->
     <dimen name="bottom_navigation_height">50dp</dimen>
+    <dimen name="frame_layout_height">680dp</dimen>
 
     <!--Messages-->
     <dimen name="send_margin_right">10dp</dimen>

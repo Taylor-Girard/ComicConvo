@@ -64,7 +64,6 @@ public class ProfileFragment extends Fragment {
 
     public static final String TAG = "ProfileFragment";
     public static final int PICK_IMAGE = 1;
-    public static final int LIST_COLUMNS = 2;
 
     ParseUser user = ParseUser.getCurrentUser();
     TextView tvUsername;

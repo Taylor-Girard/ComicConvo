@@ -71,10 +71,6 @@ public class Comic extends ParseObject implements Serializable {
 
     }
 
-    public String getBasicPath(){
-        return basicPath;
-    }
-
     public String getCoverPath(){
         return coverPath;
     }

@@ -215,11 +215,7 @@ public class IndividualMessageActivity extends AppCompatActivity {
             });
         });
 
-
-        // get the latest 50 messages, order will show up newest to oldest of this group
         finalQuery.orderByDescending("createdAt");
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
         finalQuery.findInBackground(new FindCallback<Message>() {
             @Override
             public void done(List<Message> newMessages, ParseException e) {
