@@ -15,7 +15,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
@@ -29,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +50,7 @@ import com.taylorgirard.comicconvo.tools.ListType;
 import com.taylorgirard.comicconvo.adapters.UserListAdapter;
 import com.taylorgirard.comicconvo.models.Comic;
 import com.taylorgirard.comicconvo.tools.Match;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -115,9 +119,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ComicSearchActivity.class);
                 startActivity(intent);
-//                intent.putExtra("Likes", (Serializable) likes);
-//                intent.putExtra("Dislikes", (Serializable) dislikes);
-//                activityResultLauncher.launch(intent);
             }
         });
 
@@ -249,7 +250,10 @@ public class ProfileFragment extends Fragment {
 
         comicAdapterDislikes = new UserListAdapter(getContext(), dislikes, ListType.DISLIKES);
         rvDislikes.setAdapter(comicAdapterDislikes);
-        rvDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+        LinearLayoutManager layoutManagerDislikes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvDislikes.setLayoutManager(layoutManagerDislikes);
+        DividerItemDecoration dividerItemDecorationDislikes = new DividerItemDecoration(rvDislikes.getContext(), layoutManagerDislikes.getOrientation());
+        rvDislikes.addItemDecoration(dividerItemDecorationDislikes);
 
         //Set up list of dislikes
         List<Comic> userLikes = user.getList(ListType.LIKES.toString());
@@ -263,7 +267,10 @@ public class ProfileFragment extends Fragment {
 
         comicAdapterLikes = new UserListAdapter(getContext(), likes, ListType.LIKES);
         rvLikes.setAdapter(comicAdapterLikes);
-        rvLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+        LinearLayoutManager layoutManagerLikes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvLikes.setLayoutManager(layoutManagerLikes);
+        DividerItemDecoration dividerItemDecorationLikes = new DividerItemDecoration(rvLikes.getContext(), layoutManagerLikes.getOrientation());
+        rvLikes.addItemDecoration(dividerItemDecorationLikes);
 
         tvUsername.setText(user.getUsername());
 
@@ -276,24 +283,6 @@ public class ProfileFragment extends Fragment {
         etAboutMe.setText(AboutMe);
 
     }
-
-//    ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-//            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//                @Override
-//                public void onActivityResult(ActivityResult result) {
-//                    if (result.getResultCode() == Activity.RESULT_OK) {
-//                        Intent data = result.getData();
-//                        List<Comic> newLikes = (List<Comic>) data.getSerializableExtra("Likes");
-//                        List<Comic> newDislikes = (List<Comic>)data.getSerializableExtra("Dislikes");
-//                        likes.clear();
-//                        likes.addAll(newLikes);
-//                        dislikes.clear();
-//                        dislikes.addAll(newDislikes);
-//                        comicAdapterDislikes.notifyDataSetChanged();
-//                        comicAdapterLikes.notifyDataSetChanged();
-//                    }
-//                }
-//            });
 
     public Bitmap loadFromUri(Uri photoUri) {
         Bitmap image = null;

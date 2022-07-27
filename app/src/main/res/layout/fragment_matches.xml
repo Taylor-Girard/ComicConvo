@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/clMatchLayout"
@@ -7,120 +7,144 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/ivMatchProfile"
-        android:layout_width="@dimen/image_width_height"
-        android:layout_height="@dimen/image_width_height"
-        android:layout_marginTop="@dimen/comic_top_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvMatchUsername"
-        tools:src="@tools:sample/avatars" />
-
-    <TextView
-        android:id="@+id/tvAboutMe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/profile_start_margins"
-        android:layout_marginTop="@dimen/profile_top_margins"
-        android:fontFamily="@font/mouse_memoirs"
-        android:text="@string/about_me"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivMatchProfile" />
-
-    <TextView
-        android:id="@+id/tvAboutMatch"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/comic_list_margins"
-        android:hint="User description goes here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAboutMe"
-        tools:ignore="TouchTargetSizeCheck">
+        android:layout_height="match_parent"
+        tools:context=".fragments.ProfileFragment">
 
-    </TextView>
+        <ImageView
+            android:id="@+id/ivMatchProfile"
+            android:layout_width="@dimen/image_width_height"
+            android:layout_height="@dimen/image_width_height"
+            android:layout_marginTop="@dimen/comic_top_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMatchUsername"
+            tools:src="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/tvLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/profile_start_margins"
-        android:layout_marginTop="@dimen/profile_top_margins"
-        android:fontFamily="@font/mouse_memoirs"
-        android:text="@string/likes"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAboutMatch" />
+        <TextView
+            android:id="@+id/tvAboutMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_start_margins"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:fontFamily="@font/mouse_memoirs"
+            android:text="@string/about_me"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivMatchProfile" />
 
-    <TextView
-        android:id="@+id/tvDislikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/image_margin_start"
-        android:layout_marginTop="@dimen/image_margin_top"
-        android:fontFamily="@font/mouse_memoirs"
-        android:text="@string/dislikes"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
+        <TextView
+            android:id="@+id/tvAboutMatch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/comic_list_margins"
+            android:hint="User description goes here"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAboutMe"
+            tools:ignore="TouchTargetSizeCheck">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMatchLikes"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/comic_list_height"
-        android:layout_margin="@dimen/comic_list_margins"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLikes" />
+        </TextView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMatchDislikes"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/comic_list_height"
-        android:layout_margin="@dimen/comic_list_margins"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
+        <TextView
+            android:id="@+id/tvLikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/profile_start_margins"
+            android:layout_marginTop="@dimen/profile_top_margins"
+            android:fontFamily="@font/mouse_memoirs"
+            android:text="@string/likes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAboutMatch" />
 
-    <ImageButton
-        android:id="@+id/ibMessage"
-        android:layout_width="@dimen/clickable"
-        android:layout_height="@dimen/clickable"
-        android:background="#00FFFFFF"
-        android:src="@android:drawable/sym_action_chat"
-        app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivMatchProfile"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <TextView
+            android:id="@+id/tvDislikes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/image_margin_start"
+            android:layout_marginTop="@dimen/image_margin_top"
+            android:fontFamily="@font/mouse_memoirs"
+            android:text="@string/dislikes"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvMatchLikes" />
 
-    <ImageButton
-        android:id="@+id/ibSkip"
-        android:layout_width="@dimen/clickable"
-        android:layout_height="@dimen/clickable"
-        android:background="#00FFFFFF"
-        android:src="@android:drawable/ic_delete"
-        app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
-        app:layout_constraintEnd_toStartOf="@+id/ivMatchProfile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMatchLikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="@dimen/comic_list_margins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLikes">
 
-    <TextView
-        android:id="@+id/tvMatchUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/mouse_memoirs"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="taylor" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMatchLikes"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_height_match"
+                android:background="#B484E5" />
 
+        </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMatchDislikes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="@dimen/comic_list_margins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDislikes">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMatchDislikes"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_height_match"
+                android:background="#B484E5" />
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageButton
+            android:id="@+id/ibMessage"
+            android:layout_width="@dimen/clickable"
+            android:layout_height="@dimen/clickable"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/sym_action_chat"
+            app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivMatchProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/ibSkip"
+            android:layout_width="@dimen/clickable"
+            android:layout_height="@dimen/clickable"
+            android:background="#00FFFFFF"
+            android:src="@android:drawable/ic_delete"
+            app:layout_constraintBottom_toTopOf="@+id/tvAboutMe"
+            app:layout_constraintEnd_toStartOf="@+id/ivMatchProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tvMatchUsername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/mouse_memoirs"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="taylor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
 

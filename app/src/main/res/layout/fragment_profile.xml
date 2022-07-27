@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
@@ -37,23 +37,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivUserProfile" />
 
-            <EditText
-                android:id="@+id/etAboutMe"
-                android:layout_width="@dimen/about_me_width"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/profile_about_me"
-                android:hint="User description goes here"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAboutMe"
-                tools:ignore="TouchTargetSizeCheck">
+        <EditText
+            android:id="@+id/etAboutMe"
+            android:layout_width="@dimen/about_me_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/profile_about_me"
+            android:hint="User description goes here"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAboutMe"
+            tools:ignore="TouchTargetSizeCheck">
 
-            </EditText>
+        </EditText>
 
         <TextView
             android:id="@+id/tvLikes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/profile_start_margins"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/mouse_memoirs"
             android:text="@string/likes"
             android:textSize="25sp"
@@ -73,24 +74,42 @@
             android:textSize="25sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvMatchLikes" />
+            app:layout_constraintTop_toBottomOf="@+id/cvLikesList" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMatchLikes"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvLikesList"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/comic_list_height"
-            android:layout_margin="@dimen/comic_list_margins"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnEditLists" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMatchDislikes"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/comic_list_height"
             android:layout_margin="@dimen/comic_list_margins"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditLists">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMatchLikes"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/comic_list_height"
+                android:background="#B484E5" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDislikesList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:layout_margin="@dimen/comic_list_margins"
+            app:layout_constraintTop_toBottomOf="@+id/tvDislikes"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvDislikes" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMatchDislikes"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/comic_list_height"
+                android:background="#B484E5" />
+
+        </androidx.cardview.widget.CardView>
 
         <ImageButton
             android:id="@+id/btnEditLists"

@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -44,7 +47,7 @@ public class MatchesFragment extends Fragment {
     public static final String TAG = "Matches Fragment";
     public static final int LIST_COLUMNS = 2;
 
-    ConstraintLayout clMatchLayout;
+    ScrollView clMatchLayout;
     TextView tvMatchUsername;
     ImageButton ibMessage;
     ImageButton ibSkip;
@@ -144,13 +147,19 @@ public class MatchesFragment extends Fragment {
 
         final MatchListAdapter comicAdapterDislikes = new MatchListAdapter(getContext(), dislikes);
         rvMatchDislikes.setAdapter(comicAdapterDislikes);
-        rvMatchDislikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+        LinearLayoutManager layoutManagerDislikes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvMatchDislikes.setLayoutManager(layoutManagerDislikes);
+        DividerItemDecoration dividerItemDecorationDislikes = new DividerItemDecoration(rvMatchDislikes.getContext(), layoutManagerDislikes.getOrientation());
+        rvMatchDislikes.addItemDecoration(dividerItemDecorationDislikes);
 
         likes = Match.loadMatchComics(ListType.LIKES, match);
 
         final MatchListAdapter comicAdapterLikes = new MatchListAdapter(getContext(), likes);
         rvMatchLikes.setAdapter(comicAdapterLikes);
-        rvMatchLikes.setLayoutManager(new GridLayoutManager(getContext(), LIST_COLUMNS));
+        LinearLayoutManager layoutManagerLikes = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        rvMatchLikes.setLayoutManager(layoutManagerLikes);
+        DividerItemDecoration dividerItemDecorationLikes = new DividerItemDecoration(rvMatchLikes.getContext(), layoutManagerLikes.getOrientation());
+        rvMatchLikes.addItemDecoration(dividerItemDecorationLikes);
 
         tvMatchUsername.setText(match.getUsername());
 
